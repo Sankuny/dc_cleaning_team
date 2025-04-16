@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+
+<div class="max-w-3xl mx-auto mt-10 bg-white shadow p-6 rounded-lg">
+  <h1 class="text-2xl font-bold text-purple-700 mb-6">{{ t["request_service_title"] }}</h1>
+
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <!-- Tipo de servicio -->
+    <div class="mb-4">
+      <label class="block font-medium">{{ t["service_type"] }}</label>
+      {{ form.service_type(class="w-full border border-gray-300 p-2 rounded") }}
+    </div>
+
+    <!-- Fecha -->
+    <div class="mb-4">
+      <label class="block font-medium">{{ t["preferred_date"] }}</label>
+      {{ form.date(class="w-full border border-gray-300 p-2 rounded") }}
+    </div>
+
+    <!-- Hora -->
+    <div class="mb-4">
+      <label class="block font-medium">{{ t["preferred_time"] }}</label>
+      {{ form.time(class="w-full border border-gray-300 p-2 rounded") }}
+    </div>
+
+    <!-- Dirección -->
+    <div class="mb-4">
+      <label class="block font-medium">{{ t["address"] }}</label>
+      {{ form.address(id="address", class="w-full border border-gray-300 p-2 rounded") }}
+    </div>
+
+    <!-- Mapa -->
+    <label for="map" class="block font-medium mb-2 text-gray-700">{{ t["select_location"] }}</label>
+    <div id="map" class="h-64 rounded shadow mb-4"></div>
+    <input type="hidden" name="lat" id="lat">
+    <input type="hidden" name="lng" id="lng">
+
+    <!-- Notas -->
+    <div class="mb-4">
+      <label class="block font-medium">{{ t["additional_notes"] }}</label>
+      {{ form.notes(class="w-full border border-gray-300 p-2 rounded") }}
+    </div>
+
+    <!-- Recurrente -->
+    <div class="mb-4">
+      <label class="inline-flex items-center">
+        {{ form.recurrent() }}
+        <span class="ml-2 font-medium">{{ t["recurrent_service"] }}</span>
+      </label>
+    </div>
+
+    <!-- Frecuencia (condicional) -->
+    <div class="mb-4" id="frequency-container" style="display: none;">
+      <label class="block font-medium">{{ t["frequency"] }}</label>
+      {{ form.frequency(class="w-full border border-gray-300 p-2 rounded") }}
+    </div>
+
+    <!-- Botón -->
+    <div class="text-right">
+      <button type="submit" class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition">
+        {{ t["submit_request"] }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+<script>
+  const defaultCoords = [49.2827, -123.1207]; // Vancouver
+
+  const map = L.map('map').setView(defaultCoords, 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+  }).addTo(map);
+
+  let marker = L.marker(defaultCoords, { draggable: true }).addTo(map);
+
+  reverseGeocode(defaultCoords[0], defaultCoords[1]);
+
+  marker.on("dragend", () => {
+    const { lat, lng } = marker.getLatLng();
+    reverseGeocode(lat, lng);
+  });
+
+  async function reverseGeocode(lat, lng) {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+    try {
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent": "dccleaningpro/1.0"
+        }
+      });
+      const data = await res.json();
+      document.getElementById("address").value = data.display_name || "";
+      document.getElementById("lat").value = lat;
+      document.getElementById("lng").value = lng;
+    } catch (e) {
+      console.error("Error getting address:", e);
+    }
+  }
+
+  // Mostrar u ocultar frecuencia según checkbox de recurrente
+  const recurrentCheckbox = document.querySelector('input[name="recurrent"]');
+  const frequencyContainer = document.getElementById("frequency-container");
+
+  if (recurrentCheckbox) {
+    function toggleFrequency() {
+      frequencyContainer.style.display = recurrentCheckbox.checked ? "block" : "none";
+    }
+
+    recurrentCheckbox.addEventListener("change", toggleFrequency);
+    toggleFrequency(); // iniciar estado
+  }
+</script>
+{% endblock %}

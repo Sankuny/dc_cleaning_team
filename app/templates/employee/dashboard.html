@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto mt-12 px-4">
+
+  <!-- Título -->
+  <div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-bold text-[#003DA5]">{{ t["employee_dashboard"] }}</h2>
+    <a href="{{ url_for('employee.assigned_services') }}"
+       class="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition text-sm">
+      {{ t["view_all_assigned"] }}
+    </a>
+  </div>
+
+  <!-- 📊 Resumen Rápido -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <p class="text-sm text-gray-500">{{ t["services_today"] }}</p>
+      <p class="text-2xl font-bold text-blue-700">{{ today_count }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <p class="text-sm text-gray-500">{{ t["services_week"] }}</p>
+      <p class="text-2xl font-bold text-blue-700">{{ week_count }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <p class="text-sm text-gray-500">{{ t["average_rating"] }}</p>
+      <p class="text-2xl font-bold text-yellow-500">{{ average_rating }} ⭐</p>
+    </div>
+  </div>
+
+  <!-- 🧹 Servicios asignados hoy -->
+  <h3 class="text-xl font-semibold text-[#003DA5] mb-4">{{ t["assigned_services_today"] }}</h3>
+  {% if today_services %}
+    <div class="space-y-4">
+      {% for s in today_services %}
+        <div class="bg-white p-4 rounded-lg shadow border border-blue-100">
+          <p><strong>{{ t["service_type"] }}:</strong> {{ t["service_type_labels"][s.service_type] }}</p>
+          <p><strong>{{ t["time"] }}:</strong> {{ s.time.strftime('%H:%M') }}</p>
+          <p><strong>{{ t["address"] }}:</strong> {{ s.address or "N/A" }}</p>
+
+          {% set other_employees = s.employees | rejectattr("id", "equalto", current_user.id) | list %}
+          {% if other_employees|length == 0 %}
+            <p class="text-xs text-blue-500 mt-1">Only you are assigned</p>
+          {% else %}
+            <p class="text-xs text-purple-600 mt-1">Shared with {{ other_employees|length }} other{{ 's' if other_employees|length > 1 }}</p>
+          {% endif %}
+
+          {% if s.status != "completed" %}
+            <form action="{{ url_for('employee.mark_completed', id=s.id) }}" method="POST" class="mt-3 text-right">
+              <button type="submit" class="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700 text-sm">
+                {{ t["mark_completed"] }}
+              </button>
+            </form>
+          {% else %}
+            <p class="text-green-600 mt-2">{{ t["already_completed"] }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-500 text-center mb-8">{{ t["no_services_today"] }}</p>
+  {% endif %}
+
+  <!-- ⭐ Últimas calificaciones -->
+  <h3 class="text-xl font-semibold text-[#003DA5] mt-12 mb-4">{{ t["recent_feedback"] }}</h3>
+  {% if ratings %}
+    <div class="space-y-4">
+      {% for r in ratings %}
+        <div class="bg-white p-4 rounded-lg shadow border border-yellow-100">
+          <p class="text-yellow-500 text-lg">⭐ {{ r.rating }} / 5</p>
+          <p class="text-gray-700 text-sm italic mt-1">"{{ r.comment }}"</p>
+          <p class="text-xs text-gray-400 mt-1">{{ r.created_at.strftime('%Y-%m-%d') }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-500 text-center">{{ t["no_feedback_yet"] }}</p>
+  {% endif %}
+
+</div>
+{% endblock %}

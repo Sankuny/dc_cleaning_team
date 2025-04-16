@@ -1,0 +1,189 @@
+{
+  "home": "Accueil",
+  "services": "Services",
+  "contact": "Contact",
+  "welcome2": "Bienvenue chez DC Cleaning Team",
+  "see_services": "Voir les services",
+  "rights_reserved": "Tous droits réservés",
+
+  "login_title": "Connexion",
+  "login_email": "Email",
+  "login_password": "Mot de passe",
+  "login_button": "Se connecter",
+
+  "register_title": "Inscription",
+  "register_name": "Nom complet",
+  "register_button": "Créer un compte",
+  "register_success": "Compte créé avec succès. Vous pouvez maintenant vous connecter.",
+  "register_exists": "Cet e-mail est déjà enregistré.",
+  "no_account": "Vous n'avez pas de compte ?",
+  "already_account": "Vous avez déjà un compte ?",
+
+  "not_found_message": "Oups ! Page non trouvée.",
+  "go_home": "Retour à l'accueil",
+
+  "access_denied": "Accès refusé. Vous n'avez pas la permission d'accéder à cette page.",
+  "login_success": "Bon retour parmi nous !",
+  "login_fail": "E-mail ou mot de passe invalide",
+
+  "welcome": "Bienvenue",
+  "request_service_title": "Demander un service de nettoyage",
+  "request_service_desc": "Planifiez un nettoyage selon votre convenance.",
+  "rate_service_title": "Évaluez le service actuel",
+  "rate_service_desc": "Partagez votre avis et aidez-nous à nous améliorer.",
+  "service_history_title": "Historique des services",
+  "service_history_desc": "Consultez vos services passés et leurs détails.",
+  "profile_title": "Mon Profil",
+  "profile_desc": "Mettez à jour vos informations personnelles.",
+
+  "service_type": "Type de service",
+  "preferred_date": "Date préférée",
+  "preferred_time": "Heure préférée",
+  "address": "Adresse",
+  "select_location": "Sélectionnez l'emplacement sur la carte",
+  "additional_notes": "Notes supplémentaires",
+  "submit_request": "Envoyer la demande",
+
+  "rate_service_subtitle": "Dites-nous comment nous avons fait.",
+  "rating_label": "Évaluation",
+  "comment_label": "Commentaire",
+  "submit_rating": "Soumettre l'évaluation",
+  "rating_success": "Merci pour votre retour !",
+
+  "comment_placeholder": "Écrivez votre commentaire ici...",
+  "date": "Date",
+  "status": "Statut",
+  "completed": "Terminé",
+  "pending": "En attente",
+  "accepted": "Accepté",
+  "canceled": "Annulé",
+  "your_rating": "Votre évaluation",
+  "no_service_history": "Vous n'avez pas encore de services passés.",
+
+  "personal_info": "Informations personnelles",
+  "name": "Nom",
+  "email": "Email",
+  "update_info": "Mettre à jour",
+  "change_password": "Changer le mot de passe",
+  "current_password": "Mot de passe actuel",
+  "new_password": "Nouveau mot de passe",
+  "confirm_new_password": "Confirmer le mot de passe",
+  "update_password": "Mettre à jour le mot de passe",
+
+  "info_updated": "Vos informations ont été mises à jour.",
+  "password_updated": "Le mot de passe a été modifié avec succès.",
+  "wrong_current_password": "Le mot de passe actuel est incorrect.",
+  "form_error": "Veuillez vérifier les erreurs dans le formulaire.",
+
+  "recurrent_service": "Service récurrent",
+  "frequency": "Fréquence",
+  "weekly": "Hebdomadaire",
+  "biweekly": "Bimensuel",
+  "monthly": "Mensuel",
+
+  "residential": "Nettoyage résidentiel",
+  "deep": "Nettoyage en profondeur",
+  "office": "Nettoyage de bureau",
+
+  "recurring_service_title": "Services Récurrents",
+  "recurring_service_desc": "Consultez et gérez vos nettoyages récurrents programmés.",
+
+  "recurring_services_title": "Mes services récurrents",
+  "no_recurring_services": "Vous n'avez pas de services récurrents actifs.",
+  "cancel_service": "Annuler le service",
+
+  "service_type_labels": {
+    "residential": "Nettoyage résidentiel",
+    "deep": "Nettoyage en profondeur",
+    "office": "Nettoyage de bureau"
+  },
+
+  "frequency_options": {
+    "weekly": "Hebdomadaire",
+    "biweekly": "Bimensuel",
+    "monthly": "Mensuel"
+  },
+
+  "pause": "Mettre en pause",
+  "resume": "Reprendre",
+  "cancel": "Annuler",
+
+  "status_label": "Statut",
+  "active": "Actif",
+  "paused": "En pause",
+
+
+  "home_welcome_title": "Bienvenue chez DC Cleaning Team",
+  "home_welcome_desc": "Planifiez, évaluez et gérez vos services de nettoyage facilement.",
+  "home_services_title": "Options de Nettoyage Disponibles",
+  "home_services_contact": "Besoin d’aide ? Contactez notre équipe",
+  "home_service_home": "Nettoyage Résidentiel",
+  "home_service_home_desc": "Nettoyage fiable pour votre maison ou appartement.",
+  "home_service_commercial": "Nettoyage Commercial",
+  "home_service_commercial_desc": "Des résultats professionnels pour votre entreprise.",
+  "home_service_deep": "Nettoyage en Profondeur",
+  "home_service_deep_desc": "Nettoyage intensif pour des besoins particuliers.",
+  "home_contact_info": "Email : contact@dccleaning.ca | Téléphone : (604) 300-4796",
+  "start_now": "Commencer maintenant",
+
+
+
+  "commercial_cleaning": "Nettoyage Commercial",
+  "commercial_cleaning_desc": "Gardez votre entreprise propre et professionnelle.",
+  "deep_cleaning": "Nettoyage en Profondeur",
+  "deep_cleaning_desc": "Un nettoyage complet pour des besoins spéciaux ou complexes.",
+  "residential_cleaning": "Nettoyage Résidentiel",
+  "residential_cleaning_desc": "Un nettoyage fiable pour votre maison.",
+
+  "what_you_can_do": "Ce que vous pouvez faire",
+
+  "only_you_assigned": "Vous êtes le seul assigné",
+  "shared_with_others": "Assigné avec {count} autre{s}",
+
+  "completed_by_employee": "Marked as completed by employee. Awaiting confirmation.",
+
+  "employee_dashboard": "Tableau de Bord Employé",
+  "services_today": "Services d'Aujourd'hui",
+  "services_week": "Services Cette Semaine",
+  "average_rating": "Note Moyenne",
+  "assigned_services_today": "Services Assignés Aujourd'hui",
+  "recent_feedback": "Commentaires Récents",
+  "no_services_today": "Aucun service assigné aujourd'hui.",
+  "no_feedback_yet": "Vous n'avez pas encore reçu de commentaires.",
+  "mark_completed": "Marquer comme Terminé",
+  "already_completed": "Ce service est déjà terminé.",
+  "time": "Heure",
+
+  "admin_dashboard": "Tableau de Bord Admin",
+  "total_users": "Utilisateurs Totaux",
+  "total_clients": "Clients Totaux",
+  "total_employees": "Employés Totaux",
+  "total_reservations": "Réservations Totales",
+  "pending_services": "Services en Attente",
+  "accept_all": "Tout Accepter",
+  "accept": "Accepter",
+  "no_pending_services": "Aucun service en attente.",
+  "client": "Client",
+  "actions": "Actions",
+
+  "assign_employees_title": "Assigner des Employés aux Services",
+  "select_employees": "Sélectionner les Employés",
+  "assign": "Assigner",
+  "no_services_to_assign": "Aucun service accepté sans employés assignés.",
+
+  "search_employees": "Rechercher un employé par nom",
+  "user_management": "Gestion des Utilisateurs",
+  "create_employee": "Créer un Employé",
+
+  "edit_user": "Modifier l'utilisateur",
+  "user_updated": "Utilisateur mis à jour avec succès.",
+  "user_deleted": "Utilisateur supprimé avec succès.",
+  "cannot_delete_admin": "Vous ne pouvez pas supprimer un administrateur.",
+  "request_success": "Demande envoyée avec succès",
+
+  "all_assigned_services": "Tous les services assignés",
+  "no_services_found": "Aucun service ne vous est encore attribué.",
+  "view_all_assigned": "Voir tous les services attribués"
+
+
+}

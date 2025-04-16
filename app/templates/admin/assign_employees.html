@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto mt-12 px-4">
+
+  <h2 class="text-3xl font-bold text-[#003DA5] mb-8 text-center">{{ t["assign_employees_title"] }}</h2>
+
+  {% if services %}
+    <div class="space-y-8">
+      {% for s in services %}
+        <div class="bg-white shadow p-6 rounded-lg border border-blue-100">
+          <p class="mb-2 text-blue-800 font-semibold">
+            {{ t["service_type"] }}: {{ t["service_type_labels"][s.service_type] }}
+          </p>
+          <p class="text-sm text-gray-700 mb-2">
+            <strong>{{ t["date"] }}:</strong> {{ s.date.strftime('%Y-%m-%d') }}<br>
+            <strong>{{ t["time"] }}:</strong> {{ s.time.strftime('%H:%M') }}<br>
+            <strong>{{ t["client"] }}:</strong> {{ s.user.name }}
+          </p>
+
+          <form method="POST" action="{{ url_for('admin.assign_employees_post', reservation_id=s.id) }}" class="space-y-3">
+            <label class="block font-medium text-gray-700 mb-1">{{ t["select_employees"] }}</label>
+
+            <!-- Buscador -->
+            <input type="text" placeholder="{{ t['search_employees'] }}"
+                   onkeyup="filterEmployees(this)"
+                   class="mb-2 w-full border border-gray-300 p-2 rounded text-sm"
+                   data-target="employee-select-{{ s.id }}">
+
+            <select name="employees" multiple id="employee-select-{{ s.id }}"
+                    class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+              {% for e in employees %}
+                <option value="{{ e.id }}">{{ e.name }}</option>
+              {% endfor %}
+            </select>
+
+            <div class="text-right mt-3">
+              <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">
+                {{ t["assign"] }}
+              </button>
+            </div>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-center text-gray-500">{{ t["no_services_to_assign"] }}</p>
+  {% endif %}
+</div>
+
+<!-- Filtro JS -->
+<script>
+  function filterEmployees(input) {
+    const targetId = input.dataset.target;
+    const select = document.getElementById(targetId);
+    const filter = input.value.toLowerCase();
+
+    for (let option of select.options) {
+      const text = option.text.toLowerCase();
+      option.style.display = text.includes(filter) ? "block" : "none";
+    }
+  }
+</script>
+{% endblock %}

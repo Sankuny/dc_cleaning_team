@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto mt-12 px-4">
+  <h2 class="text-3xl font-bold text-[#003DA5] mb-8 text-center">{{ t["all_assigned_services"] }}</h2>
+
+  {% if services %}
+    <div class="space-y-6">
+      {% for s in services %}
+        <div class="bg-white p-4 rounded-lg shadow border border-blue-100">
+          <p><strong>{{ t["service_type"] }}:</strong> {{ t["service_type_labels"][s.service_type] }}</p>
+          <p><strong>{{ t["date"] }}:</strong> {{ s.date.strftime('%Y-%m-%d') }}</p>
+          <p><strong>{{ t["time"] }}:</strong> {{ s.time.strftime('%H:%M') }}</p>
+          <p><strong>{{ t["status"] }}:</strong> {{ t[s.status] if t.get(s.status) else s.status }}</p>
+          <p><strong>{{ t["address"] }}:</strong> {{ s.address or "N/A" }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-500 text-center">{{ t["no_services_found"] }}</p>
+  {% endif %}
+</div>
+{% endblock %}

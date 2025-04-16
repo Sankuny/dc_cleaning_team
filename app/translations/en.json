@@ -1,0 +1,195 @@
+{
+  "home": "Home",
+  "services": "Services",
+  "contact": "Contact",
+  "welcome2": "Welcome to DC Cleaning Team",
+  "see_services": "See Services",
+  "rights_reserved": "All rights reserved",
+
+  "login_title": "Log In",
+  "login_email": "Email",
+  "login_password": "Password",
+  "login_button": "Log In",
+
+  "register_title": "Register",
+  "register_name": "Full Name",
+  "register_button": "Create Account",
+  "register_success": "Account created successfully. You can now log in.",
+  "register_exists": "This email is already registered.",
+  "no_account": "Don't have an account?",
+  "already_account": "Already have an account?",
+
+  "not_found_message": "Oops! Page not found.",
+  "go_home": "Go back to home",
+
+  "access_denied": "Access Denied. You do not have permission to view this page.",
+  "login_success": "Welcome back!",
+  "login_fail": "Invalid email or password",
+
+  "welcome": "Welcome",
+  "request_service_title": "Request Cleaning Service",
+  "request_service_desc": "Schedule a cleaning at your convenience.",
+  "rate_service_title": "Rate the current service",
+  "rate_service_desc": "Share your feedback and help us improve.",
+  "service_history_title": "Service History",
+  "service_history_desc": "Check your past cleaning services and details.",
+  "profile_title": "My Profile",
+  "profile_desc": "Update your personal information.",
+
+  "service_type": "Service Type",
+  "preferred_date": "Preferred Date",
+  "preferred_time": "Preferred Time",
+  "address": "Address",
+  "select_location": "Select location on the map",
+  "additional_notes": "Additional Notes",
+  "submit_request": "Submit Request",
+
+  "rate_service_subtitle": "Let us know how we did.",
+  "rating_label": "Rating",
+  "comment_label": "Comment",
+  "submit_rating": "Submit Rating",
+  "rating_success": "Thank you for your feedback!",
+
+  "comment_placeholder": "Write your comment here...",
+  "date": "Date",
+  "status": "Status",
+  "completed": "Completed",
+  "pending": "Pending",
+  "accepted": "Accepted",
+  "canceled": "Canceled",
+  "your_rating": "Your Rating",
+  "no_service_history": "You have no past services yet.",
+
+  "personal_info": "Personal Information",
+  "name": "Name",
+  "email": "Email",
+  "update_info": "Update Info",
+  "change_password": "Change Password",
+  "current_password": "Current Password",
+  "new_password": "New Password",
+  "confirm_new_password": "Confirm New Password",
+  "update_password": "Update Password",
+
+  "info_updated": "Your information has been updated.",
+  "password_updated": "Password updated successfully.",
+  "wrong_current_password": "Current password is incorrect.",
+  "form_error": "Please check the form for errors.",
+
+  "recurrent_service": "Recurrent Service",
+  "frequency": "Frequency",
+  "weekly": "Weekly",
+  "biweekly": "Biweekly",
+  "monthly": "Monthly",
+
+  "residential": "Residential Cleaning",
+  "deep": "Deep Cleaning",
+  "office": "Office Cleaning",
+
+  "recurring_service_title": "Recurring Services",
+  "recurring_service_desc": "View and manage your scheduled recurring cleanings.",
+
+  "recurring_services_title": "My Recurring Services",
+  "no_recurring_services": "You have no active recurring services.",
+  "cancel_service": "Cancel Service",
+
+  "service_type_labels": {
+    "residential": "Residential Cleaning",
+    "deep": "Deep Cleaning",
+    "office": "Office Cleaning"
+  },
+
+  "frequency_options": {
+    "weekly": "Weekly",
+    "biweekly": "Biweekly",
+    "monthly": "Monthly"
+  },
+
+  "pause": "Pause",
+  "resume": "Resume",
+  "cancel": "Cancel",
+
+  "status_label": "Status",
+  "active": "Active",
+  "paused": "Paused",
+  
+  "start_now": "Start Now",
+  "key_features": "What You Can Do",
+
+  "home_welcome_title": "Welcome to DC Cleaning Team",
+  "home_welcome_desc": "Quickly schedule, rate, and manage your cleaning services.",
+  "home_services_title": "Available Cleaning Options",
+  "home_services_contact": "Need help? Reach out to our team",
+  "home_service_home": "Home Cleaning",
+  "home_service_home_desc": "Reliable cleaning for your home or apartment.",
+  "home_service_commercial": "Commercial Cleaning",
+  "home_service_commercial_desc": "Professional results for your business space.",
+  "home_service_deep": "Deep Cleaning",
+  "home_service_deep_desc": "Thorough cleaning for intensive needs.",
+  "home_contact_info": "Email: contact@dccleaning.ca | Phone: (604) 300-4796",
+
+
+  "commercial_cleaning": "Commercial Cleaning",
+  "commercial_cleaning_desc": "Keep your business spotless and professional.",
+  "deep_cleaning": "Deep Cleaning",
+  "deep_cleaning_desc": "Thorough cleaning for special or complex needs.",
+  "residential_cleaning": "Residential Cleaning",
+  "residential_cleaning_desc": "Reliable cleaning for your home space.",
+  "what_you_can_do": "What You Can Do",
+
+
+  "employee_dashboard": "Employee Dashboard",
+  "services_today": "Today's Services",
+  "services_week": "Services This Week",
+  "average_rating": "Avg. Rating",
+  "assigned_services_today": "Assigned Services Today",
+  "recent_feedback": "Recent Feedback",
+  "no_services_today": "You have no assigned services today.",
+  "no_feedback_yet": "You haven't received any feedback yet.",
+  "mark_completed": "Mark as Completed",
+  "already_completed": "This service is already completed.",
+  "time": "Time",
+  
+  "only_you_assigned": "Only you are assigned",
+  "shared_with_others": "Shared with {count} other{s}",
+
+  "completed_by_employee": "Marked as completed by employee. Awaiting confirmation.",
+
+  "admin_dashboard": "Admin Dashboard",
+  "total_users": "Total Users",
+  "total_clients": "Total Clients",
+  "total_employees": "Total Employees",
+  "total_reservations": "Total Reservations",
+  "pending_services": "Pending Services",
+  "accept_all": "Accept All",
+  "accept": "Accept",
+  "no_pending_services": "There are no pending services.",
+  "client": "Client",
+  "actions": "Actions",
+
+  "assign_employees_title": "Assign Employees to Services",
+  "select_employees": "Select Employees",
+  "assign": "Assign",
+  "no_services_to_assign": "There are no accepted services without employees assigned.",
+
+  "search_employees": "Search employee by name",
+  "user_management": "User Management",
+  "create_employee": "Create Employee",
+
+  "edit_user": "Edit User",
+  "user_updated": "User updated successfully.",
+  "user_deleted": "User deleted successfully.",
+  "cannot_delete_admin": "You cannot delete an admin user.",
+
+  "request_success": "Request sent successfully",
+
+  "all_assigned_services": "All services assigned",
+  "no_services_found": "You have no services assigned yet.",
+  "view_all_assigned": "View All Assigned Services"
+
+
+
+
+
+}
+
+  

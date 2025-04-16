@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Hero principal -->
+<section class="flex flex-col md:flex-row items-center justify-between p-6 md:p-14 bg-white shadow rounded-lg max-w-6xl mx-auto mt-8 animate-fade-in-up">
+  <div class="md:w-1/2 mb-8 md:mb-0 text-center md:text-left">
+    <p class="text-sm text-blue-500 font-semibold uppercase tracking-wider mb-2">
+      🧼 Canada's Trusted Cleaning Experts
+    </p>
+    <h1 class="text-4xl font-bold text-blue-800 mb-4">{{ t["home_welcome_title"] }}</h1>
+    <p class="text-lg text-gray-700 mb-6">{{ t["home_welcome_desc"] }}</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+      <a href="{{ url_for('auth.login') }}" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
+        {{ t["start_now"] }}
+      </a>
+      <a href="#services" class="inline-block bg-white text-blue-600 border border-blue-600 px-6 py-3 rounded-lg shadow hover:bg-blue-100 transition">
+        {{ t["see_services"] }}
+      </a>
+    </div>
+  </div>
+  <div class="md:w-1/2 flex justify-center">
+    <img src="{{ url_for('static', filename='img/foto.png') }}" alt="Welcome" class="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-80 md:w-96">
+  </div>
+</section>
+
+<!-- Sección: Nuestros Servicios -->
+<section id="services" class="mt-20 max-w-6xl mx-auto px-4">
+  <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">{{ t["home_services_title"] }}</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <img src="{{ url_for('static', filename='img/home.png') }}" alt="Home Cleaning" class="w-16 h-16 mx-auto mb-4">
+      <h3 class="text-lg font-semibold text-blue-700">{{ t["home_service_home"] }}</h3>
+      <p class="text-sm text-gray-600">{{ t["home_service_home_desc"] }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <img src="{{ url_for('static', filename='img/Commercial.png') }}" alt="Commercial Cleaning" class="w-16 h-16 mx-auto mb-4">
+      <h3 class="text-lg font-semibold text-blue-700">{{ t["home_service_commercial"] }}</h3>
+      <p class="text-sm text-gray-600">{{ t["home_service_commercial_desc"] }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <img src="{{ url_for('static', filename='img/Deep.png') }}" alt="Deep Cleaning" class="w-16 h-16 mx-auto mb-4">
+      <h3 class="text-lg font-semibold text-blue-700">{{ t["home_service_deep"] }}</h3>
+      <p class="text-sm text-gray-600">{{ t["home_service_deep_desc"] }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Funcionalidades destacadas -->
+<section class="mt-20 max-w-6xl mx-auto px-4">
+  <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">{{ t["what_you_can_do"] }}</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <img src="{{ url_for('static', filename='img/Request.png') }}" alt="Request" class="w-16 h-16 mx-auto mb-4">
+      <h3 class="text-lg font-semibold text-blue-700">{{ t["request_service_title"] }}</h3>
+      <p class="text-sm text-gray-600">{{ t["request_service_desc"] }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <img src="{{ url_for('static', filename='img/recurrente.png') }}" alt="Recurring" class="w-16 h-16 mx-auto mb-4">
+      <h3 class="text-lg font-semibold text-blue-700">{{ t["recurring_service_title"] }}</h3>
+      <p class="text-sm text-gray-600">{{ t["recurring_service_desc"] }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <img src="{{ url_for('static', filename='img/rate.png') }}" alt="Rate" class="w-16 h-16 mx-auto mb-4">
+      <h3 class="text-lg font-semibold text-blue-700">{{ t["rate_service_title"] }}</h3>
+      <p class="text-sm text-gray-600">{{ t["rate_service_desc"] }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Información de contacto -->
+<section class="mt-20 text-center" id="contact">
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ t["contact"] }}</h2>
+  <p class="text-gray-600">{{ t["home_contact_info"] }}</p>
+</section>
+
+{% endblock %}

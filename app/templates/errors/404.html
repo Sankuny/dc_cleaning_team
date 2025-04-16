@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-xl mx-auto mt-20 text-center">
+  <h1 class="text-6xl font-bold text-red-600">404</h1>
+  <p class="mt-4 text-gray-600 text-lg">{{ t["not_found_message"] }}</p>
+  <a href="{{ url_for('public.home') }}" class="mt-6 inline-block text-blue-600 hover:underline">
+    {{ t["go_home"] }}
+  </a>
+</div>
+{% endblock %}

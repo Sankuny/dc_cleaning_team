@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-7xl mx-auto mt-12 px-4">
+
+  <!-- 🧠 Título -->
+  <h2 class="text-3xl font-bold text-[#003DA5] mb-10 text-center">{{ t["admin_dashboard"] }}</h2>
+
+  <!-- 📊 Estadísticas -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 text-center">
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <div class="text-4xl text-blue-600 mb-2">👥</div>
+      <p class="text-sm text-gray-500">{{ t["total_users"] }}</p>
+      <p class="text-2xl font-bold text-blue-800">{{ total_users }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <div class="text-4xl text-blue-600 mb-2">🧍‍♂️</div>
+      <p class="text-sm text-gray-500">{{ t["total_clients"] }}</p>
+      <p class="text-2xl font-bold text-blue-800">{{ total_clients }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <div class="text-4xl text-blue-600 mb-2">🧹</div>
+      <p class="text-sm text-gray-500">{{ t["total_employees"] }}</p>
+      <p class="text-2xl font-bold text-blue-800">{{ total_employees }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <div class="text-4xl text-blue-600 mb-2">📅</div>
+      <p class="text-sm text-gray-500">{{ t["total_reservations"] }}</p>
+      <p class="text-2xl font-bold text-blue-800">{{ total_reservations }}</p>
+    </div>
+  </div>
+
+  <!-- 🚀 Accesos rápidos -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+    <a href="{{ url_for('admin.assign_employees') }}"
+       class="block bg-white p-6 rounded-lg shadow hover:shadow-lg hover:scale-105 transition text-center">
+      <h3 class="text-lg font-semibold text-blue-700 mb-2">Assign Employees</h3>
+      <p class="text-sm text-gray-600">Assign available employees to accepted services.</p>
+    </a>
+
+    <a href="{{ url_for('admin.users') }}"
+       class="block bg-white p-6 rounded-lg shadow hover:shadow-lg hover:scale-105 transition text-center">
+      <h3 class="text-lg font-semibold text-blue-700 mb-2">User Management</h3>
+      <p class="text-sm text-gray-600">Create, view, and manage system users.</p>
+    </a>
+  </div>
+
+  <!-- 📋 Servicios por aceptar -->
+  <div class="flex justify-between items-center mb-4">
+    <h3 class="text-xl font-semibold text-[#003DA5]">{{ t["pending_services"] }}</h3>
+    {% if pending_services %}
+      <form method="POST" action="{{ url_for('admin.accept_all_services') }}">
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm shadow">
+          ✅ {{ t["accept_all"] }}
+        </button>
+      </form>
+    {% endif %}
+  </div>
+
+  {% if pending_services %}
+    <div class="overflow-x-auto bg-white shadow rounded-lg">
+      <table class="min-w-full table-auto text-sm text-left">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-2 font-semibold text-gray-600">{{ t["client"] }}</th>
+            <th class="px-4 py-2 font-semibold text-gray-600">{{ t["service_type"] }}</th>
+            <th class="px-4 py-2 font-semibold text-gray-600">{{ t["date"] }}</th>
+            <th class="px-4 py-2 font-semibold text-gray-600">{{ t["time"] }}</th>
+            <th class="px-4 py-2 text-center font-semibold text-gray-600">{{ t["actions"] }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in pending_services %}
+          <tr class="border-t hover:bg-gray-50 transition">
+            <td class="px-4 py-2">{{ r.user.name }}</td>
+            <td class="px-4 py-2">{{ t["service_type_labels"][r.service_type] }}</td>
+            <td class="px-4 py-2">{{ r.date.strftime('%Y-%m-%d') }}</td>
+            <td class="px-4 py-2">{{ r.time.strftime('%H:%M') }}</td>
+            <td class="px-4 py-2 text-center">
+              <form method="POST" action="{{ url_for('admin.accept_service', id=r.id) }}">
+                <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-xs shadow">
+                  {{ t["accept"] }}
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-center text-gray-500 mt-6">{{ t["no_pending_services"] }}</p>
+  {% endif %}
+
+</div>
+{% endblock %}

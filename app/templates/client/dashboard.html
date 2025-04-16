@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto mt-12 px-4">
+  <h2 class="text-4xl font-bold text-[#003DA5] mb-10 text-center">{{ t["welcome"] }}, {{ name }}!</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Request Cleaning Service -->
+    <a href="{{ url_for('client.request_service') }}"
+       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
+              hover:shadow-xl hover:scale-105 transform transition duration-500
+              opacity-0 animate-fade-in-up animation-delay-100">
+      <img src="{{ url_for('static', filename='img/Request.png') }}" alt="Request" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["request_service_title"] }}</h2>
+      <p class="text-gray-600 text-sm">{{ t["request_service_desc"] }}</p>
+    </a>
+
+    <!-- Rate Previous Service -->
+    <a href="{{ url_for('client.rate_service') }}"
+       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
+              hover:shadow-xl hover:scale-105 transform transition duration-500
+              opacity-0 animate-fade-in-up animation-delay-200">
+      <img src="{{ url_for('static', filename='img/rate.png') }}" alt="Rate" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["rate_service_title"] }}</h2>
+      <p class="text-gray-600 text-sm">{{ t["rate_service_desc"] }}</p>
+    </a>
+
+    <!-- Service History -->
+    <a href="{{ url_for('client.service_history') }}"
+       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
+              hover:shadow-xl hover:scale-105 transform transition duration-500
+              opacity-0 animate-fade-in-up animation-delay-300">
+      <img src="{{ url_for('static', filename='img/hitory.png') }}" alt="History" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["service_history_title"] }}</h2>
+      <p class="text-gray-600 text-sm">{{ t["service_history_desc"] }}</p>
+    </a>
+
+    <!-- My Profile -->
+    <a href="{{ url_for('client.profile') }}"
+       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
+              hover:shadow-xl hover:scale-105 transform transition duration-500
+              opacity-0 animate-fade-in-up animation-delay-400">
+      <img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["profile_title"] }}</h2>
+      <p class="text-gray-600 text-sm">{{ t["profile_desc"] }}</p>
+    </a>
+
+    <!-- Recurring Services -->
+    <a href="{{ url_for('client.recurring_services') }}"
+       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
+              hover:shadow-xl hover:scale-105 transform transition duration-500
+              opacity-0 animate-fade-in-up animation-delay-500">
+      <img src="{{ url_for('static', filename='img/recurrente.png') }}" alt="Recurring" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["recurring_service_title"] }}</h2>
+      <p class="text-gray-600 text-sm">{{ t["recurring_service_desc"] }}</p>
+    </a>
+  </div>
+</div>
+{% endblock %}

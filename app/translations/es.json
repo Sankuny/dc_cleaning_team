@@ -1,0 +1,187 @@
+{
+  "home": "Inicio",
+  "services": "Servicios",
+  "contact": "Contacto",
+  "welcome2": "Bienvenido a DC Cleaning Team",
+  "see_services": "Ver Servicios",
+  "rights_reserved": "Todos los derechos reservados",
+
+  "login_title": "Iniciar Sesión",
+  "login_email": "Correo Electrónico",
+  "login_password": "Contraseña",
+  "login_button": "Iniciar Sesión",
+
+  "register_title": "Registrarse",
+  "register_name": "Nombre Completo",
+  "register_button": "Crear Cuenta",
+  "register_success": "Cuenta creada exitosamente. Ahora puedes iniciar sesión.",
+  "register_exists": "Este correo ya está registrado.",
+  "no_account": "¿No tienes una cuenta?",
+  "already_account": "¿Ya tienes una cuenta?",
+
+  "not_found_message": "¡Ups! Página no encontrada.",
+  "go_home": "Volver al inicio",
+
+  "access_denied": "Acceso Denegado. No tienes permiso para ver esta página.",
+  "login_success": "¡Bienvenido de nuevo!",
+  "login_fail": "Correo o contraseña inválidos",
+
+  "welcome": "Bienvenido",
+  "request_service_title": "Solicitar Servicio de Limpieza",
+  "request_service_desc": "Programa una limpieza cuando te convenga.",
+  "rate_service_title": "Calificar Servicio Actual",
+  "rate_service_desc": "Comparte tu opinión y ayúdanos a mejorar.",
+  "service_history_title": "Historial de Servicios",
+  "service_history_desc": "Consulta tus servicios anteriores y sus detalles.",
+  "profile_title": "Mi Perfil",
+  "profile_desc": "Actualiza tu información personal.",
+
+  "service_type": "Tipo de Servicio",
+  "preferred_date": "Fecha Preferida",
+  "preferred_time": "Hora Preferida",
+  "address": "Dirección",
+  "select_location": "Selecciona la ubicación en el mapa",
+  "additional_notes": "Notas Adicionales",
+  "submit_request": "Enviar Solicitud",
+
+  "rate_service_subtitle": "Dinos cómo lo hicimos.",
+  "rating_label": "Calificación",
+  "comment_label": "Comentario",
+  "submit_rating": "Enviar Calificación",
+  "rating_success": "¡Gracias por tu opinión!",
+
+  "comment_placeholder": "Escribe tu comentario aquí...",
+  "date": "Fecha",
+  "status": "Estado",
+  "completed": "Completado",
+  "pending": "Pendiente",
+  "accepted": "Aceptado",
+  "canceled": "Cancelado",
+  "your_rating": "Tu Calificación",
+  "no_service_history": "Aún no tienes servicios anteriores.",
+
+  "personal_info": "Información Personal",
+  "name": "Nombre",
+  "email": "Correo Electrónico",
+  "update_info": "Actualizar Datos",
+  "change_password": "Cambiar Contraseña",
+  "current_password": "Contraseña Actual",
+  "new_password": "Nueva Contraseña",
+  "confirm_new_password": "Confirmar Nueva Contraseña",
+  "update_password": "Actualizar Contraseña",
+
+  "info_updated": "Tu información ha sido actualizada.",
+  "password_updated": "Contraseña actualizada con éxito.",
+  "wrong_current_password": "La contraseña actual es incorrecta.",
+  "form_error": "Por favor revisa los errores del formulario.",
+
+  "recurrent_service": "Servicio Recurrente",
+  "frequency": "Frecuencia",
+  "weekly": "Semanal",
+  "biweekly": "Quincenal",
+  "monthly": "Mensual",
+
+  "residential": "Limpieza Residencial",
+  "deep": "Limpieza Profunda",
+  "office": "Limpieza de Oficina",
+
+  "recurring_service_title": "Servicios Recurrentes",
+  "recurring_service_desc": "Consulta y gestiona tus limpiezas programadas recurrentes.",
+
+  "recurring_services_title": "Mis Servicios Recurrentes",
+  "no_recurring_services": "No tienes servicios recurrentes activos.",
+  "cancel_service": "Cancelar Servicio",
+
+  "service_type_labels": {
+    "residential": "Limpieza Residencial",
+    "deep": "Limpieza Profunda",
+    "office": "Limpieza de Oficina"
+  },
+
+  "frequency_options": {
+    "weekly": "Semanal",
+    "biweekly": "Quincenal",
+    "monthly": "Mensual"
+  },
+
+  "pause": "Pausar",
+  "resume": "Reanudar",
+  "cancel": "Cancelar",
+
+  "status_label": "Estado",
+  "active": "Activo",
+  "paused": "Pausado",
+  
+  "home_welcome_title": "Bienvenido a DC Cleaning Team",
+  "home_welcome_desc": "Agenda, califica y administra tus servicios de limpieza fácilmente.",
+  "home_services_title": "Opciones Disponibles de Limpieza",
+  "home_services_contact": "¿Necesitas ayuda? Comunícate con nuestro equipo",
+  "home_service_home": "Limpieza Residencial",
+  "home_service_home_desc": "Limpieza confiable para tu casa o apartamento.",
+  "home_service_commercial": "Limpieza Comercial",
+  "home_service_commercial_desc": "Resultados profesionales para tu negocio.",
+  "home_service_deep": "Limpieza Profunda",
+  "home_service_deep_desc": "Limpieza intensiva para necesidades especiales.",
+  "home_contact_info": "Correo: contact@dccleaning.ca | Tel: (604) 300-4796",
+  "start_now": "Comenzar ahora",
+
+  "commercial_cleaning": "Limpieza Comercial",
+  "commercial_cleaning_desc": "Mantén tu negocio impecable y profesional.",
+  "deep_cleaning": "Limpieza Profunda",
+  "deep_cleaning_desc": "Limpieza exhaustiva para necesidades especiales o difíciles.",
+  "residential_cleaning": "Limpieza Residencial",
+  "residential_cleaning_desc": "Limpieza confiable para tu hogar.",
+  "what_you_can_do": "Lo que puedes hacer",
+
+  "only_you_assigned": "Solo tú estás asignado",
+  "shared_with_others": "Asignado con {count} persona{s} más",
+ 
+
+  "employee_dashboard": "Panel del Empleado",
+  "services_today": "Servicios de Hoy",
+  "services_week": "Servicios de Esta Semana",
+  "average_rating": "Calificación Promedio",
+  "assigned_services_today": "Servicios Asignados Hoy",
+  "recent_feedback": "Comentarios Recientes",
+  "no_services_today": "No tienes servicios asignados para hoy.",
+  "no_feedback_yet": "Aún no has recibido comentarios.",
+  "mark_completed": "Marcar como Completado",
+  "already_completed": "Este servicio ya está completado.",
+  "time": "Hora",
+
+  "admin_dashboard": "Panel de Administrador",
+  "total_users": "Usuarios Totales",
+  "total_clients": "Clientes Totales",
+  "total_employees": "Empleados Totales",
+  "total_reservations": "Reservas Totales",
+  "pending_services": "Servicios Pendientes",
+  "accept_all": "Aceptar Todos",
+  "accept": "Aceptar",
+  "no_pending_services": "No hay servicios pendientes.",
+  "client": "Cliente",
+  "actions": "Acciones",
+  
+  "assign_employees_title": "Asignar Empleados a Servicios",
+  "select_employees": "Seleccionar Empleados",
+  "assign": "Asignar",
+  "no_services_to_assign": "No hay servicios aceptados sin empleados asignados.",
+
+  "search_employees": "Search employee by name",
+  "user_management": "Gestión de Usuarios",
+  "create_employee": "Crear Empleado",
+
+  "edit_user": "Editar Usuario",
+  "user_updated": "Usuario actualizado correctamente.",
+  "user_deleted": "Usuario eliminado correctamente.",
+  "cannot_delete_admin": "No puedes eliminar un usuario administrador.",
+  "request_success": "Solicitud enviada exitosamente",
+
+  "all_assigned_services": "Todos los servicios asignados",
+  "no_services_found": "No tienes servicios asignados todavía.",
+  "completed_by_employee": "Completado por empleado, esperando confirmacion",
+  "view_all_assigned": "Ver todos los servicios asignados"
+
+  
+
+
+}
