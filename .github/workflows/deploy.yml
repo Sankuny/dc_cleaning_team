@@ -20,11 +20,11 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.176.239 << 'EOF'
-            cd /root/dc_cleaning
+          ssh -o StrictHostKeyChecking=no root@68.183.126.174 << 'EOF'
+            cd /home/ubuntu/dc_cleaning
             git pull origin main
             source venv/bin/activate
-            pip install -r requirements.txt
+            pip install -r requirements.txt --break-system-packages
             export FLASK_APP=run.py
             flask db upgrade
             systemctl restart dccleaning
