@@ -175,6 +175,7 @@
   "user_management": "User Management",
   "create_employee": "Create Employee",
 
+  "user_created":"User created successfully",
   "edit_user": "Edit User",
   "user_updated": "User updated successfully.",
   "user_deleted": "User deleted successfully.",

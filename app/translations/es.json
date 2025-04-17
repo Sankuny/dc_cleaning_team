@@ -170,6 +170,7 @@
   "user_management": "Gestión de Usuarios",
   "create_employee": "Crear Empleado",
 
+  "user_created":"Usuario creada con éxito",
   "edit_user": "Editar Usuario",
   "user_updated": "Usuario actualizado correctamente.",
   "user_deleted": "Usuario eliminado correctamente.",
