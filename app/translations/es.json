@@ -180,7 +180,11 @@
   "all_assigned_services": "Todos los servicios asignados",
   "no_services_found": "No tienes servicios asignados todavía.",
   "completed_by_employee": "Completado por empleado, esperando confirmacion",
-  "view_all_assigned": "Ver todos los servicios asignados"
+  "view_all_assigned": "Ver todos los servicios asignados",
+
+  "assign_employees": "Asignar Empleados",
+  "assign_employees_desc": "Asigna empleados disponibles a servicios aceptados.",
+  "user_management_desc": "Crear, ver y administrar usuarios del sistema."
 
   
 

@@ -184,7 +184,12 @@
 
   "all_assigned_services": "Tous les services assignés",
   "no_services_found": "Aucun service ne vous est encore attribué.",
-  "view_all_assigned": "Voir tous les services attribués"
+  "view_all_assigned": "Voir tous les services attribués",
+
+  "assign_employees": "Affecter des employés",
+  "assign_employees_desc": "Affecte les employés disponibles aux services acceptés.",
+  "user_management_desc": "Créer, visualiser et gérer les utilisateurs du système."
+
 
 
 }

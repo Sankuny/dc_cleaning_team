@@ -185,7 +185,11 @@
 
   "all_assigned_services": "All services assigned",
   "no_services_found": "You have no services assigned yet.",
-  "view_all_assigned": "View All Assigned Services"
+  "view_all_assigned": "View All Assigned Services",
+  "assign_employees": "Assign Employees",
+  "assign_employees_desc": "Assign available employees to accepted services.",
+  
+  "user_management_desc": "Create, view, and manage system users."
 
 
 
