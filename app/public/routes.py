@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, session, request, redirect, url_for
 import json, os
+from flask_login import current_user
+
 
 public_bp = Blueprint("public", __name__)
 
@@ -21,4 +23,14 @@ def set_language():
 def home():
     lang = session.get("lang", "en")
     t = load_translations(lang)
+
+    if current_user.is_authenticated:
+        if current_user.role == "admin":
+            return redirect(url_for("admin.dashboard"))
+        elif current_user.role == "employee":
+            return redirect(url_for("employee.dashboard"))
+        else:
+            return redirect(url_for("client.dashboard"))
+
     return render_template("public/home.html", t=t)
+

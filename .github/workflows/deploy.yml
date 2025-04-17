@@ -1,0 +1,31 @@
+name: Deploy Flask App to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.176.239 << 'EOF'
+            cd /root/dc_cleaning
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements.txt
+            export FLASK_APP=run.py
+            flask db upgrade
+            systemctl restart dccleaning
+          EOF
