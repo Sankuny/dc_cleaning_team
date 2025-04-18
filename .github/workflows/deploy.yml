@@ -22,10 +22,20 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no root@68.183.126.174 << 'EOF'
             cd /home/ubuntu/dc_cleaning
+            echo "📦 Haciendo pull del repositorio..."
             git pull origin main
-            source venv/bin/activate
+
+            echo "🐍 Activando entorno virtual..."
+            . venv/bin/activate
+
+            echo "📦 Instalando dependencias..."
             pip install -r requirements.txt --break-system-packages
-            export FLASK_APP=run.py
-            flask db upgrade
+
+            echo "🔄 Ejecutando migraciones de base de datos..."
+            FLASK_APP=run.py flask db upgrade
+
+            echo "🚀 Reiniciando servicio..."
             systemctl restart dccleaning
+
+            echo "✅ ¡Despliegue completo!"
           EOF
