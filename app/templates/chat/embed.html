@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="{{ session.get('lang', 'en') }}">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+
+<body class="bg-white text-gray-800 font-sans text-sm p-2">
+
+  <div class="max-w-4xl mx-auto">
+    <!-- 🧠 Título -->
+    <h2 class="text-lg font-semibold text-blue-800 mb-3 text-center">
+      {{ t["chat_with_team"] }} – {{ t["service_type_labels"][service.service_type] }} ({{ service.date.strftime('%Y-%m-%d') }})
+    </h2>
+
+    <!-- 💬 Caja de mensajes -->
+    <div id="chat-box"
+         data-user-id="{{ current_user.id }}"
+         data-service-id="{{ service.id }}"
+         class="bg-white border border-gray-300 rounded-lg shadow h-80 overflow-y-auto px-3 py-4 space-y-3">
+
+      {% for msg in messages %}
+        {% set sender = msg.sender %}
+        <div class="flex {% if msg.sender_id==current_user.id %}justify-end{% else %}justify-start{% endif %}" data-id="{{ msg.id }}">
+          <div class="rounded-xl px-4 py-3 max-w-[85%] text-sm shadow
+                      {% if sender.role=='client' %}bg-blue-100 text-blue-800
+                      {% elif sender.role=='employee' %}bg-green-100 text-green-800
+                      {% elif sender.role=='admin' %}bg-purple-100 text-purple-800
+                      {% else %}bg-gray-200 text-gray-800{% endif %}">
+            <p class="font-bold mb-1">{{ sender.name }} <span class="text-xs font-normal">({{ sender.role }})</span></p>
+            <p class="whitespace-pre-line">{{ msg.message }}</p>
+            <p class="text-xs text-right text-gray-500 mt-1">{{ msg.timestamp.strftime('%H:%M %d/%m/%Y') }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- ✍️ Formulario -->
+    <form id="chat-form" class="mt-4">
+      <div class="flex gap-2">
+        <textarea id="chat-input" rows="2" required
+                  class="flex-1 border border-gray-300 rounded-lg p-2 resize-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="{{ t['type_message'] }}"></textarea>
+        <button type="submit"
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition shadow">
+          {{ t["send"] }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const socket = io();
+      const chatBox = document.getElementById("chat-box");
+      const form = document.getElementById("chat-form");
+      const input = document.getElementById("chat-input");
+      const currentUserId = parseInt(chatBox.dataset.userId, 10);
+      const serviceId = parseInt(chatBox.dataset.serviceId, 10);
+
+      // Unirse a la sala
+      socket.emit('join', { service_id: serviceId });
+
+      // Recibir mensajes
+      socket.on('receive_message', msg => {
+        if (msg.service_id !== serviceId) return;
+        const wrapper = document.createElement('div');
+        const align = msg.sender_id === currentUserId ? 'justify-end' : 'justify-start';
+        wrapper.className = 'flex ' + align;
+        wrapper.setAttribute('data-id', msg.id);
+
+        let bg = 'bg-gray-200 text-gray-800';
+        if (msg.role === 'client')   bg = 'bg-blue-100 text-blue-800';
+        if (msg.role === 'employee') bg = 'bg-green-100 text-green-800';
+        if (msg.role === 'admin')    bg = 'bg-purple-100 text-purple-800';
+
+        wrapper.innerHTML = `
+          <div class="rounded-xl px-4 py-3 max-w-[85%] text-sm shadow ${bg}">
+            <p class="font-bold mb-1">${msg.sender} <span class="text-xs font-normal">(${msg.role})</span></p>
+            <p>${msg.message}</p>
+            <p class="text-xs text-right text-gray-500 mt-1">${msg.timestamp}</p>
+          </div>
+        `;
+        chatBox.appendChild(wrapper);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+
+      // Enviar mensaje
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+        socket.emit('send_message', { service_id: serviceId, message: text });
+        input.value = '';
+      });
+    });
+  </script>
+
+</body>
+</html>

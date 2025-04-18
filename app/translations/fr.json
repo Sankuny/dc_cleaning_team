@@ -188,8 +188,52 @@
 
   "assign_employees": "Affecter des employés",
   "assign_employees_desc": "Affecte les employés disponibles aux services acceptés.",
-  "user_management_desc": "Créer, visualiser et gérer les utilisateurs du système."
+  "user_management_desc": "Créer, visualiser et gérer les utilisateurs du système.",
+  "shared_with": "Partagé avec",
+
+  "swal_title": "Êtes-vous sûr ?",
+  "swal_text": "Voulez-vous marquer ce service comme terminé ?",
+  "swal_confirm": "Oui, marquer",
+  "swal_cancel": "Annuler",
+  "swal_success_title": "Terminé !",
+  "swal_success_text": "Le service a été marqué comme terminé.",
+  "swal_error": "Une erreur s'est produite. Veuillez réessayer.",
+
+  "pending_rating_title": "Vous avez des services à évaluer !",
+  "pending_rating_desc": "Merci d'évaluer les services récemment terminés pour nous aider à nous améliorer.",
+  "rate_now": "Évaluer maintenant",
+
+"thank_you_rating": "Merci pour votre évaluation !",
+"swal_thanks": "Merci !",
+"swal_success_message": "Votre évaluation a été enregistrée avec succès.",
 
 
+"latest_request_status": "Dernière Demande de Service",
+"status2": "Statut",
+"status_labels": {
+  "pending": "Demande Envoyée",
+  "accepted": "Acceptée",
+  "rejected": "Rejetée",
+  "assigned": "Employé Assigné",
+  "completed_by_employee": "En attente de confirmation",
+  "completed": "Évalué"
+},
+
+  "chat_with_team": "Discussion avec l'équipe de nettoyage",
+  "type_message": "Écrivez votre message...",
+  "send": "Envoyer",
+  "open_chat": "Ouvrir le Chat",
+
+   "all_chats": "Tous les chats",
+  "all_chats_desc": "Voir et gérer les conversations de service",
+
+    "client_confirmed":     "Le client a déjà confirmé",
+  "swal_wrong_status":     "Impossible de marquer ce service : statut incorrect",
+  "use_my_location": "Utiliser ma position",
+  "clear_location": "Effacer la position",
+  "clear_form": "Effacer le formulaire",
+
+  "swal_request_title": "Service demandé !",
+  "swal_request_message": "Nous avons bien reçu votre demande."
 
 }

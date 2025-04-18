@@ -69,3 +69,13 @@ class Rating(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class ChatMessage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    service_id = db.Column(db.Integer, db.ForeignKey('reservation.id'), nullable=False)
+    sender_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    sender = db.relationship("Usuario", backref="sent_messages")  
+

@@ -184,9 +184,52 @@
 
   "assign_employees": "Asignar Empleados",
   "assign_employees_desc": "Asigna empleados disponibles a servicios aceptados.",
-  "user_management_desc": "Crear, ver y administrar usuarios del sistema."
+  "user_management_desc": "Crear, ver y administrar usuarios del sistema.",
+  "shared_with": "Compartido con",
+  "swal_title": "¿Estás seguro?",
+  "swal_text": "¿Deseas marcar este servicio como completado?",
+  "swal_confirm": "Sí, marcar",
+  "swal_cancel": "Cancelar",
+  "swal_success_title": "¡Marcado!",
+  "swal_success_text": "El servicio fue marcado como completado.",
+  "swal_error": "Algo salió mal. Inténtalo de nuevo.",
 
-  
+  "pending_rating_title": "¡Tienes servicios pendientes por calificar!",
+  "pending_rating_desc": "Por favor califica los servicios completados recientemente para ayudarnos a mejorar.",
+  "rate_now": "Calificar ahora",
+
+  "thank_you_rating": "¡Gracias por tu calificación!",
+"swal_thanks": "¡Gracias!",
+"swal_success_message": "Tu calificación ha sido registrada exitosamente.",
+
+"latest_request_status": "Última Solicitud de Servicio",
+  "status2": "Estado",
+  "status_labels": {
+    "pending": "Solicitud Enviada",
+    "accepted": "Aceptado",
+    "rejected": "Rechazado",
+    "assigned": "Empleado Asignado",
+    "completed_by_employee": "Esperando Confirmación",
+    "completed": "Calificado"
+  },
+
+  "chat_with_team": "Chat con el Equipo de Limpieza",
+  "type_message": "Escribe tu mensaje...",
+  "send": "Enviar",
+  "open_chat": "Abrir Chat",
+
+   "all_chats": "Todos los Chats",
+  "all_chats_desc": "Ver y gestionar conversaciones de servicios",
+
+  "client_confirmed":     "El cliente ya confirmó",
+  "swal_wrong_status":     "No se puede marcar este servicio: estado incorrecto",
+
+  "use_my_location": "Usar mi ubicación",
+  "clear_location": "Borrar ubicación",
+  "clear_form": "Limpiar formulario",
+
+  "swal_request_title": "¡Servicio solicitado!",
+  "swal_request_message": "Hemos recibido tu solicitud exitosamente."
 
 
 }

@@ -31,7 +31,8 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
     {% set cards = [
       ("assignEmployees.png", url_for('admin.assign_employees'), "assign_employees",       "assign_employees_desc"),
-      ("userManagement.png",  url_for('admin.users'),            "user_management",     "user_management_desc")
+      ("userManagement.png",  url_for('admin.users'),            "user_management",     "user_management_desc"),
+      ("chat.png", url_for('admin.all_chats'), "all_chats", "all_chats_desc")
     ] %}
     {% for icon, href, title_key, desc_key in cards %}
     <a href="{{ href }}"

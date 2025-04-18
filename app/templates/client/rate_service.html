@@ -1,23 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="max-w-5xl mx-auto mt-12 px-4">
-  <h2 class="text-3xl font-bold text-[#003DA5] mb-10 text-center">{{ t["rate_service_title"] }}</h2>
+  <h2 class="text-3xl font-bold text-[#003DA5] mb-10 text-center">
+    {{ t["rate_service_title"] }}
+  </h2>
 
   {% if reservas %}
     <div class="grid grid-cols-1 gap-8">
       {% for r in reservas %}
-        <div class="bg-white shadow-lg rounded-xl p-6 border border-blue-100 hover:shadow-xl transition duration-300">
-          <p class="text-lg font-semibold text-blue-800 mb-1">
-            {{ t["service_type"] }}: <span class="font-normal text-gray-700">{{ r.service_type }}</span>
-          </p>
-          <p class="text-lg font-semibold text-blue-800 mb-4">
-            {{ t["date"] }}: <span class="font-normal text-gray-700">{{ r.date.strftime('%Y-%m-%d') }}</span>
-          </p>
+        <div class="bg-white shadow-lg rounded-xl p-6 border border-blue-100 transition duration-500 ease-in-out transform opacity-0 translate-y-4 hover:shadow-2xl hover:-translate-y-1 animate-target"
+             id="card-{{ r.id }}">
+          
+          <!-- Detalles del servicio -->
+          <div class="mb-4">
+            <p class="text-blue-700 text-sm font-semibold uppercase mb-1">{{ t["service_type"] }}</p>
+            <p class="text-lg text-gray-800 font-medium">
+              {{ t["service_type_labels"][r.service_type] }}
+            </p>
+          </div>
 
-          <form method="POST" action="{{ url_for('client.submit_rating', reservation_id=r.id) }}" class="space-y-4">
+          <div class="mb-4">
+            <p class="text-blue-700 text-sm font-semibold uppercase mb-1">{{ t["date"] }}</p>
+            <p class="text-lg text-gray-800 font-medium">{{ r.date.strftime('%Y-%m-%d') }}</p>
+          </div>
+
+          <!-- Formulario de calificación -->
+          <form class="rating-form space-y-4" data-id="{{ r.id }}">
             <div>
               <label for="rating" class="block font-medium text-gray-700 mb-1">{{ t["rating"] }}</label>
-              <select name="rating" class="w-full border border-gray-300 p-2 rounded">
+              <select name="rating" class="w-full border border-gray-300 p-2 rounded" required>
                 <option value="5">⭐⭐⭐⭐⭐</option>
                 <option value="4">⭐⭐⭐⭐</option>
                 <option value="3">⭐⭐⭐</option>
@@ -31,7 +42,10 @@
             </div>
 
             <div class="text-right">
-              <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded transition duration-300">
+              <button type="submit" class="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded transition duration-300 transform hover:scale-105">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current text-white" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.185 3.638a1 1 0 00.95.69h3.813c.969 0 1.371 1.24.588 1.81l-3.088 2.244a1 1 0 00-.364 1.118l1.185 3.638c.3.921-.755 1.688-1.54 1.118L10 13.011l-3.088 2.244c-.784.57-1.838-.197-1.539-1.118l1.184-3.638a1 1 0 00-.364-1.118L3.105 9.065c-.783-.57-.38-1.81.588-1.81h3.813a1 1 0 00.95-.69l1.185-3.638z"/>
+                </svg>
                 {{ t["submit_rating"] }}
               </button>
             </div>
@@ -45,5 +59,63 @@
     </div>
   {% endif %}
 </div>
-{% endblock %}
 
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- JS: Envío por AJAX -->
+<script>
+  document.querySelectorAll(".rating-form").forEach(form => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const reservationId = form.dataset.id;
+      const formData = new FormData(form);
+      const data = {
+        rating: formData.get("rating"),
+        comment: formData.get("comment")
+      };
+
+      const response = await fetch(`/client/submit-rating/${reservationId}`, {
+        method: "POST",
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        const card = document.getElementById(`card-${reservationId}`);
+        card.innerHTML = `
+          <div class="text-center py-10">
+            <p class="text-green-600 text-xl font-semibold">⭐ {{ t["thank_you_rating"] }}</p>
+          </div>
+        `;
+        Swal.fire({
+          icon: "success",
+          title: "⭐ {{ t['swal_thanks'] }}",
+          text: "{{ t['swal_success_message'] }}",
+          timer: 2500,
+          showConfirmButton: false
+        });
+      } else {
+        Swal.fire("Error", "Something went wrong. Please try again.", "error");
+      }
+    });
+  });
+</script>
+
+<!-- JS: Animaciones de entrada -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const targets = document.querySelectorAll(".animate-target");
+    targets.forEach((el, i) => {
+      setTimeout(() => {
+        el.classList.remove("opacity-0", "translate-y-4");
+        el.classList.add("opacity-100", "translate-y-0");
+      }, i * 100);
+    });
+  });
+</script>
+{% endblock %}

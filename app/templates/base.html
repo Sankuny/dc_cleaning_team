@@ -6,6 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" type="image/png" href="/static/favicon.png">
+
+  <!-- 🎯 Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- 🔌 Socket.IO -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
   <style>
     @keyframes fade-in-up {
       0% { opacity: 0; transform: translateY(30px); }
@@ -23,7 +30,6 @@
   <header class="bg-white shadow p-4">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
 
-      <!-- Logo dinámico -->
       <a href="{% if current_user.is_authenticated %}
                  {% if current_user.role == 'admin' %}
                    {{ url_for('admin.dashboard') }}
@@ -36,12 +42,10 @@
                  {{ url_for('public.home') }}
                {% endif %}"
          class="text-xl font-bold text-blue-800">
-         DC Cleaning Team
+        DC Cleaning Team
       </a>
 
       <nav class="flex items-center space-x-6 text-sm">
-
-        <!-- Enlace "Home" dinámico -->
         <a href="{% if current_user.is_authenticated %}
                    {% if current_user.role == 'admin' %}
                      {{ url_for('admin.dashboard') }}
@@ -63,7 +67,7 @@
           <a href="{{ url_for('auth.login') }}" class="text-blue-600 hover:underline">Login</a>
         {% endif %}
 
-        <!-- 🌍 Dropdown selector de idioma -->
+        <!-- 🌍 Selector de idioma -->
         {% set current_args = request.args.to_dict() %}
         <div class="relative">
           <button id="lang-toggle" class="flex items-center space-x-1 border border-gray-300 px-2 py-1 rounded hover:bg-gray-100">
@@ -96,21 +100,88 @@
     {% block content %}{% endblock %}
   </main>
 
+    <!-- 💬 Chat flotante -->
+    {% if latest_service and request.endpoint != 'chat.chat' %}
+    <button
+      id="chat-toggle"
+      data-service-id="{{ latest_service.id }}"
+      class="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition z-50"
+    >
+      <i data-lucide="message-circle" class="w-6 h-6"></i>
+    </button>
+
+    <div
+      id="chat-window"
+      class="fixed bottom-20 right-6 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50 hidden"
+    >
+      <div
+        id="chat-close"
+        class="p-3 border-b border-gray-200 flex justify-between items-center bg-blue-600 text-white rounded-t-lg cursor-pointer"
+      >
+        <span class="font-bold text-sm">Chat</span>
+        <span class="text-white text-xl font-bold">&times;</span>
+      </div>
+      <iframe
+        src="{{ url_for('chat.chat_embed', service_id=latest_service.id) }}"
+        class="w-full h-96 border-0 rounded-b-lg"
+      ></iframe>
+    </div>
+
+    <script>
+      // Elementos
+      const toggleBtn    = document.getElementById("chat-toggle");
+      const chatWindow   = document.getElementById("chat-window");
+      const chatCloseBar = document.getElementById("chat-close");
+
+      // Obtenemos el service_id desde el atributo data
+      const latestServiceId = parseInt(toggleBtn.dataset.serviceId, 10);
+
+      // Mostrar/Ocultar ventana de chat
+      toggleBtn.addEventListener("click", function() {
+        chatWindow.classList.toggle("hidden");
+        if (!chatWindow.classList.contains("hidden")) {
+          // si abrimos, aseguramos botón azul
+          toggleBtn.classList.remove("bg-red-600");
+          toggleBtn.classList.add("bg-blue-600");
+        }
+      });
+
+      chatCloseBar.addEventListener("click", function() {
+        chatWindow.classList.add("hidden");
+      });
+
+      // Conexión a Socket.IO
+      const socket = io();
+      socket.emit("join", { service_id: latestServiceId });
+
+      socket.on("receive_message", function(msg) {
+        if (msg.service_id !== latestServiceId) return;
+        // si el chat está oculto, ponemos el botón rojo
+        if (chatWindow.classList.contains("hidden")) {
+          toggleBtn.classList.remove("bg-blue-600");
+          toggleBtn.classList.add("bg-red-600");
+        }
+      });
+    </script>
+  {% endif %}
+
+
   <!-- ⚙️ Footer -->
   <footer class="text-center text-sm py-6 mt-12 text-gray-500">
     &copy; 2025 DC Cleaning Team — {{ t["rights_reserved"] }}
   </footer>
 
+  <!-- 🔧 JS global: idioma + Lucide -->
   <script>
-    // Toggle dropdown de idiomas
-    document.getElementById('lang-toggle').addEventListener('click', e => {
+    document.getElementById('lang-toggle').addEventListener('click', function(e) {
       e.stopPropagation();
       document.getElementById('lang-menu').classList.toggle('hidden');
     });
-    // Cerrar al hacer click fuera
-    window.addEventListener('click', () => {
+    window.addEventListener('click', function() {
       document.getElementById('lang-menu').classList.add('hidden');
     });
+    lucide.createIcons();
   </script>
+
 </body>
 </html>

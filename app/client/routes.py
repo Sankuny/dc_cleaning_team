@@ -15,14 +15,25 @@ def load_translations(lang="en"):
     path = os.path.join("app", "translations", f"{lang}.json")
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
-
+    
 @client_bp.route("/dashboard")
 @login_required
 @role_required("client")
 def dashboard():
     lang = session.get("lang", "en")
     t = load_translations(lang)
-    return render_template("client/dashboard.html", t=t, name=current_user.name)
+
+    # Notificación si tiene servicios por calificar
+    to_rate = Reservation.query.filter_by(user_id=current_user.id, status="completed_by_employee").first()
+
+    # Última solicitud (puedes personalizarlo si prefieres mostrar solo 'pending', etc.)
+    latest_service = Reservation.query.filter_by(user_id=current_user.id)\
+                                      .order_by(Reservation.created_at.desc()).first()
+
+    return render_template("client/dashboard.html", t=t, name=current_user.name,
+                           to_rate=to_rate, latest_service=latest_service)
+
+
 
 
 @client_bp.route("/request-service", methods=["GET", "POST"])
@@ -128,19 +139,35 @@ def submit_rating(reservation_id):
     if reservation.user_id != current_user.id or reservation.rating or reservation.status != "completed_by_employee":
         abort(403)
 
+    # ✅ Soportar JSON recibido por AJAX
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        data = request.get_json()
+        rating_value = int(data.get("rating"))
+        comment = data.get("comment", "")
+    else:
+        # Fallback por si algún día usas POST clásico
+        rating_value = int(request.form["rating"])
+        comment = request.form.get("comment", "")
+
+    # Guardar calificación
     rating = Rating(
         reservation_id=reservation.id,
-        rating=int(request.form["rating"]),
-        comment=request.form.get("comment", "")
+        rating=rating_value,
+        comment=comment
     )
     db.session.add(rating)
 
-    # ✅ Confirmación del cliente: ahora es "completed"
+    # Cambiar estado a "completed"
     reservation.status = "completed"
-
     db.session.commit()
+
+    # ✅ Devolver respuesta adecuada si fue por AJAX
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return "", 204
+
     flash("Thank you for confirming and rating the service!", "success")
     return redirect(url_for("client.rate_service"))
+
 
 
 

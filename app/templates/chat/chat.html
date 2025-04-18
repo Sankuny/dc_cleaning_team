@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-10 px-4">
+  <h2 class="text-2xl font-bold text-blue-800 mb-6">
+    {{ t["chat_with_team"] }} – {{ t["service_type_labels"][service.service_type] }} ({{ service.date.strftime('%Y-%m-%d') }})
+  </h2>
+
+  <!-- 💬 Lista de mensajes -->
+  <div
+    id="chat-box"
+    data-user-id="{{ current_user.id }}"
+    data-service-id="{{ service.id }}"
+    class="bg-white border border-gray-300 rounded-lg p-4 h-96 overflow-y-auto space-y-3 mb-6"
+  >
+    {% for msg in messages %}
+      {% set sender = msg.sender %}
+      <div
+        class="flex {% if msg.sender_id == current_user.id %}justify-end{% else %}justify-start{% endif %}"
+        data-id="{{ msg.id }}"
+      >
+        <div
+          class="max-w-xs sm:max-w-sm md:max-w-md rounded-lg p-3 text-sm
+                 {% if sender.role == 'client' %}bg-blue-100 text-blue-800
+                 {% elif sender.role == 'employee' %}bg-green-100 text-green-800
+                 {% elif sender.role == 'admin' %}bg-purple-100 text-purple-800
+                 {% else %}bg-gray-200 text-gray-800{% endif %}"
+        >
+          <p class="font-semibold mb-1">
+            {{ sender.name }}
+            <span class="text-xs font-normal">({{ sender.role }})</span>
+          </p>
+          <p>{{ msg.message }}</p>
+          <p class="text-xs text-gray-400 mt-1 text-right">
+            {{ msg.timestamp.strftime('%H:%M %d/%m/%Y') }}
+          </p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- ✍️ Formulario para enviar -->
+  <form id="chat-form">
+    <div class="flex gap-2">
+      <textarea
+        id="chat-input"
+        rows="2"
+        required
+        class="flex-1 border border-gray-300 rounded-lg p-2 resize-none"
+        placeholder="{{ t['type_message'] }}"
+      ></textarea>
+      <button
+        type="submit"
+        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+      >
+        {{ t["send"] }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- 📦 Socket.io -->
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const socket = io();
+    const chatBox = document.getElementById('chat-box');
+    const form    = document.getElementById('chat-form');
+    const input   = document.getElementById('chat-input');
+
+    const currentUserId = parseInt(chatBox.dataset.userId, 10);
+    const serviceId     = parseInt(chatBox.dataset.serviceId, 10);
+
+    // 1️⃣ Nos unimos a la sala correspondiente
+    socket.emit('join', { service_id: serviceId });
+
+    // 2️⃣ Escuchamos mensajes entrantes
+    socket.on('receive_message', (msg) => {
+      // ✅ Asegurarnos de que el mensaje sea de esta sala
+      if (msg.service_id !== serviceId) return;
+
+      const wrapper   = document.createElement('div');
+      const alignment = (msg.sender_id === currentUserId) ? 'justify-end' : 'justify-start';
+      wrapper.className = 'flex ' + alignment;
+      wrapper.setAttribute('data-id', msg.id);
+
+      let bgColor = 'bg-gray-200 text-gray-800';
+      if (msg.role === 'client')   bgColor = 'bg-blue-100 text-blue-800';
+      if (msg.role === 'employee') bgColor = 'bg-green-100 text-green-800';
+      if (msg.role === 'admin')    bgColor = 'bg-purple-100 text-purple-800';
+
+      wrapper.innerHTML = `
+        <div class="max-w-xs sm:max-w-sm md:max-w-md rounded-lg p-3 text-sm ${bgColor}">
+          <p class="font-semibold mb-1">${msg.sender}
+            <span class="text-xs font-normal">(${msg.role})</span>
+          </p>
+          <p>${msg.message}</p>
+          <p class="text-xs text-gray-400 mt-1 text-right">${msg.timestamp}</p>
+        </div>
+      `;
+      chatBox.appendChild(wrapper);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+
+    // 3️⃣ Al enviar el formulario, emitimos por Socket.IO
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (!message) return;
+
+      socket.emit('send_message', {
+        service_id: serviceId,
+        message:    message
+      });
+
+      input.value = '';
+    });
+  });
+</script>
+{% endblock %}

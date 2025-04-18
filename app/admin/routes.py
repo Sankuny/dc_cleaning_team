@@ -72,19 +72,19 @@ def assign_employees():
     lang = session.get("lang", "en")
     t = load_translations(lang)
 
-    # Servicios aceptados sin empleados asignados
+    # Ahora buscamos solo las reservas que siguen en "accepted" y sin empleados:
     accepted_services = Reservation.query\
         .filter_by(status="accepted")\
         .filter(~Reservation.employees.any())\
         .all()
 
-    # Todos los empleados
     employees = Usuario.query.filter_by(role="employee").all()
 
     return render_template("admin/assign_employees.html",
                            t=t,
                            services=accepted_services,
                            employees=employees)
+
 
 @admin_bp.route("/assign-employees/<int:reservation_id>", methods=["POST"])
 @login_required
@@ -97,8 +97,11 @@ def assign_employees_post(reservation_id):
         flash("You must select at least one employee.", "danger")
         return redirect(url_for("admin.assign_employees"))
 
-    # Limpia y asigna
+    # 1️⃣ Asignamos los empleados
     reservation.employees = Usuario.query.filter(Usuario.id.in_(selected_ids)).all()
+    # 2️⃣ Marcamos la reserva como "assigned"
+    reservation.status = "assigned"
+
     db.session.commit()
     flash("Employees assigned successfully!", "success")
     return redirect(url_for("admin.assign_employees"))
@@ -190,3 +193,12 @@ def delete_user(id):
     return redirect(url_for("admin.users"))
 
 
+@admin_bp.route("/all-chats")
+@login_required
+@role_required("admin")
+def all_chats():
+    lang = session.get("lang", "en")
+    t = load_translations(lang)
+
+    services = Reservation.query.order_by(Reservation.created_at.desc()).all()
+    return render_template("admin/all_chats.html", services=services, t=t)

@@ -188,8 +188,54 @@
   "view_all_assigned": "View All Assigned Services",
   "assign_employees": "Assign Employees",
   "assign_employees_desc": "Assign available employees to accepted services.",
-  
-  "user_management_desc": "Create, view, and manage system users."
+  "user_management_desc": "Create, view, and manage system users.",
+  "shared_with": "Shared with",
+
+  "swal_title": "Are you sure?",
+  "swal_text": "Do you want to mark this service as completed?",
+  "swal_confirm": "Yes, mark it",
+  "swal_cancel": "Cancel",
+  "swal_success_title": "Marked!",
+  "swal_success_text": "The service has been marked as completed.",
+  "swal_error": "Something went wrong. Please try again.",
+
+
+  "pending_rating_title": "You have services waiting to be rated!",
+  "pending_rating_desc": "Please rate your recently completed services to help us improve.",
+  "rate_now": "Rate now",
+
+  "thank_you_rating": "Thank you for your rating!",
+  "swal_thanks": "Thank you!",
+  "swal_success_message": "Your rating has been submitted successfully.",
+
+  "latest_request_status": "Latest Service Request",
+  "status2": "Status",
+  "status_labels": {
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "assigned": "Assigned",
+    "completed_by_employee": "Awaiting Client Confirmation",
+    "completed": "Completed"
+  },
+
+  "chat_with_team": "Chat with the Cleaning Team",
+  "type_message": "Type your message...",
+  "send": "Send",
+  "open_chat": "Open Chat",
+
+  "all_chats": "All Chats",
+  "all_chats_desc": "View and manage service conversations",
+  "client_confirmed": "Client has already confirmed",
+  "swal_wrong_status": "Cannot mark this service: wrong status",
+  "use_my_location": "Use my location",
+  "clear_location": "Clear location",
+  "clear_form": "Clear Form",
+  "swal_request_title": "Service requested!",
+  "swal_request_message": "We have received your request successfully."
+
+
+
 
 
 
