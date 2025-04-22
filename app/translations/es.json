@@ -232,7 +232,24 @@
   "rate_prompt": "¿Cómo fue el servicio?",
   "comment_placeholder": "¿Quieres dejarnos un comentario?",
   "submit_rating": "Enviar calificación",
-  "rating": "Calificación"
+  "rating": "Calificación",
+  "not_completed_by_employee": "Este servicio aún no ha sido marcado como completado por el empleado.",
+  "inspection_saved": "Inspección registrada correctamente.",
+
+  "today_services": "Servicios del día",
+  "not_marked_completed": "Este servicio aún no ha sido marcado como completado por el empleado.",
+  "ready_for_inspection": "Listos para inspección",
+  "no_pending": "No hay servicios pendientes.",
+  "no_ready": "No hay servicios completados listos para inspección.",
+  "review_button": "Revisar servicio",
+  "inspection_title": "Inspección del Servicio",
+  "inspection_good": "Bien",
+  "inspection_bad": "Mal",
+  "photo_label": "Evidencia fotográfica",
+  "rating_label2": "Calificación (1 a 5)",
+  "comment_label2": "Comentario",
+  "comment_placeholder2": "Comentarios opcionales...",
+  "submit_inspection": "Enviar Inspección"
 
 
 

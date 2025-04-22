@@ -239,7 +239,24 @@
   "rate_prompt": "Comment était le service ?",
   "comment_placeholder": "Voulez-vous laisser un commentaire ?",
   "submit_rating": "Soumettre l'évaluation",
-  "rating": "Évaluation"
+  "rating": "Évaluation",
+  "not_completed_by_employee": "Ce service n'a pas encore été marqué comme terminé par l'employé.",
+  "inspection_saved": "Inspection enregistrée avec succès.",
+  "today_services": "Services du jour",
+  "not_marked_completed": "Ce service n'a pas encore été marqué comme terminé par l'employé.",
+  "ready_for_inspection": "Prêt pour l'inspection",
+  "no_pending": "Aucun service en attente.",
+  "no_ready": "Aucun service terminé prêt pour inspection.",
+  "review_button": "Réviser le service",
+
+  "inspection_title": "Inspection du service",
+  "inspection_good": "Bon",
+  "inspection_bad": "Mauvais",
+  "photo_label": "Preuve photo",
+  "rating_label2": "Évaluation (1 à 5)",
+  "comment_label2": "Commentaire",
+  "comment_placeholder2": "Commentaires optionnels...",
+  "submit_inspection": "Envoyer l'inspection"
 
 
 }

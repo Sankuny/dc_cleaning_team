@@ -24,7 +24,7 @@ def dashboard():
     t = load_translations(lang)
 
     # Notificación si tiene servicios por calificar
-    to_rate = Reservation.query.filter_by(user_id=current_user.id, status="completed_by_employee").first()
+    to_rate = Reservation.query.filter_by(user_id=current_user.id, status="inspected").first()
 
     # Última solicitud (puedes personalizarlo si prefieres mostrar solo 'pending', etc.)
     latest_service = Reservation.query.filter_by(user_id=current_user.id)\
@@ -123,7 +123,7 @@ def rate_service():
     t = load_translations(lang)
 
     # ✅ Solo servicios que fueron completados por el empleado y no han sido calificados aún
-    reservas = Reservation.query.filter_by(user_id=current_user.id, status="completed_by_employee").all()
+    reservas = Reservation.query.filter_by(user_id=current_user.id, status="inspected").all()
     no_calificados = [r for r in reservas if not r.rating]
 
     return render_template("client/rate_service.html", reservas=no_calificados, t=t)
@@ -136,7 +136,7 @@ def rate_service():
 def submit_rating(reservation_id):
     reservation = Reservation.query.get_or_404(reservation_id)
 
-    if reservation.user_id != current_user.id or reservation.rating or reservation.status != "completed_by_employee":
+    if reservation.user_id != current_user.id or reservation.rating or reservation.status != "inspected":
         abort(403)
 
     # ✅ Soportar JSON recibido por AJAX

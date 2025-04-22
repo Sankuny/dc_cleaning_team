@@ -144,7 +144,7 @@ def create_user():
             name=name,
             email=email,
             password_hash=generate_password_hash(password),
-            role="employee"
+            role = request.form.get("role", "employee")
         )
         db.session.add(new_user)
         db.session.commit()

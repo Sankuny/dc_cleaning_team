@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-6 max-w-4xl mx-auto">
+  <h2 class="text-3xl font-bold text-blue-800 mb-6">{{ t["inspection_title"] }} - {{ reservation.user.name }}</h2>
+
+  <form method="POST" enctype="multipart/form-data" class="space-y-8">
+
+    {% for area, tasks in checklist.items() %}
+      <div class="border rounded-lg shadow p-4 bg-white">
+        <h3 class="text-xl font-semibold mb-4 text-blue-600 capitalize">{{ area.replace('_', ' ') }}</h3>
+        <div class="space-y-4">
+          {% for task in tasks %}
+            {% set index = loop.index0 %}
+            <div class="bg-gray-50 p-3 rounded-md" x-data="{ result: '' }">
+              <p class="text-gray-800 font-medium mb-2">{{ task }}</p>
+
+              <div class="flex items-center flex-wrap gap-4">
+                <!-- Bien -->
+                <label class="flex items-center space-x-2">
+                  <input type="radio" name="{{ area }}_{{ index }}" value="on"
+                         x-model="result" class="text-green-600 focus:ring-green-500">
+                  <span class="text-green-700">{{ t["inspection_good"] }}</span>
+                </label>
+
+                <!-- Mal -->
+                <label class="flex items-center space-x-2">
+                  <input type="radio" name="{{ area }}_{{ index }}" value="fail"
+                         x-model="result" class="text-red-600 focus:ring-red-500">
+                  <span class="text-red-700">{{ t["inspection_bad"] }}</span>
+                </label>
+
+                <!-- Foto si está mal -->
+                <div x-show="result === 'fail'" class="w-full md:w-auto">
+                  <label class="block text-sm text-red-600 font-medium mb-1">{{ t["photo_label"] }}</label>
+                  <input type="file" name="{{ area }}_{{ index }}_photo" accept="image/*"
+                         class="w-full border rounded p-1 text-sm" />
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+
+    <!-- Calificación -->
+    <div class="bg-white border rounded shadow p-4">
+      <label for="rating" class="block text-lg font-semibold text-gray-800 mb-1">{{ t["rating_label2"] }}</label>
+      <input type="number" name="rating" min="1" max="5" required
+             class="w-24 border rounded p-1 text-center" />
+    </div>
+
+    <!-- Comentario -->
+    <div class="bg-white border rounded shadow p-4">
+      <label for="comment" class="block text-lg font-semibold text-gray-800 mb-1">{{ t["comment_label2"] }}</label>
+      <textarea name="comment" rows="3"
+                class="w-full border rounded p-2 text-sm"
+                placeholder="{{ t['comment_placeholder2'] }}"></textarea>
+    </div>
+
+    <!-- Botón -->
+    <div class="text-right">
+      <button type="submit"
+              class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded shadow">
+        {{ t["submit_inspection"] }}
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<!-- AlpineJS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+{% endblock %}

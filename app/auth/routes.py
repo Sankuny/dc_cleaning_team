@@ -76,8 +76,11 @@ def redirect_by_role():
         return redirect(url_for("employee.dashboard"))
     elif current_user.role == "client":
         return redirect(url_for("client.dashboard"))
+    elif current_user.role == "supervisor":
+        return redirect(url_for("supervisor.inspections"))
     else:
         return redirect(url_for("public.home"))
+
 
 
 @auth_bp.route("/logout")

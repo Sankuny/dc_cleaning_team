@@ -14,7 +14,7 @@
     <div class="flex flex-col md:flex-row items-center justify-between text-sm font-medium text-gray-600 gap-4 md:gap-0">
       <div class="flex flex-col items-center w-full">
         <div class="w-10 h-10 flex items-center justify-center rounded-full
-          {% if latest_service.status in ['pending', 'accepted', 'assigned', 'completed_by_employee', 'completed'] %}
+          {% if latest_service.status in ['pending', 'accepted', 'assigned', 'inspected', 'completed'] %}
             bg-blue-600 text-white animate-pulse
           {% else %} bg-gray-300 text-gray-500 {% endif %}">
           <i data-lucide="file-text" class="w-6 h-6"></i>
@@ -24,7 +24,7 @@
       <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-blue-600 to-green-200 mx-1"></div>
       <div class="flex flex-col items-center w-full">
         <div class="w-10 h-10 flex items-center justify-center rounded-full
-          {% if latest_service.status in ['accepted', 'assigned', 'completed_by_employee', 'completed'] %}
+          {% if latest_service.status in ['accepted', 'assigned', 'inspected', 'completed'] %}
             bg-green-600 text-white animate-pulse
           {% else %} bg-gray-300 text-gray-500 {% endif %}">
           <i data-lucide="calendar-check" class="w-6 h-6"></i>
@@ -34,7 +34,7 @@
       <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-green-600 to-yellow-200 mx-1"></div>
       <div class="flex flex-col items-center w-full">
         <div class="w-10 h-10 flex items-center justify-center rounded-full
-          {% if latest_service.status in ['completed_by_employee', 'completed'] %}
+          {% if latest_service.status in ['inspected', 'completed'] %}
             bg-yellow-500 text-white animate-pulse
           {% else %} bg-gray-300 text-gray-500 {% endif %}">
           <i data-lucide="check-circle" class="w-6 h-6"></i>
@@ -46,7 +46,7 @@
   {% endif %}
 
   <!-- ⭐ Tarjeta de calificación -->
-  {% if latest_service.status == 'completed_by_employee' and to_rate %}
+  {% if latest_service.status == 'inspected' and to_rate %}
   <div id="card-{{ latest_service.id }}" class="bg-white p-6 rounded-xl shadow-lg border border-yellow-300 mb-10">
     <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ t["rate_prompt"] }}</h3>
 

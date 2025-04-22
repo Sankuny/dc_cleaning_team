@@ -236,7 +236,27 @@
   "rate_prompt": "How was the service?",
   "comment_placeholder": "Would you like to leave a comment?",
   "submit_rating": "Submit Rating",
-  "rating": "Rating"
+  "rating": "Rating",
+  "not_completed_by_employee": "This service has not been marked as completed by the employee.",
+  "inspection_saved": "Inspection saved successfully.",
+  "today_services": "Today's Services",
+  "not_marked_completed": "This service hasn't been marked as completed by the employee yet.",
+  "ready_for_inspection": "Ready for Inspection",
+  "no_pending": "No pending services.",
+  "no_ready": "No completed services ready for inspection.",
+  "review_button": "Review Service",
+  
+ 
+  "inspection_title": "Service Inspection",
+  "inspection_good": "Good",
+  "inspection_bad": "Bad",
+  "photo_label": "Photo evidence",
+  "rating_label2": "Rating (1 to 5)",
+  "comment_label2": "Comment",
+  "comment_placeholder2": "Optional comments...",
+  "submit_inspection": "Submit Inspection"
+  
+
 
 
   

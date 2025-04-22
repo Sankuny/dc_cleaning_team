@@ -45,7 +45,9 @@ def create_app():
     from app.employee.routes import employee_bp
     from app.client.routes   import client_bp
     from app.chat.routes     import chat_bp
+    from app.supervisor.routes import supervisor_bp
 
+    app.register_blueprint(supervisor_bp)
     app.register_blueprint(chat_bp)
     app.register_blueprint(public_bp)
     app.register_blueprint(auth_bp,     url_prefix="/auth")

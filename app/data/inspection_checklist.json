@@ -1,0 +1,65 @@
+{
+    "bathroom": [
+      "Whole bathroom feels clean and fresh",
+      "The toilet ring has been scrubbed",
+      "The toilet is clean on the front and back (Free of dirt, stains, or limescale)",
+      "The shower and/or bathtub is clean (free of dirty, stains, or limescale)",
+      "The mirror, windows and lamps are clean",
+      "The bathroom cabinet is clean and tidy",
+      "The trash bin is clean and free of waste",
+      "The rugs and floor look clean and vacuumed",
+      "The sink is clean, shiny and dry",
+      "There are no cobwebs on the ceilings",
+      "The air vents are clean",
+      "All the products in the bathroom are clean and organized with the labels visible",
+      "The clothes are folded and properly organized"
+    ],
+    "kitchen": [
+      "The sink is clean, shiny and dry",
+      "The coffee maker has a clean filter, the container is clean and free of coffee grounds",
+      "The microwave is clean and smells good",
+      "The kitchen table or dining table is clean and tidy",
+      "The kitchen cabinets (Top cabinets, backsplash, counters, bottom cabinets) are clean",
+      "The floor, carpet and rugs are clean and vacuumed, including underneath furniture",
+      "The blinds or windows in kitchen are clean and dry",
+      "The lamps and fans are clean",
+      "The stove is clean and grease-free",
+      "All the dishes are either clean or in the dishwasher",
+      "There are no cobwebs on the ceilings",
+      "All the products and appliances are clean (form oil bottles, salt shaker, etc.)",
+      "The air vents are clean",
+      "The trash bags have been taken out and placed in the correct location",
+      "The clothes are folded and properly organized"
+    ],
+    "bedroom": [
+      "The bed is clean and vacuumed underneath and behind, made and tidy",
+      "The furniture is clean and tidy",
+      "The lamps, windows and mirror are clean",
+      "The carpet, floor and rugs are clean and vacuumed",
+      "The trash bins are empty",
+      "The air vents are clean",
+      "There are no cobwebs on the ceilings",
+      "The clothes are folded and properly organized"
+    ],
+    "living_room": [
+      "The living room furniture is clean and tidy",
+      "The sofas or chairs have no trash under cushions or on the floor underneath",
+      "The lamps, windows and mirror are clean",
+      "The air vents are clean",
+      "The floor, carpet and rugs are clean and vacuumed, including underneath furniture",
+      "There are no cobwebs on the ceilings",
+      "The clothes are folded and properly organized"
+    ],
+    "stairs": [
+      "The stairs are clean and vacuumed"
+    ],
+    "office": [
+      "The carpet, floor and rugs are clean and vacuumed",
+      "The lamps, windows and mirror are clean",
+      "The desk items were not moved, it's only clean top",
+      "The office recycling was not touched; it was left in place (unless the client requested otherwise)",
+      "There are no cobwebs on the ceilings",
+      "The clothes are folded and properly organized"
+    ]
+  }
+  
