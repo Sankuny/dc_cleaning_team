@@ -47,10 +47,10 @@
   "rate_service_subtitle": "Dites-nous comment nous avons fait.",
   "rating_label": "Évaluation",
   "comment_label": "Commentaire",
-  "submit_rating": "Soumettre l'évaluation",
+
   "rating_success": "Merci pour votre retour !",
 
-  "comment_placeholder": "Écrivez votre commentaire ici...",
+  
   "date": "Date",
   "status": "Statut",
   "completed": "Terminé",
@@ -234,6 +234,12 @@
   "clear_form": "Effacer le formulaire",
 
   "swal_request_title": "Service demandé !",
-  "swal_request_message": "Nous avons bien reçu votre demande."
+  "swal_request_message": "Nous avons bien reçu votre demande.",
+
+  "rate_prompt": "Comment était le service ?",
+  "comment_placeholder": "Voulez-vous laisser un commentaire ?",
+  "submit_rating": "Soumettre l'évaluation",
+  "rating": "Évaluation"
+
 
 }

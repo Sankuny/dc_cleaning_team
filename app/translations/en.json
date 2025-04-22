@@ -47,10 +47,10 @@
   "rate_service_subtitle": "Let us know how we did.",
   "rating_label": "Rating",
   "comment_label": "Comment",
-  "submit_rating": "Submit Rating",
+
   "rating_success": "Thank you for your feedback!",
 
-  "comment_placeholder": "Write your comment here...",
+
   "date": "Date",
   "status": "Status",
   "completed": "Completed",
@@ -232,7 +232,14 @@
   "clear_location": "Clear location",
   "clear_form": "Clear Form",
   "swal_request_title": "Service requested!",
-  "swal_request_message": "We have received your request successfully."
+  "swal_request_message": "We have received your request successfully.",
+  "rate_prompt": "How was the service?",
+  "comment_placeholder": "Would you like to leave a comment?",
+  "submit_rating": "Submit Rating",
+  "rating": "Rating"
+
+
+  
 
 
 

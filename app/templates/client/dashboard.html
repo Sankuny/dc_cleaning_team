@@ -2,159 +2,193 @@
 {% block content %}
 <div class="max-w-6xl mx-auto mt-12 px-4">
 
-  <!-- 🔔 Notificación de servicios por calificar -->
-  {% if to_rate %}
-    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg mb-8 shadow">
-      <p class="font-semibold mb-1">{{ t["pending_rating_title"] }}</p>
-      <p class="text-sm">{{ t["pending_rating_desc"] }}</p>
-      <a href="{{ url_for('client.rate_service') }}" class="inline-block mt-2 bg-blue-600 text-white text-sm px-4 py-1 rounded hover:bg-blue-700">
-        {{ t["rate_now"] }}
-      </a>
-    </div>
-  {% endif %}
 
-  <!-- 👋 Bienvenida -->
   <h2 class="text-4xl font-bold text-[#003DA5] mb-6 text-center">{{ t["welcome"] }}, {{ name }}!</h2>
 
- <!-- 🕒 Última solicitud de servicio con tracking -->
-{% if latest_service %}
-<div class="bg-white border border-blue-200 p-6 rounded-lg shadow mb-10">
-  <h3 class="text-lg font-bold text-blue-800 mb-4">{{ t["latest_request_status"] }}</h3>
-  <p class="text-sm text-gray-600 mb-2">{{ t["service_type"] }}: <strong>{{ t["service_type_labels"][latest_service.service_type] }}</strong></p>
-  <p class="text-sm text-gray-600 mb-6">{{ t["date"] }}: {{ latest_service.date.strftime('%Y-%m-%d') }}</p>
+  {% if latest_service.status != 'completed'%}
+  <div class="bg-white border border-blue-200 p-6 rounded-lg shadow mb-6">
+    <h3 class="text-lg font-bold text-blue-800 mb-4">{{ t["latest_request_status"] }}</h3>
+    <p class="text-sm text-gray-600 mb-2">{{ t["service_type"] }}: <strong>{{ t["service_type_labels"][latest_service.service_type] }}</strong></p>
+    <p class="text-sm text-gray-600 mb-6">{{ t["date"] }}: {{ latest_service.date.strftime('%Y-%m-%d') }}</p>
 
-  <!-- Tracking visual RESPONSIVE con Lucide -->
-  <div class="flex flex-col md:flex-row items-center justify-between text-sm font-medium text-gray-600 gap-4 md:gap-0">
-
-    <!-- Paso 1 -->
-    <div class="flex flex-col items-center w-full">
-      <div class="w-10 h-10 flex items-center justify-center rounded-full
-        {% if latest_service.status in ['pending', 'accepted', 'assigned', 'completed_by_employee', 'completed'] %}
-          bg-blue-600 text-white animate-pulse
-        {% else %}
-          bg-gray-300 text-gray-500
-        {% endif %}">
-        <i data-lucide="file-text" class="w-6 h-6"></i>
+    <div class="flex flex-col md:flex-row items-center justify-between text-sm font-medium text-gray-600 gap-4 md:gap-0">
+      <div class="flex flex-col items-center w-full">
+        <div class="w-10 h-10 flex items-center justify-center rounded-full
+          {% if latest_service.status in ['pending', 'accepted', 'assigned', 'completed_by_employee', 'completed'] %}
+            bg-blue-600 text-white animate-pulse
+          {% else %} bg-gray-300 text-gray-500 {% endif %}">
+          <i data-lucide="file-text" class="w-6 h-6"></i>
+        </div>
+        <span class="mt-2 text-center text-xs">{{ t["status_labels"]["pending"] }}</span>
       </div>
-      <span class="mt-2 text-center text-xs">{{ t["status_labels"]["pending"] }}</span>
-    </div>
-
-    <!-- Línea -->
-    <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-blue-600 to-blue-200 mx-1"></div>
-
-    <!-- Paso 2 -->
-    <div class="flex flex-col items-center w-full">
-      <div class="w-10 h-10 flex items-center justify-center rounded-full
-        {% if latest_service.status in ['accepted', 'assigned', 'completed_by_employee', 'completed'] %}
-          bg-green-600 text-white animate-pulse
-        {% else %}
-          bg-gray-300 text-gray-500
-        {% endif %}">
-        <i data-lucide="check-circle" class="w-6 h-6"></i>
+      <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-blue-600 to-green-200 mx-1"></div>
+      <div class="flex flex-col items-center w-full">
+        <div class="w-10 h-10 flex items-center justify-center rounded-full
+          {% if latest_service.status in ['accepted', 'assigned', 'completed_by_employee', 'completed'] %}
+            bg-green-600 text-white animate-pulse
+          {% else %} bg-gray-300 text-gray-500 {% endif %}">
+          <i data-lucide="calendar-check" class="w-6 h-6"></i>
+        </div>
+        <span class="mt-2 text-center text-xs">{{ t["status_labels"]["accepted"] }}</span>
       </div>
-      <span class="mt-2 text-center text-xs">{{ t["status_labels"]["accepted"] }}</span>
-    </div>
-
-    <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-green-600 to-green-200 mx-1"></div>
-
-    <!-- Paso 3 -->
-    <div class="flex flex-col items-center w-full">
-      <div class="w-10 h-10 flex items-center justify-center rounded-full
-        {% if latest_service.status in ['assigned', 'completed_by_employee', 'completed'] %}
-          bg-blue-500 text-white animate-pulse
-        {% else %}
-          bg-gray-300 text-gray-500
-        {% endif %}">
-        <i data-lucide="user-cog" class="w-6 h-6"></i>
+      <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-green-600 to-yellow-200 mx-1"></div>
+      <div class="flex flex-col items-center w-full">
+        <div class="w-10 h-10 flex items-center justify-center rounded-full
+          {% if latest_service.status in ['completed_by_employee', 'completed'] %}
+            bg-yellow-500 text-white animate-pulse
+          {% else %} bg-gray-300 text-gray-500 {% endif %}">
+          <i data-lucide="check-circle" class="w-6 h-6"></i>
+        </div>
+        <span class="mt-2 text-center text-xs">{{ t["status_labels"]["completed"] }}</span>
       </div>
-      <span class="mt-2 text-center text-xs">{{ t["status_labels"]["assigned"] }}</span>
     </div>
-
-    <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-purple-600 to-purple-200 mx-1"></div>
-
-    <!-- Paso 4 -->
-    <div class="flex flex-col items-center w-full">
-      <div class="w-10 h-10 flex items-center justify-center rounded-full
-        {% if latest_service.status in ['completed_by_employee', 'completed'] %}
-          bg-purple-600 text-white animate-pulse
-        {% else %}
-          bg-gray-300 text-gray-500
-        {% endif %}">
-        <i data-lucide="hourglass" class="w-6 h-6"></i>
-      </div>
-      <span class="mt-2 text-center text-xs">{{ t["status_labels"]["completed_by_employee"] }}</span>
-    </div>
-
-    <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-yellow-500 to-yellow-200 mx-1"></div>
-
-    <!-- Paso 5 -->
-    <div class="flex flex-col items-center w-full">
-      <div class="w-10 h-10 flex items-center justify-center rounded-full
-        {% if latest_service.status == 'completed' %}
-          bg-yellow-500 text-white animate-pulse
-        {% else %}
-          bg-gray-300 text-gray-500
-        {% endif %}">
-        <i data-lucide="star" class="w-6 h-6"></i>
-      </div>
-      <span class="mt-2 text-center text-xs">{{ t["status_labels"]["completed"] }}</span>
-    </div>
-
   </div>
-</div>
-{% endif %}
+  {% endif %}
 
+  <!-- ⭐ Tarjeta de calificación -->
+  {% if latest_service.status == 'completed_by_employee' and to_rate %}
+  <div id="card-{{ latest_service.id }}" class="bg-white p-6 rounded-xl shadow-lg border border-yellow-300 mb-10">
+    <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ t["rate_prompt"] }}</h3>
 
+    <form class="rating-form space-y-4" data-id="{{ latest_service.id }}">
+      <input type="hidden" name="rating" id="rating-value" value="0">
 
-  <!-- 📦 Funcionalidades -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div id="star-container" class="flex gap-2 justify-center mb-4">
+        {% for i in range(1, 6) %}
+          <i class="star cursor-pointer w-8 h-8 text-gray-300" data-value="{{ i }}" data-lucide="star"></i>
+        {% endfor %}
+      </div>
 
-    <!-- Solicitar servicio -->
-    <a href="{{ url_for('client.request_service') }}"
-       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
-              hover:shadow-xl hover:scale-105 transform transition duration-500">
-      <img src="{{ url_for('static', filename='img/Request.png') }}" alt="Request" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["request_service_title"] }}</h2>
-      <p class="text-gray-600 text-sm">{{ t["request_service_desc"] }}</p>
-    </a>
+      <div>
+        <textarea name="comment" rows="3" class="w-full border border-gray-300 p-2 rounded resize-none" placeholder="{{ t['comment_placeholder'] }}"></textarea>
+      </div>
 
-    <!-- Calificar servicio -->
-    <a href="{{ url_for('client.rate_service') }}"
-       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
-              hover:shadow-xl hover:scale-105 transform transition duration-500">
-      <img src="{{ url_for('static', filename='img/rate.png') }}" alt="Rate" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["rate_service_title"] }}</h2>
-      <p class="text-gray-600 text-sm">{{ t["rate_service_desc"] }}</p>
-    </a>
-
-    <!-- Historial de servicios -->
-    <a href="{{ url_for('client.service_history') }}"
-       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
-              hover:shadow-xl hover:scale-105 transform transition duration-500">
-      <img src="{{ url_for('static', filename='img/hitory.png') }}" alt="History" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["service_history_title"] }}</h2>
-      <p class="text-gray-600 text-sm">{{ t["service_history_desc"] }}</p>
-    </a>
-
-    <!-- Perfil -->
-    <a href="{{ url_for('client.profile') }}"
-       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
-              hover:shadow-xl hover:scale-105 transform transition duration-500">
-      <img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["profile_title"] }}</h2>
-      <p class="text-gray-600 text-sm">{{ t["profile_desc"] }}</p>
-    </a>
-
-    <!-- Servicios recurrentes -->
-    <a href="{{ url_for('client.recurring_services') }}"
-       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center
-              hover:shadow-xl hover:scale-105 transform transition duration-500">
-      <img src="{{ url_for('static', filename='img/recurrente.png') }}" alt="Recurring" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-      <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["recurring_service_title"] }}</h2>
-      <p class="text-gray-600 text-sm">{{ t["recurring_service_desc"] }}</p>
-    </a>
-
+      <div class="text-right">
+        <button type="submit" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded transition duration-300 transform hover:scale-105">
+          <i data-lucide="star" class="w-5 h-5"></i>
+          {{ t["submit_rating"] }}
+        </button>
+      </div>
+    </form>
   </div>
+  {% endif %}
+
+<!-- 📦 Funcionalidades -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+  <!-- Solicitar servicio -->
+  <a href="{{ url_for('client.request_service') }}"
+     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
+    <img src="{{ url_for('static', filename='img/Request.png') }}" alt="Request" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["request_service_title"] }}</h2>
+    <p class="text-gray-600 text-sm">{{ t["request_service_desc"] }}</p>
+  </a>
+
+  <!-- Calificar servicio -->
+  <a href="{{ url_for('client.rate_service') }}"
+     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
+    <img src="{{ url_for('static', filename='img/rate.png') }}" alt="Rate" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["rate_service_title"] }}</h2>
+    <p class="text-gray-600 text-sm">{{ t["rate_service_desc"] }}</p>
+  </a>
+
+  <!-- Historial de servicios -->
+  <a href="{{ url_for('client.service_history') }}"
+     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
+    <img src="{{ url_for('static', filename='img/hitory.png') }}" alt="History" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["service_history_title"] }}</h2>
+    <p class="text-gray-600 text-sm">{{ t["service_history_desc"] }}</p>
+  </a>
+
+  <!-- Perfil -->
+  <a href="{{ url_for('client.profile') }}"
+     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
+    <img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["profile_title"] }}</h2>
+    <p class="text-gray-600 text-sm">{{ t["profile_desc"] }}</p>
+  </a>
+
+  <!-- Servicios recurrentes -->
+  <a href="{{ url_for('client.recurring_services') }}"
+     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
+    <img src="{{ url_for('static', filename='img/recurrente.png') }}" alt="Recurring" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
+    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["recurring_service_title"] }}</h2>
+    <p class="text-gray-600 text-sm">{{ t["recurring_service_desc"] }}</p>
+  </a>
+
 </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    lucide.createIcons(); // 🔁 Asegura renderizado de íconos
+
+    const stars = document.querySelectorAll(".star");
+    const ratingInput = document.getElementById("rating-value");
+
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        const selected = parseInt(star.dataset.value);
+        ratingInput.value = selected;
+
+        stars.forEach(s => {
+          if (parseInt(s.dataset.value) <= selected) {
+            s.classList.remove("text-gray-300");
+            s.classList.add("text-yellow-400");
+          } else {
+            s.classList.remove("text-yellow-400");
+            s.classList.add("text-gray-300");
+          }
+        });
+      });
+    });
+  });
+
+  document.querySelectorAll(".rating-form").forEach(form => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const reservationId = form.dataset.id;
+      const formData = new FormData(form);
+      const data = {
+        rating: formData.get("rating"),
+        comment: formData.get("comment")
+      };
+
+      if (data.rating == "0") {
+        Swal.fire("Oops", "Selecciona una calificación con estrellas.", "warning");
+        return;
+      }
+
+      const response = await fetch(`/client/submit-rating/${reservationId}`, {
+        method: "POST",
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        const card = document.getElementById(`card-${reservationId}`);
+        card.innerHTML = `
+          <div class="text-center py-10">
+            <p class="text-green-600 text-xl font-semibold">⭐ {{ t["thank_you_rating"] }}</p>
+          </div>
+        `;
+        Swal.fire({
+          icon: "success",
+          title: "{{ t['swal_thanks'] }}",
+          text: "{{ t['swal_success_message'] }}",
+          timer: 2500,
+          showConfirmButton: false
+        });
+      } else {
+        Swal.fire("Error", "Algo salió mal. Inténtalo de nuevo.", "error");
+      }
+    });
+  });
+</script>
 {% endblock %}
-
