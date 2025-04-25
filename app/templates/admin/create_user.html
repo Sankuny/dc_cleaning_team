@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-md mx-auto mt-12 bg-white shadow-md rounded-lg p-8">
+<div class="max-w-md p-8 mx-auto mt-12 bg-white rounded-lg shadow-md">
 
-  <h2 class="text-2xl font-bold text-center text-[#003DA5] mb-6">Create New Employee</h2>
+  <h2 class="mb-6 text-2xl font-bold text-center text-primaryDark">{{ t["create_employee_title"] or "Create New Employee" }}</h2>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -17,43 +17,42 @@
   <form method="POST" class="space-y-4">
     
     <div>
-      <label for="name" class="block text-gray-700 font-medium">Full Name</label>
+      <label for="name" class="block font-medium text-textMain">{{ t["register_name"] or "Full Name" }}</label>
       <input type="text" name="name" required
-             class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+             class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
     </div>
 
     <div>
-      <label for="email" class="block text-gray-700 font-medium">Email</label>
+      <label for="email" class="block font-medium text-textMain">{{ t["login_email"] or "Email" }}</label>
       <input type="email" name="email" required
-             class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+             class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
     </div>
 
     <div>
-      <label for="password" class="block text-gray-700 font-medium">Password</label>
+      <label for="password" class="block font-medium text-textMain">{{ t["login_password"] or "Password" }}</label>
       <input type="password" name="password" required
-             class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+             class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
     </div>
 
     <div>
-      <label for="role" class="block text-gray-700 font-medium">Role</label>
+      <label for="role" class="block font-medium text-textMain">{{ t["role"] or "Role" }}</label>
       <select name="role" required
-              class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <option value="employee">Employee</option>
-        <option value="supervisor">Supervisor</option>
+              class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
+        <option value="employee">{{ t["employee"] or "Employee" }}</option>
+        <option value="supervisor">{{ t["supervisor"] or "Supervisor" }}</option>
       </select>
     </div>
     
-
     <div class="text-center">
       <button type="submit"
-              class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-        Create Employee
+              class="px-6 py-2 text-white transition rounded bg-primaryDark hover:bg-primary">
+        {{ t["create_employee_button"] or "Create Employee" }}
       </button>
     </div>
   </form>
 
-  <p class="mt-4 text-sm text-center text-gray-600">
-    <a href="{{ url_for('admin.users') }}" class="text-blue-600 hover:underline">← Back to User List</a>
+  <p class="mt-4 text-sm text-center text-textSecondary">
+    <a href="{{ url_for('admin.users') }}" class="text-primaryDark hover:underline">← {{ t["back_to_users"] or "Back to User List" }}</a>
   </p>
 
 </div>

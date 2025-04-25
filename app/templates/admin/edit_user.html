@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-md mx-auto mt-12 bg-white shadow-md rounded-lg p-8">
+<div class="max-w-md p-8 mx-auto mt-12 bg-white rounded-lg shadow-md">
 
-  <h2 class="text-2xl font-bold text-center text-[#003DA5] mb-6">Edit User</h2>
+  <h2 class="mb-6 text-2xl font-bold text-center text-primaryDark">Edit User</h2>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -16,33 +16,35 @@
 
   <form method="POST" class="space-y-4">
     <div>
-      <label for="name" class="block text-gray-700 font-medium">Full Name</label>
+      <label for="name" class="block font-medium text-textMain">Full Name</label>
       <input type="text" name="name" required value="{{ user.name }}"
-             class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+             class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
     </div>
 
     <div>
-      <label for="email" class="block text-gray-700 font-medium">Email</label>
+      <label for="email" class="block font-medium text-textMain">Email</label>
       <input type="email" name="email" required value="{{ user.email }}"
-             class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+             class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
     </div>
 
     <div>
-      <label for="password" class="block text-gray-700 font-medium">New Password <span class="text-sm text-gray-400">(leave blank to keep current)</span></label>
+      <label for="password" class="block font-medium text-textMain">
+        New Password <span class="text-sm text-textSecondary">(leave blank to keep current)</span>
+      </label>
       <input type="password" name="password"
-             class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+             class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
     </div>
 
     <div class="text-center">
       <button type="submit"
-              class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+              class="px-6 py-2 text-white transition rounded bg-primaryDark hover:bg-primary">
         Save Changes
       </button>
     </div>
   </form>
 
-  <p class="mt-4 text-sm text-center text-gray-600">
-    <a href="{{ url_for('admin.users') }}" class="text-blue-600 hover:underline">← Back to User List</a>
+  <p class="mt-4 text-sm text-center text-textSecondary">
+    <a href="{{ url_for('admin.users') }}" class="text-primaryDark hover:underline">← Back to User List</a>
   </p>
 
 </div>

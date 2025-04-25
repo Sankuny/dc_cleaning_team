@@ -1,35 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-5xl mx-auto mt-12 px-4">
-  <h2 class="text-3xl font-bold text-blue-800 mb-8 text-center">{{ t["service_history_title"] }}</h2>
+<div class="max-w-5xl px-4 mx-auto mt-12">
+  <h2 class="mb-8 text-3xl font-bold text-center text-primary">{{ t["service_history_title"] }}</h2>
 
   {% if reservations %}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       {% for r in reservations %}
-        <div class="bg-white p-6 rounded-xl shadow border border-blue-100 hover:shadow-md transition">
-          <p class="text-lg font-semibold text-[#003DA5]">{{ t["service_type"] }}: {{ r.service_type }}</p>
-          <p class="text-sm text-gray-600">{{ t["date"] }}: {{ r.date.strftime('%Y-%m-%d') }}</p>
-          <p class="text-sm text-gray-600">{{ t["status"] }}: 
+        <div class="p-6 transition bg-white border shadow rounded-xl border-primary/10 hover:shadow-md">
+          <p class="text-lg font-semibold text-primaryDark">
+            {{ t["service_type"] }}: {{ r.service_type }}
+          </p>
+          <p class="text-sm text-textSecondary">
+            {{ t["date"] }}: {{ r.date.strftime('%Y-%m-%d') }}
+          </p>
+          <p class="text-sm text-textSecondary">
+            {{ t["status"] }}:
             {% if r.status == "completed" %}
-              <span class="text-green-600 font-medium">{{ t["completed"] }}</span>
+              <span class="font-medium text-green-600">{{ t["completed"] }}</span>
             {% elif r.status == "pending" %}
-              <span class="text-yellow-500 font-medium">{{ t["pending"] }}</span>
+              <span class="font-medium text-yellow-500">{{ t["pending"] }}</span>
             {% elif r.status == "accepted" %}
-              <span class="text-blue-500 font-medium">{{ t["accepted"] }}</span>
+              <span class="font-medium text-primaryDark">{{ t["accepted"] }}</span>
             {% elif r.status == "canceled" %}
-              <span class="text-red-500 font-medium">{{ t["canceled"] }}</span>
+              <span class="font-medium text-red-500">{{ t["canceled"] }}</span>
             {% endif %}
           </p>
 
           {% if r.rating %}
             <div class="mt-2">
-              <p class="text-sm text-gray-700">{{ t["your_rating"] }}: 
+              <p class="text-sm text-textMain">
+                {{ t["your_rating"] }}:
                 <span class="text-yellow-500">
                   {% for i in range(r.rating.rating) %}⭐{% endfor %}
                 </span>
               </p>
               {% if r.rating.comment %}
-                <p class="text-sm text-gray-500 mt-1 italic">"{{ r.rating.comment }}"</p>
+                <p class="mt-1 text-sm italic text-textSecondary">"{{ r.rating.comment }}"</p>
               {% endif %}
             </div>
           {% endif %}
@@ -37,7 +43,7 @@
       {% endfor %}
     </div>
   {% else %}
-    <p class="text-center text-gray-500">{{ t["no_service_history"] }}</p>
+    <p class="text-center text-textSecondary">{{ t["no_service_history"] }}</p>
   {% endif %}
 </div>
 {% endblock %}

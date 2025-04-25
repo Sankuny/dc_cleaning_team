@@ -1,27 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-6xl mx-auto mt-12 px-4">
+<div class="max-w-6xl px-4 mx-auto mt-12">
 
-
-  <h2 class="text-4xl font-bold text-[#003DA5] mb-6 text-center">{{ t["welcome"] }}, {{ name }}!</h2>
+  <h2 class="mb-6 text-4xl font-bold text-center text-primary">{{ t["welcome"] }}, {{ name }}!</h2>
 
   {% if latest_service.status != 'completed'%}
-  <div class="bg-white border border-blue-200 p-6 rounded-lg shadow mb-6">
-    <h3 class="text-lg font-bold text-blue-800 mb-4">{{ t["latest_request_status"] }}</h3>
-    <p class="text-sm text-gray-600 mb-2">{{ t["service_type"] }}: <strong>{{ t["service_type_labels"][latest_service.service_type] }}</strong></p>
-    <p class="text-sm text-gray-600 mb-6">{{ t["date"] }}: {{ latest_service.date.strftime('%Y-%m-%d') }}</p>
+  <div class="p-6 mb-6 bg-white border rounded-lg shadow border-primary/30">
+    <h3 class="mb-4 text-lg font-bold text-primaryDark">{{ t["latest_request_status"] }}</h3>
+    <p class="mb-2 text-sm text-textSecondary">{{ t["service_type"] }}: <strong>{{ t["service_type_labels"][latest_service.service_type] }}</strong></p>
+    <p class="mb-6 text-sm text-textSecondary">{{ t["date"] }}: {{ latest_service.date.strftime('%Y-%m-%d') }}</p>
 
-    <div class="flex flex-col md:flex-row items-center justify-between text-sm font-medium text-gray-600 gap-4 md:gap-0">
+    <div class="flex flex-col items-center justify-between gap-4 text-sm font-medium md:flex-row text-textSecondary md:gap-0">
       <div class="flex flex-col items-center w-full">
         <div class="w-10 h-10 flex items-center justify-center rounded-full
           {% if latest_service.status in ['pending', 'accepted', 'assigned', 'inspected', 'completed'] %}
-            bg-blue-600 text-white animate-pulse
+            bg-primary text-white animate-pulse
           {% else %} bg-gray-300 text-gray-500 {% endif %}">
           <i data-lucide="file-text" class="w-6 h-6"></i>
         </div>
-        <span class="mt-2 text-center text-xs">{{ t["status_labels"]["pending"] }}</span>
+        <span class="mt-2 text-xs text-center">{{ t["status_labels"]["pending"] }}</span>
       </div>
-      <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-blue-600 to-green-200 mx-1"></div>
+      <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-primary to-green-200"></div>
       <div class="flex flex-col items-center w-full">
         <div class="w-10 h-10 flex items-center justify-center rounded-full
           {% if latest_service.status in ['accepted', 'assigned', 'inspected', 'completed'] %}
@@ -29,9 +28,9 @@
           {% else %} bg-gray-300 text-gray-500 {% endif %}">
           <i data-lucide="calendar-check" class="w-6 h-6"></i>
         </div>
-        <span class="mt-2 text-center text-xs">{{ t["status_labels"]["accepted"] }}</span>
+        <span class="mt-2 text-xs text-center">{{ t["status_labels"]["accepted"] }}</span>
       </div>
-      <div class="hidden md:flex flex-1 h-1 bg-gradient-to-r from-green-600 to-yellow-200 mx-1"></div>
+      <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-green-600 to-yellow-200"></div>
       <div class="flex flex-col items-center w-full">
         <div class="w-10 h-10 flex items-center justify-center rounded-full
           {% if latest_service.status in ['inspected', 'completed'] %}
@@ -39,32 +38,31 @@
           {% else %} bg-gray-300 text-gray-500 {% endif %}">
           <i data-lucide="check-circle" class="w-6 h-6"></i>
         </div>
-        <span class="mt-2 text-center text-xs">{{ t["status_labels"]["completed"] }}</span>
+        <span class="mt-2 text-xs text-center">{{ t["status_labels"]["completed"] }}</span>
       </div>
     </div>
   </div>
   {% endif %}
 
-  <!-- ⭐ Tarjeta de calificación -->
   {% if latest_service.status == 'inspected' and to_rate %}
-  <div id="card-{{ latest_service.id }}" class="bg-white p-6 rounded-xl shadow-lg border border-yellow-300 mb-10">
-    <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ t["rate_prompt"] }}</h3>
+  <div id="card-{{ latest_service.id }}" class="p-6 mb-10 bg-white border border-yellow-300 shadow-lg rounded-xl">
+    <h3 class="mb-2 text-lg font-semibold text-textMain">{{ t["rate_prompt"] }}</h3>
 
-    <form class="rating-form space-y-4" data-id="{{ latest_service.id }}">
+    <form class="space-y-4 rating-form" data-id="{{ latest_service.id }}">
       <input type="hidden" name="rating" id="rating-value" value="0">
 
-      <div id="star-container" class="flex gap-2 justify-center mb-4">
+      <div id="star-container" class="flex justify-center gap-2 mb-4">
         {% for i in range(1, 6) %}
-          <i class="star cursor-pointer w-8 h-8 text-gray-300" data-value="{{ i }}" data-lucide="star"></i>
+          <i class="w-8 h-8 text-gray-300 cursor-pointer star" data-value="{{ i }}" data-lucide="star"></i>
         {% endfor %}
       </div>
 
       <div>
-        <textarea name="comment" rows="3" class="w-full border border-gray-300 p-2 rounded resize-none" placeholder="{{ t['comment_placeholder'] }}"></textarea>
+        <textarea name="comment" rows="3" class="w-full p-2 border border-gray-300 rounded resize-none" placeholder="{{ t['comment_placeholder'] }}"></textarea>
       </div>
 
       <div class="text-right">
-        <button type="submit" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded transition duration-300 transform hover:scale-105">
+        <button type="submit" class="flex items-center gap-2 px-6 py-2 text-white transition duration-300 transform rounded bg-primary hover:bg-primaryDark hover:scale-105">
           <i data-lucide="star" class="w-5 h-5"></i>
           {{ t["submit_rating"] }}
         </button>
@@ -73,57 +71,32 @@
   </div>
   {% endif %}
 
-<!-- 📦 Funcionalidades -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <!-- 📦 Funcionalidades -->
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 
-  <!-- Solicitar servicio -->
-  <a href="{{ url_for('client.request_service') }}"
-     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
-    <img src="{{ url_for('static', filename='img/Request.png') }}" alt="Request" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["request_service_title"] }}</h2>
-    <p class="text-gray-600 text-sm">{{ t["request_service_desc"] }}</p>
-  </a>
+    {% for item in [
+      ("client.request_service", "img/Request.png", "request_service_title", "request_service_desc"),
+      ("client.rate_service", "img/rate.png", "rate_service_title", "rate_service_desc"),
+      ("client.service_history", "img/hitory.png", "service_history_title", "service_history_desc"),
+      ("client.profile", "img/profile.png", "profile_title", "profile_desc"),
+      ("client.recurring_services", "img/recurrente.png", "recurring_service_title", "recurring_service_desc")
+    ] %}
+    <a href="{{ url_for(item[0]) }}"
+       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
+      <img src="{{ url_for('static', filename=item[1]) }}" alt="Icon" class="w-20 h-20 mx-auto mb-4 transition duration-300 group-hover:scale-110">
+      <h2 class="mb-2 text-xl font-semibold text-primary">{{ t[item[2]] }}</h2>
+      <p class="text-sm text-textSecondary">{{ t[item[3]] }}</p>
+    </a>
+    {% endfor %}
 
-  <!-- Calificar servicio -->
-  <a href="{{ url_for('client.rate_service') }}"
-     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
-    <img src="{{ url_for('static', filename='img/rate.png') }}" alt="Rate" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["rate_service_title"] }}</h2>
-    <p class="text-gray-600 text-sm">{{ t["rate_service_desc"] }}</p>
-  </a>
-
-  <!-- Historial de servicios -->
-  <a href="{{ url_for('client.service_history') }}"
-     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
-    <img src="{{ url_for('static', filename='img/hitory.png') }}" alt="History" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["service_history_title"] }}</h2>
-    <p class="text-gray-600 text-sm">{{ t["service_history_desc"] }}</p>
-  </a>
-
-  <!-- Perfil -->
-  <a href="{{ url_for('client.profile') }}"
-     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
-    <img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["profile_title"] }}</h2>
-    <p class="text-gray-600 text-sm">{{ t["profile_desc"] }}</p>
-  </a>
-
-  <!-- Servicios recurrentes -->
-  <a href="{{ url_for('client.recurring_services') }}"
-     class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
-    <img src="{{ url_for('static', filename='img/recurrente.png') }}" alt="Recurring" class="mx-auto mb-4 w-20 h-20 group-hover:scale-110 transition duration-300">
-    <h2 class="text-xl font-semibold text-[#003DA5] mb-2">{{ t["recurring_service_title"] }}</h2>
-    <p class="text-gray-600 text-sm">{{ t["recurring_service_desc"] }}</p>
-  </a>
-
-</div>
+  </div>
 </div>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    lucide.createIcons(); // 🔁 Asegura renderizado de íconos
+    lucide.createIcons();
 
     const stars = document.querySelectorAll(".star");
     const ratingInput = document.getElementById("rating-value");
@@ -149,7 +122,6 @@
   document.querySelectorAll(".rating-form").forEach(form => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-
       const reservationId = form.dataset.id;
       const formData = new FormData(form);
       const data = {
@@ -174,8 +146,8 @@
       if (response.ok) {
         const card = document.getElementById(`card-${reservationId}`);
         card.innerHTML = `
-          <div class="text-center py-10">
-            <p class="text-green-600 text-xl font-semibold">⭐ {{ t["thank_you_rating"] }}</p>
+          <div class="py-10 text-center">
+            <p class="text-xl font-semibold text-green-600">⭐ {{ t["thank_you_rating"] }}</p>
           </div>
         `;
         Swal.fire({

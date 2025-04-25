@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-7xl mx-auto mt-12 px-4">
+<div class="px-4 mx-auto mt-12 max-w-7xl">
 
   <!-- 🧠 Título -->
-  <h2 class="text-3xl font-bold text-[#003DA5] mb-10 text-center">
+  <h2 class="mb-10 text-3xl font-bold text-center text-primaryDark">
     {{ t["admin_dashboard"] }}
   </h2>
 
-  <!-- 📊 Estadísticas (estáticas) -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 text-center">
+  <!-- 📊 Estadísticas -->
+  <div class="grid grid-cols-1 gap-6 mb-12 text-center sm:grid-cols-2 lg:grid-cols-4">
     {% set stats = [
       ("totalUsers.png", t["total_users"], total_users),
       ("totalClients.png", t["total_clients"], total_clients),
@@ -16,91 +16,79 @@
       ("totalReservations.png", t["total_reservations"], total_reservations)
     ] %}
     {% for icon, label, value in stats %}
-    <div class="bg-white p-6 rounded-lg shadow">
-      <div class="bg-blue-50 p-4 rounded-full inline-block mb-4">
-        <img src="{{ url_for('static', filename='img/' ~ icon) }}"
-             alt="{{ label }}" class="w-8 h-8">
+    <div class="p-6 bg-white rounded-lg shadow">
+      <div class="inline-block p-4 mb-4 rounded-full bg-lightGray">
+        <img src="{{ url_for('static', filename='img/' ~ icon) }}" alt="{{ label }}" class="w-8 h-8">
       </div>
-      <p class="text-sm text-gray-500 mb-2">{{ label }}</p>
-      <p class="text-2xl font-bold text-blue-800">{{ value }}</p>
+      <p class="mb-2 text-sm text-textSecondary">{{ label }}</p>
+      <p class="text-2xl font-bold text-primaryDark">{{ value }}</p>
     </div>
     {% endfor %}
   </div>
 
-  <!-- 🚀 Accesos Rápidos (clicables) -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+  <!-- 🚀 Accesos Rápidos -->
+  <div class="grid grid-cols-1 gap-6 mb-12 sm:grid-cols-2 lg:grid-cols-3">
     {% set cards = [
-      ("assignEmployees.png", url_for('admin.assign_employees'), "assign_employees",       "assign_employees_desc"),
-      ("userManagement.png",  url_for('admin.users'),            "user_management",     "user_management_desc"),
+      ("assignEmployees.png", url_for('admin.assign_employees'), "assign_employees", "assign_employees_desc"),
+      ("userManagement.png",  url_for('admin.users'), "user_management", "user_management_desc"),
       ("chat.png", url_for('admin.all_chats'), "all_chats", "all_chats_desc")
     ] %}
     {% for icon, href, title_key, desc_key in cards %}
-    <a href="{{ href }}"
-       class="block bg-white p-6 rounded-lg shadow
-              cursor-pointer transform transition
-              hover:-translate-y-1 hover:shadow-xl
-              text-center">
-      <div class="bg-purple-50 p-4 rounded-full inline-block mb-4">
-        <img src="{{ url_for('static', filename='img/' ~ icon) }}"
-             alt="{{ t[title_key] }}" class="w-8 h-8">
+    <a href="{{ href }}" class="block p-6 text-center transition transform bg-white rounded-lg shadow cursor-pointer hover:-translate-y-1 hover:shadow-xl">
+      <div class="inline-block p-4 mb-4 rounded-full bg-lightGray">
+        <img src="{{ url_for('static', filename='img/' ~ icon) }}" alt="{{ t[title_key] }}" class="w-8 h-8">
       </div>
-      <h3 class="text-lg font-semibold text-blue-700 mb-2">
-        {{ t[title_key] }}
-      </h3>
-      <p class="text-sm text-gray-600">
-        {{ t[desc_key] }}
-      </p>
+      <h3 class="mb-2 text-lg font-semibold text-primaryDark">{{ t[title_key] }}</h3>
+      <p class="text-sm text-textSecondary">{{ t[desc_key] }}</p>
     </a>
     {% endfor %}
   </div>
 
   <!-- 📋 Servicios Pendientes -->
-  <div class="flex justify-between items-center mb-4">
-    <h3 class="text-xl font-semibold text-[#003DA5]">{{ t["pending_services"] }}</h3>
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-xl font-semibold text-primaryDark">{{ t["pending_services"] }}</h3>
     {% if pending_services %}
-      <form method="POST" action="{{ url_for('admin.accept_all_services') }}">
-        <button type="submit"
-                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm shadow transition">
-          ✅ {{ t["accept_all"] }}
-        </button>
-      </form>
+    <form method="POST" action="{{ url_for('admin.accept_all_services') }}">
+      <button type="submit" class="px-4 py-2 text-sm text-white transition bg-green-600 rounded shadow hover:bg-green-700">
+        ✅ {{ t["accept_all"] }}
+      </button>
+    </form>
     {% endif %}
   </div>
 
   {% if pending_services %}
-    <div class="overflow-x-auto bg-white shadow rounded-lg">
-      <table class="min-w-full table-auto text-sm text-left">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="px-4 py-2 font-semibold text-gray-600">{{ t["client"] }}</th>
-            <th class="px-4 py-2 font-semibold text-gray-600">{{ t["service_type"] }}</th>
-            <th class="px-4 py-2 font-semibold text-gray-600">{{ t["date"] }}</th>
-            <th class="px-4 py-2 font-semibold text-gray-600">{{ t["time"] }}</th>
-            <th class="px-4 py-2 text-center font-semibold text-gray-600">{{ t["actions"] }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for r in pending_services %}
-          <tr class="border-t hover:bg-gray-50 transition">
-            <td class="px-4 py-2">{{ r.user.name }}</td>
-            <td class="px-4 py-2">{{ t["service_type_labels"][r.service_type] }}</td>
-            <td class="px-4 py-2">{{ r.date.strftime('%Y-%m-%d') }}</td>
-            <td class="px-4 py-2">{{ r.time.strftime('%H:%M') }}</td>
-            <td class="px-4 py-2 text-center">
-              <form method="POST" action="{{ url_for('admin.accept_service', id=r.id) }}">
-                <button type="submit"
-                        class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-xs shadow transition">
-                  {{ t["accept"] }}
-                </button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full text-sm text-left table-auto">
+      <thead class="bg-lightGray">
+        <tr>
+          <th class="px-4 py-2 font-semibold text-textSecondary">{{ t["client"] }}</th>
+          <th class="px-4 py-2 font-semibold text-textSecondary">{{ t["service_type"] }}</th>
+          <th class="px-4 py-2 font-semibold text-textSecondary">{{ t["date"] }}</th>
+          <th class="px-4 py-2 font-semibold text-textSecondary">{{ t["time"] }}</th>
+          <th class="px-4 py-2 font-semibold text-center text-textSecondary">{{ t["actions"] }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in pending_services %}
+        <tr class="transition border-t hover:bg-gray-50">
+          <td class="px-4 py-2">{{ r.user.name }}</td>
+          <td class="px-4 py-2">{{ t["service_type_labels"][r.service_type] }}</td>
+          <td class="px-4 py-2">{{ r.date.strftime('%Y-%m-%d') }}</td>
+          <td class="px-4 py-2">{{ r.time.strftime('%H:%M') }}</td>
+          <td class="px-4 py-2 text-center">
+            <form method="POST" action="{{ url_for('admin.accept_service', id=r.id) }}">
+              <button type="submit" class="px-3 py-1 text-xs text-white transition rounded shadow bg-primaryDark hover:bg-primary">
+                {{ t["accept"] }}
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
   {% else %}
-    <p class="text-center text-gray-500 mt-6">{{ t["no_pending_services"] }}</p>
+  <p class="mt-6 text-center text-textSecondary">{{ t["no_pending_services"] }}</p>
   {% endif %}
 
 </div>

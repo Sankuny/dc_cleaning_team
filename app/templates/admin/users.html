@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-6xl mx-auto mt-12 px-4">
+<div class="max-w-6xl px-4 mx-auto mt-12">
 
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-3xl font-bold text-[#003DA5]">{{ t["user_management"] }}</h2>
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-3xl font-bold text-primaryDark">{{ t["user_management"] }}</h2>
     <a href="{{ url_for('admin.create_user') }}"
-       class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm">
+       class="px-4 py-2 text-sm text-white transition bg-green-600 rounded shadow hover:bg-green-700">
       + {{ t["create_employee"] }}
     </a>
   </div>
@@ -13,8 +13,8 @@
   <!-- 🔍 Filtros -->
   <form method="GET" action="{{ url_for('admin.users') }}" class="flex flex-wrap gap-3 mb-4">
     <div>
-      <label class="text-sm font-medium text-gray-600">Filter by role:</label>
-      <select name="role" onchange="this.form.submit()" class="border p-2 rounded text-sm">
+      <label class="text-sm font-medium text-textSecondary">Filter by role:</label>
+      <select name="role" onchange="this.form.submit()" class="p-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary">
         <option value="">All</option>
         <option value="admin" {% if role_filter == "admin" %}selected{% endif %}>Admin</option>
         <option value="employee" {% if role_filter == "employee" %}selected{% endif %}>Employee</option>
@@ -22,18 +22,18 @@
       </select>
     </div>
 
-    <div class="ml-auto w-full md:w-1/3">
+    <div class="w-full ml-auto md:w-1/3">
       <input type="text" placeholder="Search by name..."
              onkeyup="filterUsers(this)"
-             class="w-full border border-gray-300 p-2 rounded text-sm"
+             class="w-full p-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary"
              id="userSearchInput">
     </div>
   </form>
 
   <!-- 👤 Tabla de usuarios -->
-  <div class="overflow-x-auto bg-white shadow rounded-lg">
-    <table class="min-w-full table-auto text-sm text-left" id="usersTable">
-      <thead class="bg-gray-100 text-gray-700 font-semibold">
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full text-sm text-left table-auto" id="usersTable">
+      <thead class="font-semibold bg-lightGray text-textMain">
         <tr>
           <th class="px-4 py-2">Name</th>
           <th class="px-4 py-2">Email</th>
@@ -43,18 +43,18 @@
       </thead>
       <tbody>
         {% for user in users %}
-        <tr class="border-t">
+        <tr class="transition border-t hover:bg-gray-50">
           <td class="px-4 py-2">{{ user.name }}</td>
           <td class="px-4 py-2">{{ user.email }}</td>
           <td class="px-4 py-2 capitalize">{{ user.role }}</td>
           <td class="px-4 py-2 text-center">
             <a href="{{ url_for('admin.edit_user', id=user.id) }}"
-               class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs">Edit</a>
+               class="px-3 py-1 text-xs text-white bg-yellow-500 rounded shadow hover:bg-yellow-600">Edit</a>
 
             <form action="{{ url_for('admin.delete_user', id=user.id) }}" method="POST" class="inline">
               <button type="submit"
                       onclick="return confirm('Are you sure you want to delete this user?')"
-                      class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs ml-1">
+                      class="px-3 py-1 ml-1 text-xs text-white bg-red-500 rounded shadow hover:bg-red-600">
                 Delete
               </button>
             </form>

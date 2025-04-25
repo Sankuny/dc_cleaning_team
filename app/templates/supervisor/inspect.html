@@ -1,20 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="p-6 max-w-4xl mx-auto">
-  <h2 class="text-3xl font-bold text-blue-800 mb-6">{{ t["inspection_title"] }} - {{ reservation.user.name }}</h2>
+<div class="max-w-4xl p-6 mx-auto">
+  <h2 class="mb-6 text-3xl font-bold text-primary">
+    {{ t["inspection_title"] }} - {{ reservation.user.name }}
+  </h2>
 
   <form method="POST" enctype="multipart/form-data" class="space-y-8">
 
     {% for area, tasks in checklist.items() %}
-      <div class="border rounded-lg shadow p-4 bg-white">
-        <h3 class="text-xl font-semibold mb-4 text-blue-600 capitalize">{{ area.replace('_', ' ') }}</h3>
+      <div class="p-4 bg-white border rounded-lg shadow">
+        <h3 class="mb-4 text-xl font-semibold capitalize text-primaryDark">
+          {{ area.replace('_', ' ') }}
+        </h3>
         <div class="space-y-4">
           {% for task in tasks %}
             {% set index = loop.index0 %}
-            <div class="bg-gray-50 p-3 rounded-md" x-data="{ result: '' }">
-              <p class="text-gray-800 font-medium mb-2">{{ task }}</p>
+            <div class="p-3 rounded-md bg-lightGray" x-data="{ result: '' }">
+              <p class="mb-2 font-medium text-textMain">{{ task }}</p>
 
-              <div class="flex items-center flex-wrap gap-4">
+              <div class="flex flex-wrap items-center gap-4">
                 <!-- Bien -->
                 <label class="flex items-center space-x-2">
                   <input type="radio" name="{{ area }}_{{ index }}" value="on"
@@ -31,9 +35,11 @@
 
                 <!-- Foto si está mal -->
                 <div x-show="result === 'fail'" class="w-full md:w-auto">
-                  <label class="block text-sm text-red-600 font-medium mb-1">{{ t["photo_label"] }}</label>
+                  <label class="block mb-1 text-sm font-medium text-red-600">
+                    {{ t["photo_label"] }}
+                  </label>
                   <input type="file" name="{{ area }}_{{ index }}_photo" accept="image/*"
-                         class="w-full border rounded p-1 text-sm" />
+                         class="w-full p-1 text-sm border rounded" />
                 </div>
               </div>
             </div>
@@ -43,24 +49,28 @@
     {% endfor %}
 
     <!-- Calificación -->
-    <div class="bg-white border rounded shadow p-4">
-      <label for="rating" class="block text-lg font-semibold text-gray-800 mb-1">{{ t["rating_label2"] }}</label>
+    <div class="p-4 bg-white border rounded shadow">
+      <label for="rating" class="block mb-1 text-lg font-semibold text-textMain">
+        {{ t["rating_label2"] }}
+      </label>
       <input type="number" name="rating" min="1" max="5" required
-             class="w-24 border rounded p-1 text-center" />
+             class="w-24 p-1 text-center border rounded" />
     </div>
 
     <!-- Comentario -->
-    <div class="bg-white border rounded shadow p-4">
-      <label for="comment" class="block text-lg font-semibold text-gray-800 mb-1">{{ t["comment_label2"] }}</label>
+    <div class="p-4 bg-white border rounded shadow">
+      <label for="comment" class="block mb-1 text-lg font-semibold text-textMain">
+        {{ t["comment_label2"] }}
+      </label>
       <textarea name="comment" rows="3"
-                class="w-full border rounded p-2 text-sm"
+                class="w-full p-2 text-sm border rounded"
                 placeholder="{{ t['comment_placeholder2'] }}"></textarea>
     </div>
 
     <!-- Botón -->
     <div class="text-right">
       <button type="submit"
-              class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded shadow">
+              class="px-6 py-2 text-white bg-green-600 rounded shadow hover:bg-green-700">
         {{ t["submit_inspection"] }}
       </button>
     </div>

@@ -24,11 +24,11 @@
   </style>
 </head>
 
-<body class="bg-gray-100 text-gray-800 font-sans">
+<body class="font-sans bg-gray-100 text-textMain">
 
   <!-- 🚀 Navegación principal -->
-  <header class="bg-white shadow p-4">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
+  <header class="p-4 bg-white shadow">
+    <div class="flex items-center justify-between max-w-6xl mx-auto">
 
       <a href="{% if current_user.is_authenticated %}
                  {% if current_user.role == 'admin' %}
@@ -41,7 +41,7 @@
                {% else %}
                  {{ url_for('public.home') }}
                {% endif %}"
-         class="text-xl font-bold text-blue-800">
+         class="text-xl font-bold text-primary">
         DC Cleaning Team
       </a>
 
@@ -57,20 +57,20 @@
                  {% else %}
                    {{ url_for('public.home') }}
                  {% endif %}"
-           class="text-blue-600 hover:underline">
+           class="text-primary hover:underline">
           {{ t["home"] }}
         </a>
 
         {% if current_user.is_authenticated %}
           <a href="{{ url_for('auth.logout') }}" class="text-red-600 hover:underline">Logout</a>
         {% else %}
-          <a href="{{ url_for('auth.login') }}" class="text-blue-600 hover:underline">Login</a>
+          <a href="{{ url_for('auth.login') }}" class="text-primary hover:underline">Login</a>
         {% endif %}
 
         <!-- 🌍 Selector de idioma -->
         {% set current_args = request.args.to_dict() %}
         <div class="relative">
-          <button id="lang-toggle" class="flex items-center space-x-1 border border-gray-300 px-2 py-1 rounded hover:bg-gray-100">
+          <button id="lang-toggle" class="flex items-center px-2 py-1 space-x-1 border border-gray-300 rounded hover:bg-lightGray">
             {% set lang = session.get('lang','en') %}
             {% if lang=='en' %}🇬🇧<span>EN</span>{% elif lang=='es' %}🇪🇸<span>ES</span>{% else %}🇫🇷<span>FR</span>{% endif %}
             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,13 +78,13 @@
                     d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-          <ul id="lang-menu" class="hidden absolute right-0 mt-1 bg-white border border-gray-200 rounded shadow-md z-10">
+          <ul id="lang-menu" class="absolute right-0 z-10 hidden mt-1 bg-white border border-gray-200 rounded shadow-md">
             {% for code, flag in [("en","🇬🇧"),("es","🇪🇸"),("fr","🇫🇷")] %}
               {% set args = current_args.copy() %}
               {% set args = args.update({"lang": code}) or args %}
               <li>
                 <a href="{{ request.path }}?{{ args | urlencode }}"
-                   class="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap">
+                   class="block px-4 py-2 hover:bg-lightGray whitespace-nowrap">
                   {{ flag }} {{ code.upper() }}
                 </a>
               </li>
@@ -96,78 +96,70 @@
   </header>
 
   <!-- 🔥 Contenido principal -->
-  <main class="mt-6 px-4 sm:px-6 lg:px-8">
+  <main class="px-4 mt-6 sm:px-6 lg:px-8">
     {% block content %}{% endblock %}
   </main>
 
-    <!-- 💬 Chat flotante -->
-    {% if latest_service and request.endpoint != 'chat.chat' %}
-    <button
-      id="chat-toggle"
-      data-service-id="{{ latest_service.id }}"
-      class="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition z-50"
-    >
-      <i data-lucide="message-circle" class="w-6 h-6"></i>
-    </button>
+  <!-- 💬 Chat flotante -->
+  {% if latest_service and request.endpoint != 'chat.chat' %}
+  <button
+    id="chat-toggle"
+    data-service-id="{{ latest_service.id }}"
+    class="fixed z-50 p-4 text-white transition rounded-full shadow-lg bottom-6 right-6 bg-primary hover:bg-primaryDark"
+  >
+    <i data-lucide="message-circle" class="w-6 h-6"></i>
+  </button>
 
+  <div
+    id="chat-window"
+    class="fixed z-50 hidden bg-white border border-gray-300 rounded-lg shadow-lg bottom-20 right-6 w-80"
+  >
     <div
-      id="chat-window"
-      class="fixed bottom-20 right-6 w-80 bg-white shadow-lg rounded-lg border border-gray-300 z-50 hidden"
+      id="chat-close"
+      class="flex items-center justify-between p-3 text-white border-b border-gray-200 rounded-t-lg cursor-pointer bg-primary"
     >
-      <div
-        id="chat-close"
-        class="p-3 border-b border-gray-200 flex justify-between items-center bg-blue-600 text-white rounded-t-lg cursor-pointer"
-      >
-        <span class="font-bold text-sm">Chat</span>
-        <span class="text-white text-xl font-bold">&times;</span>
-      </div>
-      <iframe
-        src="{{ url_for('chat.chat_embed', service_id=latest_service.id) }}"
-        class="w-full h-96 border-0 rounded-b-lg"
-      ></iframe>
+      <span class="text-sm font-bold">Chat</span>
+      <span class="text-xl font-bold text-white">&times;</span>
     </div>
+    <iframe
+      src="{{ url_for('chat.chat_embed', service_id=latest_service.id) }}"
+      class="w-full border-0 rounded-b-lg h-96"
+    ></iframe>
+  </div>
 
-    <script>
-      // Elementos
-      const toggleBtn    = document.getElementById("chat-toggle");
-      const chatWindow   = document.getElementById("chat-window");
-      const chatCloseBar = document.getElementById("chat-close");
+  <script>
+    const toggleBtn = document.getElementById("chat-toggle");
+    const chatWindow = document.getElementById("chat-window");
+    const chatCloseBar = document.getElementById("chat-close");
+    const latestServiceId = parseInt(toggleBtn.dataset.serviceId, 10);
 
-      // Obtenemos el service_id desde el atributo data
-      const latestServiceId = parseInt(toggleBtn.dataset.serviceId, 10);
+    toggleBtn.addEventListener("click", function() {
+      chatWindow.classList.toggle("hidden");
+      if (!chatWindow.classList.contains("hidden")) {
+        toggleBtn.classList.remove("bg-red-600");
+        toggleBtn.classList.add("bg-primary");
+      }
+    });
 
-      // Mostrar/Ocultar ventana de chat
-      toggleBtn.addEventListener("click", function() {
-        chatWindow.classList.toggle("hidden");
-        if (!chatWindow.classList.contains("hidden")) {
-          // si abrimos, aseguramos botón azul
-          toggleBtn.classList.remove("bg-red-600");
-          toggleBtn.classList.add("bg-blue-600");
-        }
-      });
+    chatCloseBar.addEventListener("click", function() {
+      chatWindow.classList.add("hidden");
+    });
 
-      chatCloseBar.addEventListener("click", function() {
-        chatWindow.classList.add("hidden");
-      });
+    const socket = io();
+    socket.emit("join", { service_id: latestServiceId });
 
-      // Conexión a Socket.IO
-      const socket = io();
-      socket.emit("join", { service_id: latestServiceId });
-
-      socket.on("receive_message", function(msg) {
-        if (msg.service_id !== latestServiceId) return;
-        // si el chat está oculto, ponemos el botón rojo
-        if (chatWindow.classList.contains("hidden")) {
-          toggleBtn.classList.remove("bg-blue-600");
-          toggleBtn.classList.add("bg-red-600");
-        }
-      });
-    </script>
+    socket.on("receive_message", function(msg) {
+      if (msg.service_id !== latestServiceId) return;
+      if (chatWindow.classList.contains("hidden")) {
+        toggleBtn.classList.remove("bg-primary");
+        toggleBtn.classList.add("bg-red-600");
+      }
+    });
+  </script>
   {% endif %}
 
-
   <!-- ⚙️ Footer -->
-  <footer class="text-center text-sm py-6 mt-12 text-gray-500">
+  <footer class="py-6 mt-12 text-sm text-center text-textSecondary">
     &copy; 2025 DC Cleaning Team — {{ t["rights_reserved"] }}
   </footer>
 

@@ -2,75 +2,75 @@
 {% block content %}
 
 <!-- Hero principal -->
-<section class="flex flex-col md:flex-row items-center justify-between p-6 md:p-14 bg-white shadow rounded-lg max-w-6xl mx-auto mt-8 animate-fade-in-up">
-  <div class="md:w-1/2 mb-8 md:mb-0 text-center md:text-left">
-    <p class="text-sm text-blue-500 font-semibold uppercase tracking-wider mb-2">
+<section class="flex flex-col items-center justify-between max-w-6xl p-6 mx-auto mt-8 bg-white rounded-lg shadow md:flex-row md:p-14 animate-fade-in-up">
+  <div class="mb-8 text-center md:w-1/2 md:mb-0 md:text-left">
+    <p class="mb-2 text-sm font-semibold tracking-wider uppercase text-primary">
       🧼 Canada's Trusted Cleaning Experts
     </p>
-    <h1 class="text-4xl font-bold text-blue-800 mb-4">{{ t["home_welcome_title"] }}</h1>
-    <p class="text-lg text-gray-700 mb-6">{{ t["home_welcome_desc"] }}</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-      <a href="{{ url_for('auth.login') }}" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
+    <h1 class="mb-4 text-4xl font-bold text-primary">{{ t["home_welcome_title"] }}</h1>
+    <p class="mb-6 text-lg text-textSecondary">{{ t["home_welcome_desc"] }}</p>
+    <div class="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
+      <a href="{{ url_for('auth.login') }}" class="inline-block px-6 py-3 text-white transition rounded-lg shadow bg-primary hover:bg-primaryDark">
         {{ t["start_now"] }}
       </a>
-      <a href="#services" class="inline-block bg-white text-blue-600 border border-blue-600 px-6 py-3 rounded-lg shadow hover:bg-blue-100 transition">
+      <a href="#services" class="inline-block px-6 py-3 transition bg-white border rounded-lg shadow text-primary border-primary hover:bg-lightGray">
         {{ t["see_services"] }}
       </a>
     </div>
   </div>
-  <div class="md:w-1/2 flex justify-center">
-    <img src="{{ url_for('static', filename='img/foto.png') }}" alt="Welcome" class="rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-80 md:w-96">
+  <div class="flex justify-center md:w-1/2">
+    <img src="{{ url_for('static', filename='img/foto.png') }}" alt="Welcome" class="transition-transform duration-300 shadow-lg rounded-xl hover:scale-105 w-80 md:w-96">
   </div>
 </section>
 
 <!-- Sección: Nuestros Servicios -->
-<section id="services" class="mt-20 max-w-6xl mx-auto px-4">
-  <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">{{ t["home_services_title"] }}</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div class="bg-white p-6 rounded-lg shadow text-center">
+<section id="services" class="max-w-6xl px-4 mx-auto mt-20">
+  <h2 class="mb-6 text-2xl font-bold text-center text-textMain">{{ t["home_services_title"] }}</h2>
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+    <div class="p-6 text-center bg-white rounded-lg shadow">
       <img src="{{ url_for('static', filename='img/home.png') }}" alt="Home Cleaning" class="w-16 h-16 mx-auto mb-4">
-      <h3 class="text-lg font-semibold text-blue-700">{{ t["home_service_home"] }}</h3>
-      <p class="text-sm text-gray-600">{{ t["home_service_home_desc"] }}</p>
+      <h3 class="text-lg font-semibold text-primary">{{ t["home_service_home"] }}</h3>
+      <p class="text-sm text-textSecondary">{{ t["home_service_home_desc"] }}</p>
     </div>
-    <div class="bg-white p-6 rounded-lg shadow text-center">
+    <div class="p-6 text-center bg-white rounded-lg shadow">
       <img src="{{ url_for('static', filename='img/Commercial.png') }}" alt="Commercial Cleaning" class="w-16 h-16 mx-auto mb-4">
-      <h3 class="text-lg font-semibold text-blue-700">{{ t["home_service_commercial"] }}</h3>
-      <p class="text-sm text-gray-600">{{ t["home_service_commercial_desc"] }}</p>
+      <h3 class="text-lg font-semibold text-primary">{{ t["home_service_commercial"] }}</h3>
+      <p class="text-sm text-textSecondary">{{ t["home_service_commercial_desc"] }}</p>
     </div>
-    <div class="bg-white p-6 rounded-lg shadow text-center">
+    <div class="p-6 text-center bg-white rounded-lg shadow">
       <img src="{{ url_for('static', filename='img/Deep.png') }}" alt="Deep Cleaning" class="w-16 h-16 mx-auto mb-4">
-      <h3 class="text-lg font-semibold text-blue-700">{{ t["home_service_deep"] }}</h3>
-      <p class="text-sm text-gray-600">{{ t["home_service_deep_desc"] }}</p>
+      <h3 class="text-lg font-semibold text-primary">{{ t["home_service_deep"] }}</h3>
+      <p class="text-sm text-textSecondary">{{ t["home_service_deep_desc"] }}</p>
     </div>
   </div>
 </section>
 
 <!-- Funcionalidades destacadas -->
-<section class="mt-20 max-w-6xl mx-auto px-4">
-  <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">{{ t["what_you_can_do"] }}</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div class="bg-white p-6 rounded-lg shadow text-center">
+<section class="max-w-6xl px-4 mx-auto mt-20">
+  <h2 class="mb-6 text-2xl font-bold text-center text-textMain">{{ t["what_you_can_do"] }}</h2>
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+    <div class="p-6 text-center bg-white rounded-lg shadow">
       <img src="{{ url_for('static', filename='img/Request.png') }}" alt="Request" class="w-16 h-16 mx-auto mb-4">
-      <h3 class="text-lg font-semibold text-blue-700">{{ t["request_service_title"] }}</h3>
-      <p class="text-sm text-gray-600">{{ t["request_service_desc"] }}</p>
+      <h3 class="text-lg font-semibold text-primary">{{ t["request_service_title"] }}</h3>
+      <p class="text-sm text-textSecondary">{{ t["request_service_desc"] }}</p>
     </div>
-    <div class="bg-white p-6 rounded-lg shadow text-center">
+    <div class="p-6 text-center bg-white rounded-lg shadow">
       <img src="{{ url_for('static', filename='img/recurrente.png') }}" alt="Recurring" class="w-16 h-16 mx-auto mb-4">
-      <h3 class="text-lg font-semibold text-blue-700">{{ t["recurring_service_title"] }}</h3>
-      <p class="text-sm text-gray-600">{{ t["recurring_service_desc"] }}</p>
+      <h3 class="text-lg font-semibold text-primary">{{ t["recurring_service_title"] }}</h3>
+      <p class="text-sm text-textSecondary">{{ t["recurring_service_desc"] }}</p>
     </div>
-    <div class="bg-white p-6 rounded-lg shadow text-center">
+    <div class="p-6 text-center bg-white rounded-lg shadow">
       <img src="{{ url_for('static', filename='img/rate.png') }}" alt="Rate" class="w-16 h-16 mx-auto mb-4">
-      <h3 class="text-lg font-semibold text-blue-700">{{ t["rate_service_title"] }}</h3>
-      <p class="text-sm text-gray-600">{{ t["rate_service_desc"] }}</p>
+      <h3 class="text-lg font-semibold text-primary">{{ t["rate_service_title"] }}</h3>
+      <p class="text-sm text-textSecondary">{{ t["rate_service_desc"] }}</p>
     </div>
   </div>
 </section>
 
 <!-- Información de contacto -->
 <section class="mt-20 text-center" id="contact">
-  <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ t["contact"] }}</h2>
-  <p class="text-gray-600">{{ t["home_contact_info"] }}</p>
+  <h2 class="mb-4 text-2xl font-bold text-textMain">{{ t["contact"] }}</h2>
+  <p class="text-textSecondary">{{ t["home_contact_info"] }}</p>
 </section>
 
 {% endblock %}

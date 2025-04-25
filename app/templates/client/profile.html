@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-4xl mx-auto mt-12 px-4">
-  <h2 class="text-3xl font-bold text-blue-800 mb-6 text-center">{{ t["profile_title"] }}</h2>
+<div class="max-w-4xl px-4 mx-auto mt-12">
+  <h2 class="mb-6 text-3xl font-bold text-center text-primary">{{ t["profile_title"] }}</h2>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -14,49 +14,49 @@
   {% endwith %}
 
   <!-- Información Personal -->
-  <div class="bg-white shadow rounded-lg p-6 mb-10 border border-blue-100">
-    <h3 class="text-xl font-semibold text-blue-700 mb-4">{{ t["personal_info"] }}</h3>
+  <div class="p-6 mb-10 bg-white border rounded-lg shadow border-primary/20">
+    <h3 class="mb-4 text-xl font-semibold text-primaryDark">{{ t["personal_info"] }}</h3>
     <form method="POST" action="{{ url_for('client.update_profile') }}" class="space-y-4">
       {{ update_form.hidden_tag() }}
 
       <div>
-        <label class="block font-medium text-gray-700 mb-1">{{ t["name"] }}</label>
-        {{ update_form.name(class="w-full border border-gray-300 p-2 rounded") }}
+        <label class="block mb-1 font-medium text-textMain">{{ t["name"] }}</label>
+        {{ update_form.name(class="w-full p-2 border border-gray-300 rounded") }}
       </div>
 
       <div>
-        <label class="block font-medium text-gray-700 mb-1">{{ t["email"] }}</label>
-        {{ update_form.email(class="w-full border border-gray-300 p-2 rounded") }}
+        <label class="block mb-1 font-medium text-textMain">{{ t["email"] }}</label>
+        {{ update_form.email(class="w-full p-2 border border-gray-300 rounded") }}
       </div>
 
-      <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+      <button type="submit" class="px-6 py-2 text-white transition rounded bg-primary hover:bg-primaryDark">
         {{ t["update_info"] }}
       </button>
     </form>
   </div>
 
   <!-- Cambiar Contraseña -->
-  <div class="bg-white shadow rounded-lg p-6 border border-purple-100">
-    <h3 class="text-xl font-semibold text-purple-700 mb-4">{{ t["change_password"] }}</h3>
+  <div class="p-6 bg-white border border-purple-100 rounded-lg shadow">
+    <h3 class="mb-4 text-xl font-semibold text-purple-700">{{ t["change_password"] }}</h3>
     <form method="POST" action="{{ url_for('client.change_password') }}" class="space-y-4">
       {{ password_form.hidden_tag() }}
 
       <div>
-        <label class="block font-medium text-gray-700 mb-1">{{ t["current_password"] }}</label>
-        {{ password_form.current_password(class="w-full border border-gray-300 p-2 rounded") }}
+        <label class="block mb-1 font-medium text-textMain">{{ t["current_password"] }}</label>
+        {{ password_form.current_password(class="w-full p-2 border border-gray-300 rounded") }}
       </div>
 
       <div>
-        <label class="block font-medium text-gray-700 mb-1">{{ t["new_password"] }}</label>
-        {{ password_form.new_password(class="w-full border border-gray-300 p-2 rounded") }}
+        <label class="block mb-1 font-medium text-textMain">{{ t["new_password"] }}</label>
+        {{ password_form.new_password(class="w-full p-2 border border-gray-300 rounded") }}
       </div>
 
       <div>
-        <label class="block font-medium text-gray-700 mb-1">{{ t["confirm_new_password"] }}</label>
-        {{ password_form.confirm_password(class="w-full border border-gray-300 p-2 rounded") }}
+        <label class="block mb-1 font-medium text-textMain">{{ t["confirm_new_password"] }}</label>
+        {{ password_form.confirm_password(class="w-full p-2 border border-gray-300 rounded") }}
       </div>
 
-      <button type="submit" class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition">
+      <button type="submit" class="px-6 py-2 text-white transition bg-purple-600 rounded hover:bg-purple-700">
         {{ t["update_password"] }}
       </button>
     </form>

@@ -5,61 +5,61 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
-<div class="max-w-3xl mx-auto mt-10 bg-white shadow p-6 rounded-lg">
-  <h1 class="text-2xl font-bold text-purple-700 mb-6">{{ t["request_service_title"] }}</h1>
+<div class="max-w-3xl p-6 mx-auto mt-10 bg-white border rounded-lg shadow border-primary/10">
+  <h1 class="mb-6 text-2xl font-bold text-primaryDark">{{ t["request_service_title"] }}</h1>
 
   <form method="POST">
     {{ form.hidden_tag() }}
 
     <!-- Tipo de servicio -->
     <div class="mb-4">
-      <label class="block font-medium">{{ t["service_type"] }}</label>
-      {{ form.service_type(class="w-full border border-gray-300 p-2 rounded") }}
+      <label class="block font-medium text-textMain">{{ t["service_type"] }}</label>
+      {{ form.service_type(class="w-full p-2 border border-gray-300 rounded") }}
     </div>
 
     <!-- Fecha -->
     <div class="mb-4">
-      <label class="block font-medium">{{ t["preferred_date"] }}</label>
-      {{ form.date(class="w-full border border-gray-300 p-2 rounded") }}
+      <label class="block font-medium text-textMain">{{ t["preferred_date"] }}</label>
+      {{ form.date(class="w-full p-2 border border-gray-300 rounded") }}
     </div>
 
     <!-- Hora -->
     <div class="mb-4">
-      <label class="block font-medium">{{ t["preferred_time"] }}</label>
-      {{ form.time(class="w-full border border-gray-300 p-2 rounded") }}
+      <label class="block font-medium text-textMain">{{ t["preferred_time"] }}</label>
+      {{ form.time(class="w-full p-2 border border-gray-300 rounded") }}
     </div>
 
     <!-- Dirección -->
-    <div class="mb-2 flex items-center gap-2">
-      <label class="block font-medium w-full">{{ t["address"] }}</label>
+    <div class="flex items-center gap-2 mb-2">
+      <label class="block w-full font-medium text-textMain">{{ t["address"] }}</label>
     </div>
     <div class="flex gap-2 mb-3">
-      {{ form.address(id="address", class="flex-1 border border-gray-300 p-2 rounded") }}
+      {{ form.address(id="address", class="flex-1 p-2 border border-gray-300 rounded") }}
       <button type="button" onclick="getCurrentLocation()"
-        class="bg-blue-600 text-white px-3 rounded hover:bg-blue-700 text-sm">
+        class="px-3 text-sm text-white rounded bg-primary hover:bg-primaryDark">
         📍 {{ t["use_my_location"] }}
       </button>
       <button type="button" onclick="clearAddress()"
-        class="bg-red-500 text-white px-3 rounded hover:bg-red-600 text-sm">
+        class="px-3 text-sm text-white bg-red-500 rounded hover:bg-red-600">
         ❌ {{ t["clear_location"] }}
       </button>
     </div>
 
     <!-- Mapa -->
-    <label for="map" class="block font-medium mb-2 text-gray-700">{{ t["select_location"] }}</label>
-    <div id="map" class="h-64 rounded shadow mb-4"></div>
+    <label for="map" class="block mb-2 font-medium text-textSecondary">{{ t["select_location"] }}</label>
+    <div id="map" class="h-64 mb-4 rounded shadow"></div>
     <input type="hidden" name="lat" id="lat">
     <input type="hidden" name="lng" id="lng">
 
     <!-- Notas -->
     <div class="mb-4">
-      <label class="block font-medium">{{ t["additional_notes"] }}</label>
-      {{ form.notes(class="w-full border border-gray-300 p-2 rounded") }}
+      <label class="block font-medium text-textMain">{{ t["additional_notes"] }}</label>
+      {{ form.notes(class="w-full p-2 border border-gray-300 rounded") }}
     </div>
 
     <!-- Recurrente -->
     <div class="mb-4">
-      <label class="inline-flex items-center">
+      <label class="inline-flex items-center text-textMain">
         {{ form.recurrent() }}
         <span class="ml-2 font-medium">{{ t["recurrent_service"] }}</span>
       </label>
@@ -67,13 +67,13 @@
 
     <!-- Frecuencia -->
     <div class="mb-4" id="frequency-container" style="display: none;">
-      <label class="block font-medium">{{ t["frequency"] }}</label>
-      {{ form.frequency(class="w-full border border-gray-300 p-2 rounded") }}
+      <label class="block font-medium text-textMain">{{ t["frequency"] }}</label>
+      {{ form.frequency(class="w-full p-2 border border-gray-300 rounded") }}
     </div>
 
     <!-- Botón -->
     <div class="text-right">
-      <button type="submit" class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition">
+      <button type="submit" class="px-6 py-2 text-white transition bg-purple-600 rounded hover:bg-purple-700">
         {{ t["submit_request"] }}
       </button>
     </div>
@@ -94,11 +94,7 @@
 
   let marker = L.marker(defaultCoords, { draggable: true }).addTo(map);
 
-  // Geocoder
-  const geocoder = L.Control.geocoder({
-    defaultMarkGeocode: false
-  }).addTo(map);
-
+  const geocoder = L.Control.geocoder({ defaultMarkGeocode: false }).addTo(map);
   geocoder.on('markgeocode', function(e) {
     const { lat, lng } = e.geocode.center;
     marker.setLatLng([lat, lng]);
@@ -106,7 +102,6 @@
     reverseGeocode(lat, lng);
   });
 
-  // Auto llenar dirección si se arrastra
   marker.on("dragend", () => {
     const { lat, lng } = marker.getLatLng();
     reverseGeocode(lat, lng);
@@ -126,7 +121,6 @@
     }
   }
 
-  // Geolocalizar
   function getCurrentLocation() {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported.");
@@ -144,14 +138,12 @@
     );
   }
 
-  // Limpiar dirección
   function clearAddress() {
     document.getElementById("address").value = "";
     document.getElementById("lat").value = "";
     document.getElementById("lng").value = "";
   }
 
-  // Mostrar frecuencia solo si es recurrente
   const recurrentCheckbox = document.querySelector('input[name="recurrent"]');
   const frequencyContainer = document.getElementById("frequency-container");
   if (recurrentCheckbox) {
@@ -162,5 +154,4 @@
     toggleFrequency();
   }
 </script>
-
 {% endblock %}

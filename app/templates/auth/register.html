@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="flex items-center justify-center mt-20 mb-24 px-4">
-  <div class="bg-white p-8 rounded shadow-md w-full max-w-md text-center">
+<div class="flex items-center justify-center px-4 mt-20 mb-24">
+  <div class="w-full max-w-md p-8 text-center bg-white rounded shadow-md">
 
     <!-- Imagen superior -->
     <img src="{{ url_for('static', filename='img/register.png') }}" alt="Register Icon" class="w-24 h-24 mx-auto mb-4">
 
     <!-- Título -->
-    <h2 class="text-2xl font-bold text-blue-700 mb-6">{{ t["register_title"] }}</h2>
+    <h2 class="mb-6 text-2xl font-bold text-textMain">{{ t["register_title"] }}</h2>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -22,26 +22,26 @@
 
     <form action="{{ url_for('auth.register') }}" method="POST" class="space-y-4 text-left">
       <div>
-        <label for="name" class="block text-gray-700 font-medium">{{ t["register_name"] }}</label>
-        <input type="text" name="name" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+        <label for="name" class="block font-medium text-textMain">{{ t["register_name"] }}</label>
+        <input type="text" name="name" required class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
       </div>
       <div>
-        <label for="email" class="block text-gray-700 font-medium">{{ t["login_email"] }}</label>
-        <input type="email" name="email" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+        <label for="email" class="block font-medium text-textMain">{{ t["login_email"] }}</label>
+        <input type="email" name="email" required class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
       </div>
       <div>
-        <label for="password" class="block text-gray-700 font-medium">{{ t["login_password"] }}</label>
-        <input type="password" name="password" required class="w-full mt-1 p-2 border border-gray-300 rounded">
+        <label for="password" class="block font-medium text-textMain">{{ t["login_password"] }}</label>
+        <input type="password" name="password" required class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primaryDark">
       </div>
       <div class="text-center">
-        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+        <button type="submit" class="px-6 py-2 text-white transition rounded bg-primaryDark hover:bg-primary">
           {{ t["register_button"] }}
         </button>
       </div>
     </form>
 
-    <p class="mt-4 text-sm text-gray-600">
-      {{ t["already_account"] }} <a href="{{ url_for('auth.login') }}" class="text-blue-600 hover:underline">{{ t["login_title"] }}</a>
+    <p class="mt-4 text-sm text-textSecondary">
+      {{ t["already_account"] }} <a href="{{ url_for('auth.login') }}" class="text-primaryDark hover:underline">{{ t["login_title"] }}</a>
     </p>
     
   </div>

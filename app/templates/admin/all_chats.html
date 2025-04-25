@@ -1,45 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-6xl mx-auto px-4 mt-12">
-  <h2 class="text-3xl font-bold text-[#003DA5] mb-8 text-center">{{ t["all_chats_title"] or "All Chats" }}</h2>
+<div class="max-w-6xl px-4 mx-auto mt-12">
+  <h2 class="mb-8 text-3xl font-bold text-center text-primaryDark">{{ t["all_chats_title"] or "All Chats" }}</h2>
 
   <!-- 🔍 Filtros -->
-  <form method="GET" action="" class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+  <form method="GET" action="" class="flex flex-col items-center justify-between gap-4 mb-6 md:flex-row">
     <input type="text" name="client" value="{{ request.args.get('client', '') }}" placeholder="{{ t['search_client'] or 'Search by client name' }}"
-           class="w-full md:w-1/3 border border-gray-300 rounded px-3 py-2 text-sm">
+           class="w-full px-3 py-2 text-sm border border-gray-300 rounded md:w-1/3 focus:ring-2 focus:ring-primaryDark">
 
-    <select name="status" class="w-full md:w-1/3 border border-gray-300 rounded px-3 py-2 text-sm">
+    <select name="status" class="w-full px-3 py-2 text-sm border border-gray-300 rounded md:w-1/3 focus:ring-2 focus:ring-primaryDark">
       <option value="">{{ t['filter_by_status'] or 'Filter by status' }}</option>
       {% for key, label in t['status_labels'].items() %}
         <option value="{{ key }}" {% if request.args.get('status') == key %}selected{% endif %}>{{ label }}</option>
       {% endfor %}
     </select>
 
-    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded shadow">{{ t['filter'] or 'Filter' }}</button>
+    <button type="submit" class="px-4 py-2 text-sm text-white rounded shadow bg-primaryDark hover:bg-primary">
+      {{ t['filter'] or 'Filter' }}
+    </button>
   </form>
 
   {% if services %}
-  <div class="overflow-x-auto bg-white shadow rounded-lg">
+  <div class="overflow-x-auto bg-white border rounded-lg shadow border-lightGray">
     <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
+      <thead class="bg-lightGray">
         <tr>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ t["client"] or "Client" }}</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ t["service_type"] or "Service Type" }}</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ t["date"] or "Date" }}</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ t["status2"] or "Status" }}</th>
+          <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-textSecondary">{{ t["client"] or "Client" }}</th>
+          <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-textSecondary">{{ t["service_type"] or "Service Type" }}</th>
+          <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-textSecondary">{{ t["date"] or "Date" }}</th>
+          <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-textSecondary">{{ t["status2"] or "Status" }}</th>
           <th class="px-6 py-3"></th>
         </tr>
       </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
+      <tbody class="bg-white divide-y divide-gray-100">
         {% for s in services %}
         <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4 whitespace-nowrap">{{ s.user.name }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ t["service_type_labels"][s.service_type] }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ s.date.strftime('%Y-%m-%d') }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ t["status_labels"][s.status] }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-textMain">{{ s.user.name }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-textMain">{{ t["service_type_labels"][s.service_type] }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-textMain">{{ s.date.strftime('%Y-%m-%d') }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-textMain">{{ t["status_labels"][s.status] }}</td>
           <td class="px-6 py-4 text-right whitespace-nowrap">
             <a href="{{ url_for('chat.chat', service_id=s.id) }}"
-               class="text-blue-600 hover:underline text-sm">
+               class="text-sm text-primaryDark hover:underline">
               {{ t["open_chat"] or "Open Chat" }}
             </a>
           </td>
@@ -49,7 +51,7 @@
     </table>
   </div>
   {% else %}
-  <p class="text-center text-gray-500 mt-8">{{ t["no_chats_available"] or "No chats available." }}</p>
+  <p class="mt-8 text-center text-textSecondary">{{ t["no_chats_available"] or "No chats available." }}</p>
   {% endif %}
 </div>
 {% endblock %}
