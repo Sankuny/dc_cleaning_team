@@ -58,3 +58,44 @@ def dashboard():
                            today_count=len(today_services),
                            ratings=ratings,
                            average_rating=round(avg_rating or 0, 1))
+
+
+@employee_bp.route("/mark-completed/<int:id>", methods=["POST"])
+@login_required
+@role_required("employee")
+def mark_completed(id):
+    reservation = Reservation.query.get_or_404(id)
+
+    # Solo si está realmente "assigned"
+    if reservation.status != "assigned":
+        return ("Bad request", 400)
+
+    # Verifica que el empleado forme parte de la reserva
+    if current_user not in reservation.employees:
+        return ("Unauthorized", 403)
+
+    # Marca como completado por empleado
+    reservation.status = "completed_by_employee"
+    db.session.commit()
+
+    # Respuesta AJAX
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return ("", 204)
+
+    flash("Marked as completed. Awaiting client confirmation.", "success")
+    return redirect(url_for("employee.dashboard"))
+
+
+@employee_bp.route("/assigned")
+@login_required
+@role_required("employee")
+def assigned_services():
+    lang = session.get("lang", "en")
+    t = load_translations(lang)
+
+    # Todas las reservas donde el empleado está asignado
+    services = Reservation.query\
+        .filter(Reservation.employees.any(id=current_user.id))\
+        .order_by(Reservation.date.desc(), Reservation.time).all()
+
+    return render_template("employee/assigned_services.html", t=t, services=services)
