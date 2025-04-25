@@ -7,15 +7,33 @@ __pycache__/
 venv/
 .env
 
-# Flask instance/
+# Flask instance
 instance/
 *.db
 
 # Migrations
-migrations/
+migrations/__pycache__/
+migrations/env.pyc
 
 # IDEs
 .vscode/
 .idea/
 
-/static/uploads/
+# Tailwind / Node
+node_modules/
+app/static/css/input.css       # ✅ solo dejamos output.css en producción
+tailwind.config.js
+postcss.config.js
+package-lock.json
+package.json
+
+# Archivos temporales o auto-generados
+*.log
+*.bak
+.DS_Store
+
+# Subidas de usuarios
+app/static/uploads/
+
+# (opcional) Si usas pytest
+.pytest_cache/
