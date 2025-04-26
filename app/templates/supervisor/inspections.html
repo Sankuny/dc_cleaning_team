@@ -1,49 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="p-6">
-  <h1 class="mb-6 text-3xl font-bold text-primary">{{ t["today_services"] }}</h1>
+  <h1 class="mb-8 text-3xl font-bold text-center text-primary">{{ t["today_services"] }}</h1>
 
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+  <div class="grid grid-cols-1 gap-6">
+    <h2 class="mb-4 text-2xl font-semibold text-green-600">{{ t["services_to_inspect"] }}</h2>
 
-    <!-- Servicios pendientes -->
-    <div>
-      <h2 class="mb-2 text-xl font-semibold text-red-600">{{ t["pending_services"] }}</h2>
-      {% if pending %}
-        {% for r in pending %}
-          <div class="p-4 mb-3 bg-red-100 border-l-4 border-red-500 rounded shadow">
-            <p><strong>{{ t["client"] }}:</strong> {{ r.user.name }}</p>
-            <p><strong>{{ t["address"] }}:</strong> {{ r.address }}</p>
-            <p><strong>{{ t["date"] }}:</strong> {{ r.date.strftime('%Y-%m-%d') }}</p>
-            <p><strong>{{ t["time"] }}:</strong> {{ r.time }}</p>
-            <p class="mt-2 text-sm text-red-700">{{ t["not_marked_completed"] }}</p>
-          </div>
-        {% endfor %}
-      {% else %}
-        <p class="text-textSecondary">{{ t["no_pending"] }}</p>
-      {% endif %}
-    </div>
-
-    <!-- Servicios listos para inspección -->
-    <div>
-      <h2 class="mb-2 text-xl font-semibold text-green-600">{{ t["ready_for_inspection"] }}</h2>
-      {% if ready_to_inspect %}
-        {% for r in ready_to_inspect %}
-          <div class="p-4 mb-3 bg-green-100 border-l-4 border-green-500 rounded shadow">
-            <p><strong>{{ t["client"] }}:</strong> {{ r.user.name }}</p>
-            <p><strong>{{ t["address"] }}:</strong> {{ r.address }}</p>
-            <p><strong>{{ t["date"] }}:</strong> {{ r.date.strftime('%Y-%m-%d') }}</p>
-            <p><strong>{{ t["time"] }}:</strong> {{ r.time }}</p>
-            <a href="{{ url_for('supervisor.inspect', reservation_id=r.id) }}"
-               class="inline-block px-4 py-2 mt-3 text-white transition rounded bg-primary hover:bg-primaryDark">
-              {{ t["review_button"] }}
-            </a>
-          </div>
-        {% endfor %}
-      {% else %}
-        <p class="text-textSecondary">{{ t["no_ready"] }}</p>
-      {% endif %}
-    </div>
-
+    {% if pending %}
+      {% for r in pending %}
+        <div class="p-6 mb-6 border-l-4 border-green-500 rounded-lg shadow-md bg-green-50">
+          <p><strong>{{ t["client"] }}:</strong> {{ r.user.name }}</p>
+          <p><strong>{{ t["address"] }}:</strong> {{ r.address }}</p>
+          <p><strong>{{ t["date"] }}:</strong> {{ r.date.strftime('%Y-%m-%d') }}</p>
+          <p><strong>{{ t["time"] }}:</strong> {{ r.time }}</p>
+          <a href="{{ url_for('supervisor.inspect', reservation_id=r.id) }}"
+             class="inline-block px-6 py-2 mt-4 text-white transition rounded-lg bg-primary hover:bg-primaryDark hover:scale-105">
+            {{ t["review_button"] }}
+          </a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-center text-textSecondary">{{ t["no_services_to_inspect"] }}</p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

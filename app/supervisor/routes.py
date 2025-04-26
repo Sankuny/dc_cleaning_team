@@ -10,7 +10,7 @@ from app.decorators import role_required
 
 supervisor_bp = Blueprint("supervisor", __name__, url_prefix="/supervisor")
 
-# 🈳 Traducciones multilenguaje
+# 𝔳 Traducciones multilenguaje
 def load_translations(lang="en"):
     try:
         path = os.path.join("app", "translations", f"{lang}.json")
@@ -21,13 +21,13 @@ def load_translations(lang="en"):
         with open(os.path.join("app", "translations", "en.json"), "r", encoding="utf-8") as f:
             return json.load(f)
 
-# 📥 Cargar checklist fijo
+# 📋 Cargar checklist fijo
 base_path = os.path.dirname(os.path.abspath(__file__))
 checklist_path = os.path.join(base_path, "..", "data", "inspection_checklist.json")
 with open(checklist_path, "r", encoding="utf-8") as f:
     CLEANING_CHECKLIST = json.load(f)
 
-# 📋 Ver servicios del día
+# 👋 Ver servicios del día para inspeccionar
 @supervisor_bp.route("/inspections")
 @login_required
 @role_required("supervisor")
@@ -40,12 +40,12 @@ def inspections():
         db.func.date(Reservation.date) == today
     ).all()
 
-    pending = [r for r in services_today if r.status == "assigned"]
-    ready = [r for r in services_today if r.status == "completed_by_employee"]
+    # Ahora se ven servicios "accepted"
+    pending = [r for r in services_today if r.status == "accepted"]
 
-    return render_template("supervisor/inspections.html", pending=pending, ready_to_inspect=ready, t=t)
+    return render_template("supervisor/inspections.html", pending=pending, t=t)
 
-# ✅ Inspeccionar un servicio completado por el empleado
+# ✅ Inspeccionar un servicio aceptado
 @supervisor_bp.route("/inspect/<int:reservation_id>", methods=["GET", "POST"])
 @login_required
 @role_required("supervisor")
@@ -55,8 +55,9 @@ def inspect(reservation_id):
 
     reservation = Reservation.query.get_or_404(reservation_id)
 
-    if reservation.status != "completed_by_employee":
-        flash(t.get("not_completed_by_employee", "This service has not been marked as completed yet."), "warning")
+    # Solo inspeccionar servicios "accepted"
+    if reservation.status != "accepted":
+        flash(t.get("not_ready_for_inspection", "This service is not ready for inspection."), "warning")
         return redirect(url_for("supervisor.inspections"))
 
     if request.method == "POST":
@@ -100,8 +101,8 @@ def inspect(reservation_id):
         )
         db.session.add(inspection)
 
-        # ✅ Cambiar estado de la reservación a "inspected"
-        reservation.status = "inspected"
+        # ✅ Cambiar estado de la reservación a "completed"
+        reservation.status = "completed"
 
         db.session.commit()
 

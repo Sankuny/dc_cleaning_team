@@ -51,29 +51,15 @@
     <input type="hidden" name="lat" id="lat">
     <input type="hidden" name="lng" id="lng">
 
-    <!-- Notas -->
+    <!-- Notas adicionales -->
     <div class="mb-4">
       <label class="block font-medium text-textMain">{{ t["additional_notes"] }}</label>
       {{ form.notes(class="w-full p-2 border border-gray-300 rounded") }}
     </div>
 
-    <!-- Recurrente -->
-    <div class="mb-4">
-      <label class="inline-flex items-center text-textMain">
-        {{ form.recurrent() }}
-        <span class="ml-2 font-medium">{{ t["recurrent_service"] }}</span>
-      </label>
-    </div>
-
-    <!-- Frecuencia -->
-    <div class="mb-4" id="frequency-container" style="display: none;">
-      <label class="block font-medium text-textMain">{{ t["frequency"] }}</label>
-      {{ form.frequency(class="w-full p-2 border border-gray-300 rounded") }}
-    </div>
-
     <!-- Botón -->
     <div class="text-right">
-      <button type="submit" class="px-6 py-2 text-white transition bg-purple-600 rounded hover:bg-purple-700">
+      <button type="submit" class="px-6 py-2 text-white transition rounded bg-primary hover:bg-primaryDark">
         {{ t["submit_request"] }}
       </button>
     </div>
@@ -142,16 +128,6 @@
     document.getElementById("address").value = "";
     document.getElementById("lat").value = "";
     document.getElementById("lng").value = "";
-  }
-
-  const recurrentCheckbox = document.querySelector('input[name="recurrent"]');
-  const frequencyContainer = document.getElementById("frequency-container");
-  if (recurrentCheckbox) {
-    function toggleFrequency() {
-      frequencyContainer.style.display = recurrentCheckbox.checked ? "block" : "none";
-    }
-    recurrentCheckbox.addEventListener("change", toggleFrequency);
-    toggleFrequency();
   }
 </script>
 {% endblock %}

@@ -20,25 +20,6 @@ class Usuario(db.Model, UserMixin):
     def __repr__(self):
         return f"<Usuario {self.email} - {self.role}>"
 
-# 🔁 Modelo de Servicio Recurrente
-class RecurringService(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("usuario.id"), nullable=False)
-
-    service_type = db.Column(db.String(100), nullable=False)
-    address = db.Column(db.String(200))
-    notes = db.Column(db.Text)
-    lat = db.Column(db.Float)
-    lng = db.Column(db.Float)
-    time = db.Column(db.Time, nullable=False)
-    start_date = db.Column(db.Date, nullable=False)
-    frequency = db.Column(db.String(20), nullable=False)  # weekly, biweekly, monthly
-    status = db.Column(db.String(20), default="active")  # active, paused, canceled
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-    user = db.relationship("Usuario", backref="recurring_services")
-
-# 📅 Modelo de Reservación
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
@@ -50,15 +31,12 @@ class Reservation(db.Model):
     notes = db.Column(db.Text)
     lat = db.Column(db.Float)
     lng = db.Column(db.Float)
-    status = db.Column(db.String(20), default="pending")  # pending, accepted, completed, canceled, completed_by_employee
+    status = db.Column(db.String(20), default="pending")  # pending, accepted, completed, canceled
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    recurring_id = db.Column(db.Integer, db.ForeignKey("recurring_service.id"))
-
-    user = db.relationship('Usuario', backref='reservations', foreign_keys=[user_id])
-    recurring = db.relationship("RecurringService", backref="generated_reservations")
-    employees = db.relationship("Usuario", secondary=reservation_employees, backref="assigned_reservations")
+    user = db.relationship('Usuario', backref='reservations')
     rating = db.relationship("Rating", backref="reservation", uselist=False)
+    inspection = db.relationship("Inspection", backref="reservation", uselist=False)
 
 # ⭐ Modelo de Calificación
 class Rating(db.Model):

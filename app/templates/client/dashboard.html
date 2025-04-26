@@ -2,68 +2,87 @@
 {% block content %}
 <div class="max-w-6xl px-4 mx-auto mt-12">
 
-  <h2 class="mb-6 text-4xl font-bold text-center text-primary">{{ t["welcome"] }}, {{ name }}!</h2>
+  <h2 class="mb-8 text-4xl font-bold text-center text-primary">{{ t["welcome"] }}, {{ name }}!</h2>
 
   {% if latest_service %}
-    {% if latest_service.status != 'completed'%}
-    <div class="p-6 mb-6 bg-white border rounded-lg shadow border-primary/30">
-      <h3 class="mb-4 text-lg font-bold text-primaryDark">{{ t["latest_request_status"] }}</h3>
-      <p class="mb-2 text-sm text-textSecondary">{{ t["service_type"] }}: <strong>{{ t["service_type_labels"][latest_service.service_type] }}</strong></p>
+    {% if latest_service.status != 'completed' %}
+    <!-- ✨ Sección Estado del último servicio -->
+    <div class="p-6 mb-10 bg-white border rounded-lg shadow-md border-primary/30">
+      <h3 class="mb-4 text-2xl font-semibold text-primaryDark">{{ t["latest_request_status"] }}</h3>
+      <p class="mb-2 text-sm text-textSecondary">
+        {{ t["service_type"] }}: <strong>{{ t["service_type_labels"][latest_service.service_type] }}</strong>
+      </p>
       {% if latest_service.date %}
-        <p class="mb-6 text-sm text-textSecondary">{{ t["date"] }}: {{ latest_service.date.strftime('%Y-%m-%d') }}</p>
+      <p class="mb-6 text-sm text-textSecondary">
+        {{ t["date"] }}: {{ latest_service.date.strftime('%Y-%m-%d') }}
+      </p>
       {% endif %}
 
-      <div class="flex flex-col items-center justify-between gap-4 text-sm font-medium md:flex-row text-textSecondary md:gap-0">
+      <!-- ✨ Progresión visual mejorada -->
+      <div class="flex flex-col items-center justify-between gap-6 text-sm font-medium md:flex-row text-textSecondary">
+
+        <!-- Estado: Pending -->
         <div class="flex flex-col items-center w-full">
-          <div class="w-10 h-10 flex items-center justify-center rounded-full
-            {% if latest_service.status in ['pending', 'accepted', 'assigned', 'inspected', 'completed'] %}
+          <div class="flex items-center justify-center w-12 h-12 rounded-full
+            {% if latest_service.status in ['pending', 'accepted', 'completed'] %}
               bg-primary text-white animate-pulse
             {% else %} bg-gray-300 text-gray-500 {% endif %}">
             <i data-lucide="file-text" class="w-6 h-6"></i>
           </div>
           <span class="mt-2 text-xs text-center">{{ t["status_labels"]["pending"] }}</span>
         </div>
-        <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-primary to-green-200"></div>
+
+        <!-- Barra progreso 1 -->
+        <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-primary to-green-400"></div>
+
+        <!-- Estado: Accepted -->
         <div class="flex flex-col items-center w-full">
-          <div class="w-10 h-10 flex items-center justify-center rounded-full
-            {% if latest_service.status in ['accepted', 'assigned', 'inspected', 'completed'] %}
+          <div class="flex items-center justify-center w-12 h-12 rounded-full
+            {% if latest_service.status in ['accepted', 'completed'] %}
               bg-green-600 text-white animate-pulse
             {% else %} bg-gray-300 text-gray-500 {% endif %}">
             <i data-lucide="calendar-check" class="w-6 h-6"></i>
           </div>
           <span class="mt-2 text-xs text-center">{{ t["status_labels"]["accepted"] }}</span>
         </div>
-        <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-green-600 to-yellow-200"></div>
+
+        <!-- Barra progreso 2 -->
+        <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-green-600 to-yellow-400"></div>
+
+        <!-- Estado: Completed -->
         <div class="flex flex-col items-center w-full">
-          <div class="w-10 h-10 flex items-center justify-center rounded-full
-            {% if latest_service.status in ['inspected', 'completed'] %}
+          <div class="flex items-center justify-center w-12 h-12 rounded-full
+            {% if latest_service.status in ['completed'] %}
               bg-yellow-500 text-white animate-pulse
             {% else %} bg-gray-300 text-gray-500 {% endif %}">
             <i data-lucide="check-circle" class="w-6 h-6"></i>
           </div>
           <span class="mt-2 text-xs text-center">{{ t["status_labels"]["completed"] }}</span>
         </div>
+
       </div>
     </div>
     {% endif %}
 
-    {% if latest_service.status == 'inspected' and to_rate %}
+    {% if latest_service.status == 'completed' and to_rate %}
+    <!-- ✨ Tarjeta para Calificar Servicio -->
     <div id="card-{{ latest_service.id }}" class="p-6 mb-10 bg-white border border-yellow-300 shadow-lg rounded-xl">
-      <h3 class="mb-2 text-lg font-semibold text-textMain">{{ t["rate_prompt"] }}</h3>
+      <h3 class="mb-4 text-2xl font-semibold text-textMain">{{ t["rate_prompt"] }}</h3>
 
       <form class="space-y-4 rating-form" data-id="{{ latest_service.id }}">
         <input type="hidden" name="rating" id="rating-value" value="0">
 
+        <!-- Estrellas -->
         <div id="star-container" class="flex justify-center gap-2 mb-4">
           {% for i in range(1, 6) %}
             <i class="w-8 h-8 text-gray-300 cursor-pointer star" data-value="{{ i }}" data-lucide="star"></i>
           {% endfor %}
         </div>
 
-        <div>
-          <textarea name="comment" rows="3" class="w-full p-2 border border-gray-300 rounded resize-none" placeholder="{{ t['comment_placeholder'] }}"></textarea>
-        </div>
+        <!-- Comentario -->
+        <textarea name="comment" rows="3" class="w-full p-3 border border-gray-300 rounded-lg resize-none" placeholder="{{ t['comment_placeholder'] }}"></textarea>
 
+        <!-- Boton Enviar -->
         <div class="text-right">
           <button type="submit" class="flex items-center gap-2 px-6 py-2 text-white transition duration-300 transform rounded bg-primary hover:bg-primaryDark hover:scale-105">
             <i data-lucide="star" class="w-5 h-5"></i>
@@ -75,25 +94,21 @@
     {% endif %}
   {% endif %}
 
-  <!-- 📦 Funcionalidades -->
+  <!-- ✨ Acciones principales -->
   <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-
     {% for item in [
       ("client.request_service", "img/Request.png", "request_service_title", "request_service_desc"),
-      ("client.rate_service", "img/rate.png", "rate_service_title", "rate_service_desc"),
       ("client.service_history", "img/hitory.png", "service_history_title", "service_history_desc"),
-      ("client.profile", "img/profile.png", "profile_title", "profile_desc"),
-      ("client.recurring_services", "img/recurrente.png", "recurring_service_title", "recurring_service_desc")
+      ("client.profile", "img/profile.png", "profile_title", "profile_desc")
     ] %}
-    <a href="{{ url_for(item[0]) }}"
-       class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
-      <img src="{{ url_for('static', filename=item[1]) }}" alt="Icon" class="w-20 h-20 mx-auto mb-4 transition duration-300 group-hover:scale-110">
+    <a href="{{ url_for(item[0]) }}" class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
+      <img src="{{ url_for('static', filename=item[1]) }}" alt="Icon" class="w-20 h-20 mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
       <h2 class="mb-2 text-xl font-semibold text-primary">{{ t[item[2]] }}</h2>
       <p class="text-sm text-textSecondary">{{ t[item[3]] }}</p>
     </a>
     {% endfor %}
-
   </div>
+
 </div>
 
 <!-- Scripts -->
@@ -149,11 +164,7 @@
 
       if (response.ok) {
         const card = document.getElementById(`card-${reservationId}`);
-        card.innerHTML = `
-          <div class="py-10 text-center">
-            <p class="text-xl font-semibold text-green-600">⭐ {{ t["thank_you_rating"] }}</p>
-          </div>
-        `;
+        card.innerHTML = `<div class='py-10 text-center'><p class='text-xl font-semibold text-green-600'>⭐ {{ t["thank_you_rating"] }}</p></div>`;
         Swal.fire({
           icon: "success",
           title: "{{ t['swal_thanks'] }}",
