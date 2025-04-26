@@ -213,10 +213,7 @@
 "status_labels": {
   "pending": "Demande Envoyée",
   "accepted": "Acceptée",
-  "rejected": "Rejetée",
-  "assigned": "Employé Assigné",
-  "completed_by_employee": "En attente de confirmation",
-  "completed": "Évalué"
+  "completed": "complété"
 },
 
   "chat_with_team": "Discussion avec l'équipe de nettoyage",

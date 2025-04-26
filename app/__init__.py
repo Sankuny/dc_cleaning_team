@@ -66,11 +66,16 @@ def create_app():
             elif current_user.role == "admin":
                 latest = Reservation.query.order_by(Reservation.created_at.desc()).first()
             else:
-                latest = Reservation.query.filter(Reservation.employees.any(id=current_user.id))\
-                                        .order_by(Reservation.created_at.desc()).first()
+                latest = None  
 
-            return {"latest_service": latest}
+            to_rate = False
+            if latest and latest.status == "completed" and latest.rating is None:
+                to_rate = True
+
+            return {"latest_service": latest, "to_rate": to_rate}
         return {}
+
+
 
     # Errores 403 / 404 traducidos
     @app.errorhandler(403)

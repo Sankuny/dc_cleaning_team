@@ -1,0 +1,10 @@
+.star {
+    transition: transform 0.2s, color 0.2s !important;
+    color: #d1d5db !important; /* gris claro por defecto */
+  }
+  
+  .star:hover {
+    transform: scale(1.2);
+    color: #facc15 !important; /* amarillo (Tailwind yellow-400) */
+  }
+  

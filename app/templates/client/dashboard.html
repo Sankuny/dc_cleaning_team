@@ -5,176 +5,177 @@
   <h2 class="mb-8 text-4xl font-bold text-center text-primary">{{ t["welcome"] }}, {{ name }}!</h2>
 
   {% if latest_service %}
-    {% if latest_service.status != 'completed' %}
-    <!-- ✨ Sección Estado del último servicio -->
-    <div class="p-6 mb-10 bg-white border rounded-lg shadow-md border-primary/30">
-      <h3 class="mb-4 text-2xl font-semibold text-primaryDark">{{ t["latest_request_status"] }}</h3>
-      <p class="mb-2 text-sm text-textSecondary">
-        {{ t["service_type"] }}: <strong>{{ t["service_type_labels"][latest_service.service_type] }}</strong>
-      </p>
-      {% if latest_service.date %}
-      <p class="mb-6 text-sm text-textSecondary">
-        {{ t["date"] }}: {{ latest_service.date.strftime('%Y-%m-%d') }}
-      </p>
-      {% endif %}
+    {# ————— Mostrar progreso o tarjeta de rating ————— #}
+    {% if latest_service.status != 'completed' or (latest_service.status == 'completed' and not latest_service.rating) %}
+      <div class="p-6 mb-10 bg-white border rounded-lg shadow-md border-primary/30">
+        <h3 class="mb-4 text-2xl font-semibold text-primaryDark">{{ t["latest_request_status"] }}</h3>
+        <p class="mb-2 text-sm text-textSecondary">
+          {{ t["service_type"] }}:
+          <strong>{{ t["service_type_labels"][latest_service.service_type] }}</strong>
+        </p>
+        {% if latest_service.date %}
+          <p class="mb-6 text-sm text-textSecondary">
+            {{ t["date"] }}: {{ latest_service.date.strftime('%Y-%m-%d') }}
+          </p>
+        {% endif %}
 
-      <!-- ✨ Progresión visual mejorada -->
-      <div class="flex flex-col items-center justify-between gap-6 text-sm font-medium md:flex-row text-textSecondary">
-
-        <!-- Estado: Pending -->
-        <div class="flex flex-col items-center w-full">
-          <div class="flex items-center justify-center w-12 h-12 rounded-full
-            {% if latest_service.status in ['pending', 'accepted', 'completed'] %}
-              bg-primary text-white animate-pulse
-            {% else %} bg-gray-300 text-gray-500 {% endif %}">
-            <i data-lucide="file-text" class="w-6 h-6"></i>
+        <div class="flex flex-col items-center justify-between gap-6 text-sm font-medium md:flex-row text-textSecondary">
+          {# Pending #}
+          <div class="flex flex-col items-center w-full">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full
+              {% if latest_service.status in ['pending','accepted','completed'] %} bg-primary text-white animate-pulse
+              {% else %} bg-gray-300 text-gray-500 {% endif %}">
+              <i data-lucide="file-text" class="w-6 h-6"></i>
+            </div>
+            <span class="mt-2 text-xs text-center">{{ t["status_labels"]["pending"] }}</span>
           </div>
-          <span class="mt-2 text-xs text-center">{{ t["status_labels"]["pending"] }}</span>
-        </div>
+          <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-primary to-green-400"></div>
 
-        <!-- Barra progreso 1 -->
-        <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-primary to-green-400"></div>
-
-        <!-- Estado: Accepted -->
-        <div class="flex flex-col items-center w-full">
-          <div class="flex items-center justify-center w-12 h-12 rounded-full
-            {% if latest_service.status in ['accepted', 'completed'] %}
-              bg-green-600 text-white animate-pulse
-            {% else %} bg-gray-300 text-gray-500 {% endif %}">
-            <i data-lucide="calendar-check" class="w-6 h-6"></i>
+          {# Accepted #}
+          <div class="flex flex-col items-center w-full">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full
+              {% if latest_service.status in ['accepted','completed'] %} bg-green-600 text-white animate-pulse
+              {% else %} bg-gray-300 text-gray-500 {% endif %}">
+              <i data-lucide="calendar-check" class="w-6 h-6"></i>
+            </div>
+            <span class="mt-2 text-xs text-center">{{ t["status_labels"]["accepted"] }}</span>
           </div>
-          <span class="mt-2 text-xs text-center">{{ t["status_labels"]["accepted"] }}</span>
-        </div>
+          <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-green-600 to-yellow-400"></div>
 
-        <!-- Barra progreso 2 -->
-        <div class="flex-1 hidden h-1 mx-1 md:flex bg-gradient-to-r from-green-600 to-yellow-400"></div>
-
-        <!-- Estado: Completed -->
-        <div class="flex flex-col items-center w-full">
-          <div class="flex items-center justify-center w-12 h-12 rounded-full
-            {% if latest_service.status in ['completed'] %}
-              bg-yellow-500 text-white animate-pulse
-            {% else %} bg-gray-300 text-gray-500 {% endif %}">
-            <i data-lucide="check-circle" class="w-6 h-6"></i>
+          {# Completed #}
+          <div class="flex flex-col items-center w-full">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full
+              {% if latest_service.status == 'completed' %} bg-yellow-500 text-white animate-pulse
+              {% else %} bg-gray-300 text-gray-500 {% endif %}">
+              <i data-lucide="check-circle" class="w-6 h-6"></i>
+            </div>
+            <span class="mt-2 text-xs text-center">{{ t["status_labels"]["completed"] }}</span>
           </div>
-          <span class="mt-2 text-xs text-center">{{ t["status_labels"]["completed"] }}</span>
         </div>
-
       </div>
-    </div>
     {% endif %}
 
-    {% if latest_service.status == 'completed' and to_rate %}
-    <!-- ✨ Tarjeta para Calificar Servicio -->
-    <div id="card-{{ latest_service.id }}" class="p-6 mb-10 bg-white border border-yellow-300 shadow-lg rounded-xl">
-      <h3 class="mb-4 text-2xl font-semibold text-textMain">{{ t["rate_prompt"] }}</h3>
+    {# ————— Tarjeta de Calificación ————— #}
+    {% if latest_service.status == 'completed' and not latest_service.rating %}
+      <div id="card-{{ latest_service.id }}" class="p-6 mb-10 bg-white border border-yellow-300 shadow-lg rounded-xl">
+        <h3 class="mb-4 text-2xl font-semibold text-textMain">{{ t["rate_prompt"] }}</h3>
 
-      <form class="space-y-4 rating-form" data-id="{{ latest_service.id }}">
-        <input type="hidden" name="rating" id="rating-value" value="0">
-
-        <!-- Estrellas -->
         <div id="star-container" class="flex justify-center gap-2 mb-4">
-          {% for i in range(1, 6) %}
-            <i class="w-8 h-8 text-gray-300 cursor-pointer star" data-value="{{ i }}" data-lucide="star"></i>
+          {% for i in range(1,6) %}
+            <span class="flex items-center justify-center w-8 h-8 cursor-pointer star" data-value="{{ i }}">
+              <i data-lucide="star" class="w-6 h-6"></i>
+            </span>
           {% endfor %}
         </div>
 
-        <!-- Comentario -->
-        <textarea name="comment" rows="3" class="w-full p-3 border border-gray-300 rounded-lg resize-none" placeholder="{{ t['comment_placeholder'] }}"></textarea>
+        <input type="hidden" id="rating-value" name="rating" value="0">
 
-        <!-- Boton Enviar -->
-        <div class="text-right">
-          <button type="submit" class="flex items-center gap-2 px-6 py-2 text-white transition duration-300 transform rounded bg-primary hover:bg-primaryDark hover:scale-105">
+        <textarea id="rating-comment" name="comment" rows="3"
+                  class="w-full p-3 border border-gray-300 rounded-lg resize-none"
+                  placeholder="{{ t['comment_placeholder'] }}"></textarea>
+
+        <div class="mt-4 text-right">
+          <button type="button" id="submit-rating-btn"
+                  class="flex items-center gap-2 px-6 py-2 text-white transition rounded bg-primary hover:bg-primaryDark">
             <i data-lucide="star" class="w-5 h-5"></i>
             {{ t["submit_rating"] }}
           </button>
         </div>
-      </form>
-    </div>
+      </div>
     {% endif %}
   {% endif %}
 
-  <!-- ✨ Acciones principales -->
+  {# ————— Acciones principales ————— #}
   <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
     {% for item in [
-      ("client.request_service", "img/Request.png", "request_service_title", "request_service_desc"),
-      ("client.service_history", "img/hitory.png", "service_history_title", "service_history_desc"),
-      ("client.profile", "img/profile.png", "profile_title", "profile_desc")
+      ("client.request_service","img/Request.png","request_service_title","request_service_desc"),
+      ("client.service_history","img/hitory.png","service_history_title","service_history_desc"),
+      ("client.profile","img/profile.png","profile_title","profile_desc")
     ] %}
-    <a href="{{ url_for(item[0]) }}" class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition duration-500">
-      <img src="{{ url_for('static', filename=item[1]) }}" alt="Icon" class="w-20 h-20 mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
-      <h2 class="mb-2 text-xl font-semibold text-primary">{{ t[item[2]] }}</h2>
-      <p class="text-sm text-textSecondary">{{ t[item[3]] }}</p>
-    </a>
+      <a href="{{ url_for(item[0]) }}"
+         class="group block bg-white shadow-md rounded-2xl p-6 border border-[#EBF2FA] text-center hover:shadow-xl hover:scale-105 transition">
+        <img src="{{ url_for('static',filename=item[1]) }}"
+             alt=""
+             class="w-20 h-20 mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
+        <h2 class="mb-2 text-xl font-semibold text-primary">{{ t[item[2]] }}</h2>
+        <p class="text-sm text-textSecondary">{{ t[item[3]] }}</p>
+      </a>
     {% endfor %}
   </div>
 
 </div>
 
-<!-- Scripts -->
+<style>
+  .star { color: #9CA3AF; transition: transform .2s, color .2s; }
+  .star:hover { transform: scale(1.2); }
+  .star.selected { color: #FACC15 !important; }
+  .star.selected:hover { transform: scale(1.25); }
+</style>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
 
-    const stars = document.querySelectorAll(".star");
-    const ratingInput = document.getElementById("rating-value");
+    const container = document.getElementById("star-container");
+    const inputRating = document.getElementById("rating-value");
+    const inputComment= document.getElementById("rating-comment");
+    const submitBtn   = document.getElementById("submit-rating-btn");
+    let selectedRating = 0;
 
-    stars.forEach(star => {
-      star.addEventListener("click", () => {
-        const selected = parseInt(star.dataset.value);
-        ratingInput.value = selected;
-
-        stars.forEach(s => {
-          if (parseInt(s.dataset.value) <= selected) {
-            s.classList.remove("text-gray-300");
-            s.classList.add("text-yellow-400");
-          } else {
-            s.classList.remove("text-yellow-400");
-            s.classList.add("text-gray-300");
-          }
-        });
+    function updateStars(r) {
+      container.querySelectorAll(".star").forEach(span => {
+        const v = parseInt(span.dataset.value, 10);
+        span.classList.toggle("selected", v <= r);
       });
+    }
+
+    container.addEventListener("click", e => {
+      const span = e.target.closest(".star");
+      if (!span) return;
+      selectedRating = parseInt(span.dataset.value, 10);
+      inputRating.value = selectedRating;
+      updateStars(selectedRating);
     });
-  });
 
-  document.querySelectorAll(".rating-form").forEach(form => {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const reservationId = form.dataset.id;
-      const formData = new FormData(form);
-      const data = {
-        rating: formData.get("rating"),
-        comment: formData.get("comment")
-      };
+    container.addEventListener("mouseover", e => {
+      const span = e.target.closest(".star");
+      if (!span) return;
+      updateStars(parseInt(span.dataset.value, 10));
+    });
 
-      if (data.rating == "0") {
-        Swal.fire("Oops", "Selecciona una calificación con estrellas.", "warning");
-        return;
+    container.addEventListener("mouseout", () => updateStars(selectedRating));
+
+    submitBtn.addEventListener("click", async () => {
+      if (selectedRating === 0) {
+        return Swal.fire("Oops", "Selecciona una calificación con estrellas.", "warning");
       }
+      const cardId = submitBtn.closest("[id^='card-']").id.split("-")[1];
+      const comment = inputComment.value;
 
-      const response = await fetch(`/client/submit-rating/${reservationId}`, {
+      const res = await fetch(`/client/submit-rating/${cardId}`, {
         method: "POST",
         headers: {
           "X-Requested-With": "XMLHttpRequest",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ rating: selectedRating, comment })
       });
 
-      if (response.ok) {
-        const card = document.getElementById(`card-${reservationId}`);
-        card.innerHTML = `<div class='py-10 text-center'><p class='text-xl font-semibold text-green-600'>⭐ {{ t["thank_you_rating"] }}</p></div>`;
-        Swal.fire({
+      if (res.ok) {
+        submitBtn.closest(`#card-${cardId}`).innerHTML = `
+          <div class="py-10 text-center">
+            <p class="text-xl font-semibold text-green-600">⭐ {{ t["thank_you_rating"] }}</p>
+          </div>`;
+        return Swal.fire({
           icon: "success",
           title: "{{ t['swal_thanks'] }}",
           text: "{{ t['swal_success_message'] }}",
           timer: 2500,
           showConfirmButton: false
         });
-      } else {
-        Swal.fire("Error", "Algo salió mal. Inténtalo de nuevo.", "error");
       }
+      Swal.fire("Error", "Algo salió mal. Inténtalo de nuevo.", "error");
     });
   });
 </script>

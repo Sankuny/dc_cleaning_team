@@ -213,9 +213,6 @@
   "status_labels": {
     "pending": "Pending",
     "accepted": "Accepted",
-    "rejected": "Rejected",
-    "assigned": "Assigned",
-    "completed_by_employee": "Awaiting Client Confirmation",
     "completed": "Completed"
   },
 

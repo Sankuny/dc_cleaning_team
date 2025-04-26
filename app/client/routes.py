@@ -24,7 +24,7 @@ def dashboard():
     t = load_translations(lang)
 
     # Notificación si tiene servicios por calificar
-    to_rate = Reservation.query.filter_by(user_id=current_user.id, status="inspected").first()
+    to_rate = Reservation.query.filter_by(user_id=current_user.id, status="completed").first()
 
     # Última solicitud (puedes personalizarlo si prefieres mostrar solo 'pending', etc.)
     latest_service = Reservation.query.filter_by(user_id=current_user.id)\

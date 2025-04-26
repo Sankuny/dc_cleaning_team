@@ -65,26 +65,35 @@ def create_user():
 
     if request.method == "POST":
         name = request.form["name"]
-        email = request.form["email"]
+        email = request.form["email"].strip()
         password = request.form["password"]
 
-        # Check if email already exists
-        if Usuario.query.filter_by(email=email).first():
+        # 🛡 Validar email no vacío
+        if not email:
+            flash("Email cannot be empty.", "danger")
+            return redirect(url_for("admin.create_user"))
+
+        # 🛡 Validar que no exista (case insensitive)
+        existing_user = Usuario.query.filter(db.func.lower(Usuario.email) == email.lower()).first()
+        if existing_user:
             flash(t["register_exists"], "danger")
             return redirect(url_for("admin.create_user"))
 
+        # Crear nuevo usuario
         new_user = Usuario(
             name=name,
             email=email,
             password_hash=generate_password_hash(password),
-            role = request.form.get("role", "employee")
+            role=request.form.get("role", "employee")
         )
         db.session.add(new_user)
         db.session.commit()
+
         flash(t["user_created"], "success")
         return redirect(url_for("admin.users"))
 
     return render_template("admin/create_user.html", t=t)
+
 
 @admin_bp.route("/users/edit/<int:id>", methods=["GET", "POST"])
 @login_required
@@ -135,3 +144,19 @@ def all_chats():
 
     services = Reservation.query.order_by(Reservation.created_at.desc()).all()
     return render_template("admin/all_chats.html", services=services, t=t)
+
+@admin_bp.route("/users")
+@login_required
+@role_required("admin")
+def users():
+    lang = session.get("lang", "en")
+    t = load_translations(lang)
+
+    role_filter = request.args.get("role")
+
+    if role_filter:
+        users = Usuario.query.filter_by(role=role_filter).all()
+    else:
+        users = Usuario.query.all()
+
+    return render_template("admin/users.html", users=users, t=t, role_filter=role_filter)

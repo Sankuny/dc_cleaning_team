@@ -205,10 +205,7 @@
   "status_labels": {
     "pending": "Solicitud Enviada",
     "accepted": "Aceptado",
-    "rejected": "Rechazado",
-    "assigned": "Empleado Asignado",
-    "completed_by_employee": "Esperando Confirmación",
-    "completed": "Calificado"
+    "completed": "Completado"
   },
 
   "chat_with_team": "Chat con el Equipo de Limpieza",
