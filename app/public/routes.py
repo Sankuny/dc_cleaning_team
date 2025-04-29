@@ -21,16 +21,26 @@ def set_language():
 
 @public_bp.route("/")
 def home():
+    from flask import g
+
+    # 📥 Detectar idioma
     lang = session.get("lang", "en")
     t = load_translations(lang)
+    g.t = t  # Opcional si quieres mantenerlo accesible en g
 
+    # 🔒 Si el usuario está autenticado, redirigir según su rol
     if current_user.is_authenticated:
         if current_user.role == "admin":
             return redirect(url_for("admin.dashboard"))
         elif current_user.role == "employee":
             return redirect(url_for("employee.dashboard"))
+        elif current_user.role == "supervisor":
+            return redirect(url_for("supervisor.inspections"))  # inspections es su dashboard
+        elif current_user.role == "master":
+            return redirect(url_for("master.list_branches"))  # redirigir al panel de master
         else:
-            return redirect(url_for("client.dashboard"))
+            return redirect(url_for("client.dashboard"))  # 👈 el cliente redirige aquí
 
+    # 🌐 Renderizar home público si no ha iniciado sesión
     return render_template("public/home.html", t=t)
 

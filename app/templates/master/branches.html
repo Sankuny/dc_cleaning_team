@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-6">
+  <h1 class="mb-6 text-2xl font-bold">{{ t["master_panel"] }}</h1>
+
+  <!-- Botón para agregar nueva sucursal -->
+  <div class="mb-4">
+    <a href="{{ url_for('master.add_branch') }}" class="px-4 py-2 text-white rounded bg-primary hover:bg-primary-dark">
+      {{ t["add_new_branch"] }}
+    </a>
+  </div>
+
+  <!-- Tabla de Sucursales -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white rounded shadow">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="px-4 py-2 text-left border-b">{{ t["name"] }}</th>
+          <th class="px-4 py-2 text-left border-b">{{ t["city"] }}</th>
+          <th class="px-4 py-2 text-left border-b">{{ t["phone"] }}</th>
+          <th class="px-4 py-2 text-left border-b">{{ t["email"] }}</th>
+          <th class="px-4 py-2 text-left border-b">{{ t["actions"] }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for branch in branches %}
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-2 border-b">{{ branch.name }}</td>
+          <td class="px-4 py-2 border-b">{{ branch.city }}</td>
+          <td class="px-4 py-2 border-b">{{ branch.phone }}</td>
+          <td class="px-4 py-2 border-b">{{ branch.email }}</td>
+          <td class="px-4 py-2 border-b">
+            <a href="{{ url_for('master.edit_branch', branch_id=branch.id) }}" class="mr-4 text-blue-600 hover:underline">
+              {{ t["edit"] }}
+            </a>
+            <a href="{{ url_for('master.delete_branch', branch_id=branch.id) }}" class="text-red-600 hover:underline" onclick="return confirm('{{ t["are_you_sure"] }}');">
+              {{ t["delete"] }}
+            </a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5" class="px-4 py-4 text-center text-gray-500">{{ t["no_branches_found"] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

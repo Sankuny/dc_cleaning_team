@@ -251,7 +251,26 @@
   "rating_label2": "Rating (1 to 5)",
   "comment_label2": "Comment",
   "comment_placeholder2": "Optional comments...",
-  "submit_inspection": "Submit Inspection"
+  "submit_inspection": "Submit Inspection",
+
+  "add_new_branch": "Add New Branch",
+  "branch_name": "Branch Name",
+  "enter_branch_name": "Enter branch name",
+  "city": "City",
+  "enter_city": "Enter city",
+  "phone": "Phone",
+  "enter_phone_number": "Enter phone number",
+
+  "enter_email_address": "Enter email address",
+  "save_branch": "Save Branch",
+  "master_panel": "Master Panel",
+  "edit": "Edit",
+  "delete": "Delete",
+  "are_you_sure": "Are you sure?",
+  "no_branches_found": "No branches found.",
+  "edit_branch": "Edit Branch",
+  "update_branch": "Update Branch"
+
   
 
 

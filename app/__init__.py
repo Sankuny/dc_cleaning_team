@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
 
+
 # Carga .env
 load_dotenv()
 
@@ -46,7 +47,10 @@ def create_app():
     from app.client.routes   import client_bp
     from app.chat.routes     import chat_bp
     from app.supervisor.routes import supervisor_bp
-
+    from app.master.routes import master_bp
+    
+    
+    app.register_blueprint(master_bp)
     app.register_blueprint(supervisor_bp)
     app.register_blueprint(chat_bp)
     app.register_blueprint(public_bp)
@@ -54,6 +58,7 @@ def create_app():
     app.register_blueprint(admin_bp)
     app.register_blueprint(employee_bp, url_prefix="/employee")
     app.register_blueprint(client_bp,   url_prefix="/client")
+
 
     @app.context_processor
     def inject_latest_service():

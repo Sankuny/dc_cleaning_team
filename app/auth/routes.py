@@ -78,6 +78,8 @@ def redirect_by_role():
         return redirect(url_for("client.dashboard"))
     elif current_user.role == "supervisor":
         return redirect(url_for("supervisor.inspections"))
+    elif current_user.role == "master":
+        return redirect(url_for("master.list_branches"))
     else:
         return redirect(url_for("public.home"))
 

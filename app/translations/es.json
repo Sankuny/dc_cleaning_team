@@ -246,8 +246,26 @@
   "rating_label2": "Calificación (1 a 5)",
   "comment_label2": "Comentario",
   "comment_placeholder2": "Comentarios opcionales...",
-  "submit_inspection": "Enviar Inspección"
+  "submit_inspection": "Enviar Inspección",
 
+  "add_new_branch": "Agregar Nueva Sucursal",
+  "branch_name": "Nombre de la Sucursal",
+  "enter_branch_name": "Ingresa el nombre de la sucursal",
+  "city": "Ciudad",
+  "enter_city": "Ingresa la ciudad",
+  "phone": "Teléfono",
+  "enter_phone_number": "Ingresa el número de teléfono",
+  "enter_email_address": "Ingresa el correo electrónico",
+  "save_branch": "Guardar Sucursal",
+
+  "master_panel": "Panel Principal",
+  "edit": "Editar",
+  "delete": "Eliminar",
+  "are_you_sure": "¿Estás seguro?",
+  "no_branches_found": "No se encontraron sucursales.",
+  "edit_branch": "Editar Sucursal",
+  "update_branch": "Actualizar Sucursal"
+ 
 
 
 }

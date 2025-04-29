@@ -253,7 +253,35 @@
   "rating_label2": "Évaluation (1 à 5)",
   "comment_label2": "Commentaire",
   "comment_placeholder2": "Commentaires optionnels...",
-  "submit_inspection": "Envoyer l'inspection"
+  "submit_inspection": "Envoyer l'inspection",
+
+  "dashboard": "Tableau de bord",
+  "reservations": "Réservations",
+  "clients": "Clients",
+  "employees": "Employés",
+  "branches": "Succursales",
+  "add_branch": "Ajouter une succursale",
+  "delete_branch": "Supprimer la succursale",
+  "logout": "Se déconnecter",
+  "login": "Se connecter",
+
+  "add_new_branch": "Ajouter une nouvelle succursale",
+  "branch_name": "Nom de la succursale",
+  "enter_branch_name": "Entrez le nom de la succursale",
+  "city": "Ville",
+  "enter_city": "Entrez la ville",
+  "phone": "Téléphone",
+  "enter_phone_number": "Entrez le numéro de téléphone",
+  "enter_email_address": "Entrez l'adresse e-mail",
+  "save_branch": "Enregistrer la succursale",
+  "master_panel": "Panneau Principal",
+  "edit": "Modifier",
+  "delete": "Supprimer",
+  "are_you_sure": "Êtes-vous sûr ?",
+  "no_branches_found": "Aucune succursale trouvée.",
+  "edit_branch": "Modifier la succursale",
+  "update_branch": "Mettre à jour la succursale"
+
 
 
 }

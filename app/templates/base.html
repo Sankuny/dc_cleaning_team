@@ -31,16 +31,20 @@
 
       <!-- Logo -->
       <a href="{% if current_user.is_authenticated %}
-                  {% if current_user.role == 'admin' %}
-                    {{ url_for('admin.dashboard') }}
-                  {% elif current_user.role == 'employee' %}
-                    {{ url_for('employee.dashboard') }}
-                  {% else %}
-                    {{ url_for('client.dashboard') }}
-                  {% endif %}
-                 {% else %}
-                   {{ url_for('public.home') }}
-                 {% endif %}"
+            {% if current_user.role == 'admin' %}
+              {{ url_for('admin.dashboard') }}
+            {% elif current_user.role == 'employee' %}
+              {{ url_for('employee.dashboard') }}
+            {% elif current_user.role == 'supervisor' %}
+              {{ url_for('supervisor.inspections') }}
+            {% elif current_user.role == 'master' %}
+              {{ url_for('master.list_branches') }}
+            {% else %}
+              {{ url_for('client.dashboard') }}
+            {% endif %}
+         {% else %}
+           {{ url_for('public.home') }}
+         {% endif %}"
          class="flex flex-col items-center text-textMain">
         <div class="flex items-center gap-3 mb-1">
           <span class="w-8 h-[2px] bg-textMain"></span>
@@ -54,17 +58,21 @@
       <!-- Navegación -->
       <nav class="flex flex-wrap justify-center gap-3 text-sm">
         <a href="{% if current_user.is_authenticated %}
-                    {% if current_user.role == 'admin' %}
-                      {{ url_for('admin.dashboard') }}
-                    {% elif current_user.role == 'employee' %}
-                      {{ url_for('employee.dashboard') }}
-                    {% else %}
-                      {{ url_for('client.dashboard') }}
-                    {% endif %}
-                   {% else %}
-                     {{ url_for('public.home') }}
-                   {% endif %}"
-           class="px-4 py-2 font-medium transition bg-white rounded-lg shadow text-primary hover:bg-white/90">
+              {% if current_user.role == 'admin' %}
+                {{ url_for('admin.dashboard') }}
+              {% elif current_user.role == 'employee' %}
+                {{ url_for('employee.dashboard') }}
+              {% elif current_user.role == 'supervisor' %}
+                {{ url_for('supervisor.inspections') }}
+              {% elif current_user.role == 'master' %}
+                {{ url_for('master.list_branches') }}
+              {% else %}
+                {{ url_for('client.dashboard') }}
+              {% endif %}
+           {% else %}
+             {{ url_for('public.home') }}
+           {% endif %}"
+          class="px-4 py-2 font-medium transition bg-white rounded-lg shadow text-primary hover:bg-white/90">
           {{ t["home"] }}
         </a>
 
