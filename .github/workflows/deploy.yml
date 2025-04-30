@@ -22,7 +22,7 @@ jobs:
         env:
           PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@68.183.126.174 << 'EOF'
+          ssh -o StrictHostKeyChecking=no root@68.183.126.174 << EOF
             set -e
 
             cd /home/ubuntu/dc_cleaning
@@ -32,8 +32,12 @@ jobs:
 
             echo "🛡️ Haciendo backup de la base de datos antes de migrar..."
             mkdir -p /home/ubuntu/backups
+
+            # Exportamos la variable para pg_dump
             export PGPASSWORD="$PGPASSWORD"
-            pg_dump -U postgres -h localhost dccleaning > /home/ubuntu/backups/backup_$(date +%Y%m%d_%H%M%S).sql
+            # Hacemos el dump con el usuario 'angel' y la base 'dccleaning'
+            pg_dump -U angel -h localhost dccleaning \
+              > /home/ubuntu/backups/backup_$(date +%Y%m%d_%H%M%S).sql
 
             echo "🧹 Limpiando backups antiguos..."
             ls -1t /home/ubuntu/backups/*.sql | tail -n +6 | xargs -r rm --
