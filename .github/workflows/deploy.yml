@@ -20,9 +20,9 @@ jobs:
 
       - name: Deploy to Server
         env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@68.183.126.174 << EOF
+          ssh -o StrictHostKeyChecking=no root@68.183.126.174 << 'EOF'
             set -e
 
             cd /home/ubuntu/dc_cleaning
@@ -31,11 +31,10 @@ jobs:
             git pull origin main
 
             echo "🛡️ Haciendo backup de la base de datos antes de migrar..."
-            export PGPASSWORD="${POSTGRES_PASSWORD}"
             mkdir -p /home/ubuntu/backups
-            pg_dump -U postgres -h localhost dc_cleaning_db > /home/ubuntu/backups/backup_\$(date +%Y%m%d_%H%M%S).sql
+            PGPASSWORD="$PGPASSWORD" pg_dump -U postgres -h localhost dccleaning > /home/ubuntu/backups/backup_$(date +%Y%m%d_%H%M%S).sql
 
-            echo "🧹 Limpiando backups antiguos (guardando solo los últimos 5)..."
+            echo "🧹 Limpiando backups antiguos..."
             ls -1t /home/ubuntu/backups/*.sql | tail -n +6 | xargs -r rm --
 
             echo "🐍 Activando entorno virtual..."
