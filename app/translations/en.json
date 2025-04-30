@@ -269,7 +269,25 @@
   "are_you_sure": "Are you sure?",
   "no_branches_found": "No branches found.",
   "edit_branch": "Edit Branch",
-  "update_branch": "Update Branch"
+  "update_branch": "Update Branch",
+  "branch_admin_info": "Branch Administrator",
+  "admin_name": "Admin Name",
+  "enter_admin_name": "Enter admin name",
+  "admin_email": "Admin Email",
+  "enter_admin_email": "Enter admin email",
+  "admin_password": "Admin Password",
+  "enter_admin_password": "Enter admin password",
+  "admin": "Admin",
+  "no_admin_assigned": "No admin assigned",
+  "admin_password_optional": "Admin Password (Optional)",
+  "leave_blank_password": "Leave blank to keep current password",
+  "branch_added_successfully": "Branch added successfully!",
+  "branch_updated_successfully": "Branch updated successfully!",
+  "branch_deleted_successfully": "Branch deleted successfully!",
+  "select_branch": "Select Branch",
+  "choose_branch": "Choose a branch...",
+  "delete_branch_warning": "This action will delete the branch and all its related data. Are you sure?"
+
 
   
 

@@ -1,11 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, abort
 from flask_login import login_required, current_user
 from app.decorators import role_required
 from app.models import Usuario, Reservation
 from app import db
 import json, os
 from werkzeug.security import generate_password_hash
-
 
 admin_bp = Blueprint("admin", __name__)
 
@@ -20,17 +19,17 @@ def load_translations(lang="en"):
 def dashboard():
     lang = session.get("lang", "en")
     t = load_translations(lang)
+    branch_id = current_user.branch_id
 
-    # Stats
-    total_users = Usuario.query.count()
-    total_clients = Usuario.query.filter_by(role="client").count()
-    total_employees = Usuario.query.filter_by(role="employee").count()
-    total_reservations = Reservation.query.count()
+    total_users = Usuario.query.filter_by(branch_id=branch_id).count()
+    total_clients = Usuario.query.filter_by(branch_id=branch_id, role="client").count()
+    total_employees = Usuario.query.filter_by(branch_id=branch_id, role="employee").count()
+    total_reservations = Reservation.query.filter_by(branch_id=branch_id).count()
 
-    pending_services = Reservation.query.filter_by(status="pending").all()
-    accepted_count = Reservation.query.filter_by(status="accepted").count()
-    completed_count = Reservation.query.filter_by(status="completed").count()
-    confirmed_pending = Reservation.query.filter_by(status="completed_by_employee").count()
+    pending_services = Reservation.query.filter_by(branch_id=branch_id, status="pending").all()
+    accepted_count = Reservation.query.filter_by(branch_id=branch_id, status="accepted").count()
+    completed_count = Reservation.query.filter_by(branch_id=branch_id, status="completed").count()
+    confirmed_pending = Reservation.query.filter_by(branch_id=branch_id, status="completed_by_employee").count()
 
     return render_template("admin/dashboard.html",
                            t=t,
@@ -48,13 +47,13 @@ def dashboard():
 @role_required("admin")
 def accept_service(id):
     reservation = Reservation.query.get_or_404(id)
+    if reservation.branch_id != current_user.branch_id:
+        abort(403)
     if reservation.status == "pending":
         reservation.status = "accepted"
         db.session.commit()
         flash("Service accepted.", "success")
     return redirect(url_for("admin.dashboard"))
-
-
 
 @admin_bp.route("/users/create", methods=["GET", "POST"])
 @login_required
@@ -68,23 +67,21 @@ def create_user():
         email = request.form["email"].strip()
         password = request.form["password"]
 
-        # 🛡 Validar email no vacío
         if not email:
             flash("Email cannot be empty.", "danger")
             return redirect(url_for("admin.create_user"))
 
-        # 🛡 Validar que no exista (case insensitive)
         existing_user = Usuario.query.filter(db.func.lower(Usuario.email) == email.lower()).first()
         if existing_user:
             flash(t["register_exists"], "danger")
             return redirect(url_for("admin.create_user"))
 
-        # Crear nuevo usuario
         new_user = Usuario(
             name=name,
             email=email,
             password_hash=generate_password_hash(password),
-            role=request.form.get("role", "employee")
+            role=request.form.get("role", "employee"),
+            branch_id=current_user.branch_id
         )
         db.session.add(new_user)
         db.session.commit()
@@ -94,7 +91,6 @@ def create_user():
 
     return render_template("admin/create_user.html", t=t)
 
-
 @admin_bp.route("/users/edit/<int:id>", methods=["GET", "POST"])
 @login_required
 @role_required("admin")
@@ -103,6 +99,8 @@ def edit_user(id):
     t = load_translations(lang)
 
     user = Usuario.query.get_or_404(id)
+    if user.branch_id != current_user.branch_id:
+        abort(403)
 
     if request.method == "POST":
         user.name = request.form["name"]
@@ -124,7 +122,8 @@ def edit_user(id):
 def delete_user(id):
     user = Usuario.query.get_or_404(id)
 
-    # Prevenir eliminar admins si quieres protegerlos
+    if user.branch_id != current_user.branch_id:
+        abort(403)
     if user.role == "admin":
         flash("You cannot delete an admin user.", "danger")
         return redirect(url_for("admin.users"))
@@ -134,7 +133,6 @@ def delete_user(id):
     flash("User deleted successfully.", "success")
     return redirect(url_for("admin.users"))
 
-
 @admin_bp.route("/all-chats")
 @login_required
 @role_required("admin")
@@ -142,7 +140,8 @@ def all_chats():
     lang = session.get("lang", "en")
     t = load_translations(lang)
 
-    services = Reservation.query.order_by(Reservation.created_at.desc()).all()
+    services = Reservation.query.filter_by(branch_id=current_user.branch_id)\
+                                 .order_by(Reservation.created_at.desc()).all()
     return render_template("admin/all_chats.html", services=services, t=t)
 
 @admin_bp.route("/users")
@@ -153,10 +152,11 @@ def users():
     t = load_translations(lang)
 
     role_filter = request.args.get("role")
+    branch_id = current_user.branch_id
 
     if role_filter:
-        users = Usuario.query.filter_by(role=role_filter).all()
+        users = Usuario.query.filter_by(branch_id=branch_id, role=role_filter).all()
     else:
-        users = Usuario.query.all()
+        users = Usuario.query.filter_by(branch_id=branch_id).all()
 
     return render_template("admin/users.html", users=users, t=t, role_filter=role_filter)

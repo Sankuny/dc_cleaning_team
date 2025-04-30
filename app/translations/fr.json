@@ -280,7 +280,26 @@
   "are_you_sure": "Êtes-vous sûr ?",
   "no_branches_found": "Aucune succursale trouvée.",
   "edit_branch": "Modifier la succursale",
-  "update_branch": "Mettre à jour la succursale"
+  "update_branch": "Mettre à jour la succursale",
+  "branch_admin_info": "Administrateur de la succursale",
+  "admin_name": "Nom de l’administrateur",
+  "enter_admin_name": "Entrez le nom de l’administrateur",
+  "admin_email": "Email de l’administrateur",
+  "enter_admin_email": "Entrez l’email de l’administrateur",
+  "admin_password": "Mot de passe de l’administrateur",
+  "enter_admin_password": "Entrez le mot de passe de l’administrateur",
+  "admin": "Admin",
+  "no_admin_assigned": "Aucun admin assigné",
+  
+  "admin_password_optional": "Mot de passe de l’administrateur (optionnel)",
+  "leave_blank_password": "Laissez vide pour conserver le mot de passe",
+  "branch_added_successfully": "Succursale ajoutée avec succès !",
+  "branch_updated_successfully": "Succursale mise à jour avec succès !",
+  "branch_deleted_successfully": "Succursale supprimée avec succès !",
+  "select_branch": "Sélectionner une succursale",
+  "choose_branch": "Choisissez une succursale...",
+  "delete_branch_warning": "Cette action supprimera la succursale et toutes ses données associées. Êtes-vous sûr ?"
+
 
 
 

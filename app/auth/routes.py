@@ -5,6 +5,7 @@ from app.models import Usuario
 from app import db
 import json, os
 from flask_login import current_user
+from app.models import Branch
 
 
 
@@ -42,10 +43,17 @@ def register():
     lang = session.get("lang", "en")
     t = load_translations(lang)
 
+    branches = Branch.query.all()
+
     if request.method == "POST":
-        name = request.form["name"]  # ✅ aquí corregido
+        name = request.form["name"]
         email = request.form["email"]
         password = request.form["password"]
+        branch_id = request.form.get("branch_id")
+
+        if not branch_id:
+            flash(t["choose_branch"], "danger")
+            return redirect(url_for("auth.register"))
 
         existing_user = Usuario.query.filter_by(email=email).first()
         if existing_user:
@@ -56,7 +64,8 @@ def register():
             name=name,
             email=email,
             password_hash=generate_password_hash(password),
-            role="client"  # ✅ aquí también
+            role="client",
+            branch_id=int(branch_id)
         )
         db.session.add(new_user)
         db.session.commit()
@@ -64,7 +73,8 @@ def register():
         flash(t["register_success"], "success")
         return redirect(url_for("auth.login"))
 
-    return render_template("auth/register.html", t=t)
+    return render_template("auth/register.html", t=t, branches=branches)
+
 
 
 

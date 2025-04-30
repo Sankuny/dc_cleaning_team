@@ -264,7 +264,25 @@
   "are_you_sure": "¿Estás seguro?",
   "no_branches_found": "No se encontraron sucursales.",
   "edit_branch": "Editar Sucursal",
-  "update_branch": "Actualizar Sucursal"
+  "update_branch": "Actualizar Sucursal",
+  "branch_admin_info": "Administrador de la Sucursal",
+  "admin_name": "Nombre del Administrador",
+  "enter_admin_name": "Ingresa el nombre del administrador",
+  "admin_email": "Correo del Administrador",
+  "enter_admin_email": "Ingresa el correo del administrador",
+  "admin_password": "Contraseña del Administrador",
+  "enter_admin_password": "Ingresa la contraseña del administrador",
+  "admin": "Admin",
+  "no_admin_assigned": "Sin administrador asignado",
+   "admin_password_optional": "Contraseña del Administrador (opcional)",
+  "leave_blank_password": "Déjalo en blanco para mantener la actual",
+  "branch_added_successfully": "¡Sucursal agregada con éxito!",
+  "branch_updated_successfully": "¡Sucursal actualizada con éxito!",
+  "branch_deleted_successfully": "¡Sucursal eliminada con éxito!",
+   "select_branch": "Seleccionar sucursal",
+  "choose_branch": "Elige una sucursal...",
+  "delete_branch_warning": "Esta acción eliminará la sucursal y todos sus datos relacionados. ¿Estás seguro?"
+
  
 
 

@@ -8,31 +8,57 @@
 
     <form action="{{ url_for('master.add_branch') }}" method="POST" class="space-y-6">
 
-      <!-- Nombre de la sucursal -->
+      <!-- 📌 Datos de la sucursal -->
+
       <div>
         <label class="block mb-1 font-semibold" for="name">{{ t["branch_name"] }}</label>
-        <input type="text" name="name" id="name" required class="w-full p-2 border border-gray-300 rounded" placeholder="{{ t["enter_branch_name"] }}">
+        <input type="text" name="name" id="name" required class="w-full p-2 border border-gray-300 rounded"
+               placeholder="{{ t['enter_branch_name'] }}">
       </div>
 
-      <!-- Ciudad -->
       <div>
         <label class="block mb-1 font-semibold" for="city">{{ t["city"] }}</label>
-        <input type="text" name="city" id="city" required class="w-full p-2 border border-gray-300 rounded" placeholder="{{ t["enter_city"] }}">
+        <input type="text" name="city" id="city" required class="w-full p-2 border border-gray-300 rounded"
+               placeholder="{{ t['enter_city'] }}">
       </div>
 
-      <!-- Teléfono -->
       <div>
         <label class="block mb-1 font-semibold" for="phone">{{ t["phone"] }}</label>
-        <input type="text" name="phone" id="phone" required class="w-full p-2 border border-gray-300 rounded" placeholder="{{ t["enter_phone_number"] }}">
+        <input type="text" name="phone" id="phone" required class="w-full p-2 border border-gray-300 rounded"
+               placeholder="{{ t['enter_phone_number'] }}">
       </div>
 
-      <!-- Correo -->
       <div>
         <label class="block mb-1 font-semibold" for="email">{{ t["email"] }}</label>
-        <input type="email" name="email" id="email" required class="w-full p-2 border border-gray-300 rounded" placeholder="{{ t["enter_email_address"] }}">
+        <input type="email" name="email" id="email" required class="w-full p-2 border border-gray-300 rounded"
+               placeholder="{{ t['enter_email_address'] }}">
       </div>
 
-      <!-- Botón de Guardar -->
+      <!-- 👤 Datos del administrador -->
+
+      <hr class="my-6 border-gray-300">
+
+      <h2 class="text-xl font-semibold text-center text-primary">{{ t["branch_admin_info"] }}</h2>
+
+      <div>
+        <label class="block mb-1 font-semibold" for="admin_name">{{ t["admin_name"] }}</label>
+        <input type="text" name="admin_name" id="admin_name" required class="w-full p-2 border border-gray-300 rounded"
+               placeholder="{{ t['enter_admin_name'] }}">
+      </div>
+
+      <div>
+        <label class="block mb-1 font-semibold" for="admin_email">{{ t["admin_email"] }}</label>
+        <input type="email" name="admin_email" id="admin_email" required class="w-full p-2 border border-gray-300 rounded"
+               placeholder="{{ t['enter_admin_email'] }}">
+      </div>
+
+      <div>
+        <label class="block mb-1 font-semibold" for="admin_password">{{ t["admin_password"] }}</label>
+        <input type="password" name="admin_password" id="admin_password" required class="w-full p-2 border border-gray-300 rounded"
+               placeholder="{{ t['enter_admin_password'] }}">
+      </div>
+
+      <!-- Guardar -->
       <div class="pt-4">
         <button type="submit" class="w-full px-4 py-2 font-semibold text-white rounded bg-primary hover:bg-primary-dark">
           {{ t["save_branch"] }}

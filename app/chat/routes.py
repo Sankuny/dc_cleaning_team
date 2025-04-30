@@ -19,16 +19,13 @@ def chat(service_id):
 
     if not (
         current_user.id == service.user_id or
-        current_user in service.employees or
-        current_user.role == "admin"
+        (current_user.role == "admin" and current_user.branch_id == service.branch_id)
     ):
         abort(403)
 
-    # Traducciones
     lang = session.get("lang", "en")
     t = load_translations(lang)
 
-    # Enviar mensaje
     if request.method == "POST":
         message_text = request.form.get("message")
         if message_text:
@@ -41,7 +38,6 @@ def chat(service_id):
             db.session.commit()
             return redirect(url_for("chat.chat", service_id=service.id))
 
-    # Mensajes anteriores
     messages = ChatMessage.query.filter_by(service_id=service.id).order_by(ChatMessage.timestamp).all()
 
     return render_template("chat/chat.html", service=service, messages=messages, t=t)
@@ -53,8 +49,7 @@ def get_messages(service_id):
 
     if not (
         current_user.id == service.user_id or
-        current_user in service.employees or
-        current_user.role == "admin"
+        (current_user.role == "admin" and current_user.branch_id == service.branch_id)
     ):
         abort(403)
 
@@ -73,12 +68,17 @@ def get_messages(service_id):
         ]
     }
 
-
 @chat_bp.route("/embed/<int:service_id>")
 @login_required
 def chat_embed(service_id):
     service = Reservation.query.get_or_404(service_id)
-    # ... mismo control de acceso que en la vista normal ...
+
+    if not (
+        current_user.id == service.user_id or
+        (current_user.role == "admin" and current_user.branch_id == service.branch_id)
+    ):
+        abort(403)
+
     messages = ChatMessage.query.filter_by(service_id=service.id).order_by(ChatMessage.timestamp).all()
     lang     = session.get("lang","en")
     t        = load_translations(lang)

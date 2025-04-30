@@ -37,10 +37,10 @@ def inspections():
 
     today = date.today()
     services_today = Reservation.query.filter(
-        db.func.date(Reservation.date) == today
+        db.func.date(Reservation.date) == today,
+        Reservation.branch_id == current_user.branch_id
     ).all()
 
-    # Ahora se ven servicios "accepted"
     pending = [r for r in services_today if r.status == "accepted"]
 
     return render_template("supervisor/inspections.html", pending=pending, t=t)
@@ -55,7 +55,10 @@ def inspect(reservation_id):
 
     reservation = Reservation.query.get_or_404(reservation_id)
 
-    # Solo inspeccionar servicios "accepted"
+    # Verificar que la reserva sea de su sucursal
+    if reservation.branch_id != current_user.branch_id:
+        abort(403)
+
     if reservation.status != "accepted":
         flash(t.get("not_ready_for_inspection", "This service is not ready for inspection."), "warning")
         return redirect(url_for("supervisor.inspections"))
@@ -89,7 +92,6 @@ def inspect(reservation_id):
         rating = int(request.form.get("rating", 0))
         comment = request.form.get("comment", "")
 
-        # Guardar inspección
         inspection = Inspection(
             reservation_id=reservation.id,
             supervisor_id=current_user.id,
@@ -101,7 +103,6 @@ def inspect(reservation_id):
         )
         db.session.add(inspection)
 
-        # ✅ Cambiar estado de la reservación a "completed"
         reservation.status = "completed"
 
         db.session.commit()

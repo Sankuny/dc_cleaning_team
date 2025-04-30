@@ -20,6 +20,7 @@
           <th class="px-4 py-2 text-left border-b">{{ t["city"] }}</th>
           <th class="px-4 py-2 text-left border-b">{{ t["phone"] }}</th>
           <th class="px-4 py-2 text-left border-b">{{ t["email"] }}</th>
+          <th class="px-4 py-2 text-left border-b">{{ t["admin"] }}</th>
           <th class="px-4 py-2 text-left border-b">{{ t["actions"] }}</th>
         </tr>
       </thead>
@@ -31,17 +32,23 @@
           <td class="px-4 py-2 border-b">{{ branch.phone }}</td>
           <td class="px-4 py-2 border-b">{{ branch.email }}</td>
           <td class="px-4 py-2 border-b">
+            {% set admin = branch.usuarios | selectattr("role", "equalto", "admin") | first %}
+            {{ admin.name if admin else t["no_admin_assigned"] }}
+          </td>
+          <td class="px-4 py-2 border-b">
             <a href="{{ url_for('master.edit_branch', branch_id=branch.id) }}" class="mr-4 text-blue-600 hover:underline">
               {{ t["edit"] }}
             </a>
-            <a href="{{ url_for('master.delete_branch', branch_id=branch.id) }}" class="text-red-600 hover:underline" onclick="return confirm('{{ t["are_you_sure"] }}');">
-              {{ t["delete"] }}
-            </a>
+            <a href="{{ url_for('master.delete_branch', branch_id=branch.id) }}"
+                class="text-red-600 hover:underline"
+                onclick="return confirm('{{ t['delete_branch_warning'] }}');">
+                {{ t['delete'] }}
+              </a>
           </td>
         </tr>
         {% else %}
         <tr>
-          <td colspan="5" class="px-4 py-4 text-center text-gray-500">{{ t["no_branches_found"] }}</td>
+          <td colspan="6" class="px-4 py-4 text-center text-gray-500">{{ t["no_branches_found"] }}</td>
         </tr>
         {% endfor %}
       </tbody>
