@@ -20,7 +20,7 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no root@68.183.126.174 << 'EOF'
+          ssh -o StrictHostKeyChecking=no root@68.183.126.174 << EOF
             set -e
 
             cd /home/ubuntu/dc_cleaning
@@ -30,7 +30,7 @@ jobs:
 
             echo "🛡️ Haciendo backup de la base de datos antes de migrar..."
             mkdir -p /home/ubuntu/backups
-            pg_dump -U postgres -h localhost dc_cleaning_db > /home/ubuntu/backups/backup_\$(date +%Y%m%d_%H%M%S).sql
+            pg_dump -U postgres -h localhost dc_cleaning_db > /home/ubuntu/backups/backup_$(date +%Y%m%d_%H%M%S).sql
 
             echo "🧹 Limpiando backups antiguos (guardando solo los últimos 5)..."
             ls -1t /home/ubuntu/backups/*.sql | tail -n +6 | xargs -r rm --

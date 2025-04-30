@@ -1,4 +1,4 @@
-# Byte‑compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *.so
@@ -6,34 +6,40 @@ __pycache__/
 # Virtual env
 venv/
 .env
+!.env.example
 
-# Flask instance
+# Flask instance / DB
 instance/
 *.db
+*.sqlite3
 
 # Migrations
 migrations/__pycache__/
 migrations/env.pyc
+migrations/*.pyc
+migrations/versions/*.pyc
 
-# IDEs
+# IDEs / Editors
 .vscode/
 .idea/
 
 # Tailwind / Node
 node_modules/
-app/static/css/input.css       # ✅ solo dejamos output.css en producción
+app/static/css/input.css
 tailwind.config.js
 postcss.config.js
 package-lock.json
 package.json
 
-# Archivos temporales o auto-generados
+# Temporary / generated files
 *.log
 *.bak
 .DS_Store
 
-# Subidas de usuarios
+# User uploads
 app/static/uploads/
 
-# (opcional) Si usas pytest
+# Testing
 .pytest_cache/
+.coverage
+htmlcov/
