@@ -9,9 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -22,19 +19,21 @@ jobs:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Deploy to Server
+        env:
+          PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@68.183.126.174 <<EOF
+          ssh -o StrictHostKeyChecking=no root@68.183.126.174 << EOF
             set -e
 
+            echo "📂 Entrando al proyecto..."
             cd /home/ubuntu/dc_cleaning
 
             echo "📦 Haciendo pull del repositorio..."
             git pull origin main
 
             echo "🛡️ Haciendo backup de la base de datos antes de migrar..."
-            export PGPASSWORD="${POSTGRES_PASSWORD}"
             mkdir -p /home/ubuntu/backups
-            pg_dump -U postgres -h localhost dccleaning > /home/ubuntu/backups/backup_\$(date +%Y%m%d_%H%M%S).sql
+            PGPASSWORD="$PGPASSWORD" pg_dump -U angel -h localhost dccleaning > /home/ubuntu/backups/backup_$(date +%Y%m%d_%H%M%S).sql
 
             echo "🧹 Limpiando backups antiguos..."
             ls -1t /home/ubuntu/backups/*.sql | tail -n +6 | xargs -r rm --
