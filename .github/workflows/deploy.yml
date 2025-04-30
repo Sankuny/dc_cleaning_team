@@ -9,6 +9,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,7 +33,7 @@ jobs:
 
             echo "🛡️ Haciendo backup de la base de datos antes de migrar..."
             mkdir -p /home/ubuntu/backups
-            pg_dump -U postgres -h localhost dc_cleaning_db > /home/ubuntu/backups/backup_$(date +%Y%m%d_%H%M%S).sql
+            pg_dump -U postgres -h localhost dc_cleaning_db > /home/ubuntu/backups/backup_\$(date +%Y%m%d_%H%M%S).sql
 
             echo "🧹 Limpiando backups antiguos (guardando solo los últimos 5)..."
             ls -1t /home/ubuntu/backups/*.sql | tail -n +6 | xargs -r rm --
