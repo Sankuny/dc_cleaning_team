@@ -286,7 +286,8 @@
   "branch_deleted_successfully": "Branch deleted successfully!",
   "select_branch": "Select Branch",
   "choose_branch": "Choose a branch...",
-  "delete_branch_warning": "This action will delete the branch and all its related data. Are you sure?"
+  "delete_branch_warning": "This action will delete the branch and all its related data. Are you sure?",
+  "home_app_promo_title": "Discover Our Web App"
 
 
   

@@ -281,7 +281,8 @@
   "branch_deleted_successfully": "¡Sucursal eliminada con éxito!",
    "select_branch": "Seleccionar sucursal",
   "choose_branch": "Elige una sucursal...",
-  "delete_branch_warning": "Esta acción eliminará la sucursal y todos sus datos relacionados. ¿Estás seguro?"
+  "delete_branch_warning": "Esta acción eliminará la sucursal y todos sus datos relacionados. ¿Estás seguro?",
+  "home_app_promo_title": "Conoce nuestra app web"
 
  
 

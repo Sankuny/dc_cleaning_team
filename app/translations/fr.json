@@ -21,7 +21,7 @@
 
   "not_found_message": "Oups ! Page non trouvée.",
   "go_home": "Retour à l'accueil",
-
+  "home_app_promo_title": "Découvrez notre application web",
   "access_denied": "Accès refusé. Vous n'avez pas la permission d'accéder à cette page.",
   "login_success": "Bon retour parmi nous !",
   "login_fail": "E-mail ou mot de passe invalide",
