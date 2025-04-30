@@ -19,11 +19,16 @@ jobs:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Deploy to Server
+        # colocamos el secreto en la env del runner
         env:
           PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
           ssh -o StrictHostKeyChecking=no root@68.183.126.174 << EOF
             set -e
+
+            # Creamos ~/.pgpass para que pg_dump no pregunte contraseña
+            printf "localhost:5432:dccleaning:postgres:%s\n" "$PGPASSWORD" > ~/.pgpass
+            chmod 600 ~/.pgpass
 
             cd /home/ubuntu/dc_cleaning
 
@@ -32,14 +37,10 @@ jobs:
 
             echo "🛡️ Haciendo backup de la base de datos antes de migrar..."
             mkdir -p /home/ubuntu/backups
-
-            # Exportamos la variable para pg_dump
-            export PGPASSWORD="$PGPASSWORD"
-            # Hacemos el dump con el usuario 'angel' y la base 'dccleaning'
-            pg_dump -U angel -h localhost dccleaning \
+            pg_dump -h localhost -U postgres dccleaning \
               > /home/ubuntu/backups/backup_$(date +%Y%m%d_%H%M%S).sql
 
-            echo "🧹 Limpiando backups antiguos..."
+            echo "🧹 Limpiando backups antiguos (solo los 5 más recientes)..."
             ls -1t /home/ubuntu/backups/*.sql | tail -n +6 | xargs -r rm --
 
             echo "🐍 Activando entorno virtual..."
